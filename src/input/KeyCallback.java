@@ -15,9 +15,10 @@ public class KeyCallback extends  GLFWKeyCallback {
 	
 	@Override
 	public void invoke(long window, int key, int scancode, int action , int mods ) {
-	if(key!=-1){	
+	if(key!=-1){
+		boolean oldValue=keys[key];
 		keys[key]=action !=GLFW.GLFW_RELEASE;
-		
+		InputPoller.updateKey(key,oldValue);
 	}
 	
 	}

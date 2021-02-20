@@ -3,15 +3,13 @@ package rendering;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
-
-import static textrendering.TextBuilder.*;
 import java.nio.*;
 
 import  org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryUtil;
 
-import gameEngine.Start;
+import core.CoreEngine;
 
 
 
@@ -28,7 +26,7 @@ public class OneTextureBatchedModel extends ModelFramwork{
     private final int MaxSections=100;
   
 	public OneTextureBatchedModel() {
-		Start.DebugPrint("made new one texture batched model");
+		CoreEngine.DebugPrint("made new one texture batched model");
 		//setting everything to 0 
 		listOfModels.add(this);
 		drawCount=0;
@@ -125,7 +123,7 @@ public void addvaluestoVBO(float[] v,float[] uv) {//used to add a new model to t
 	 MemoryUtil.memFree(Indbuffer);
 	
 	}else {
-		Start.DebugPrint("[ERROR]sorry but both verts and uv must have a size of 8",this.getClass());
+		CoreEngine.DebugPrint("[ERROR]sorry but both verts and uv must have a size of 8",this.getClass());
 	}
 	
 

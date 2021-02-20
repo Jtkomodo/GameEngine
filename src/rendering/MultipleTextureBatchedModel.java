@@ -5,12 +5,13 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 
-import static textrendering.TextBuilder.*;
 import java.nio.*;
 
 import  org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryUtil;
+
+import core.CoreEngine;
 
 
 
@@ -39,7 +40,7 @@ public class MultipleTextureBatchedModel {
 		public MultipleTextureBatchedModel() {
 			
 			//setting everything to 0 
-			Start.DebugPrint("made new multiple texture batched model");
+			CoreEngine.DebugPrint("made new multiple texture batched model");
 			  drawCount=0;
 				drawCount2=0;
 				indBase=0;
@@ -165,7 +166,7 @@ public class MultipleTextureBatchedModel {
 		 	
 		 return false;
 		 }else{
-			Start.DebugPrint("sorry but that is not the correct format for the data. sizes of each is"+ v.length+","+uv.length+","+colors.length+","+translation.length+"/nShould be devisable by 8,12,16,12");
+			CoreEngine.DebugPrint("sorry but that is not the correct format for the data. sizes of each is"+ v.length+","+uv.length+","+colors.length+","+translation.length+"/nShould be devisable by 8,12,16,12");
 		return false;
 		}
 		

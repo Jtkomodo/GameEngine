@@ -3,6 +3,9 @@ package animation;
 public class Animation {
 
 	public Animation() {
+	
+		
+		
 		
 	}
 	

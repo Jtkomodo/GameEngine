@@ -1,5 +1,7 @@
 package core;
 
+import rendering.Camera;
+import rendering.Render;
 import rendering.ShaderProgram;
 
 /**
@@ -10,7 +12,7 @@ import rendering.ShaderProgram;
 public abstract class Game {
 	private Window window;
 	private boolean windowClosed=false;
-	private ShaderProgram MainShader,batchedShader;
+	private ShaderProgram batchedShader;
 	/**
      * This is where the initialization before the game loop will be put
      */
@@ -25,14 +27,14 @@ public abstract class Game {
 	}
 	
 	
-	public  Game(int width,int height,String name,String shader) {
-	MakeWindow("test", 640,480,shader);
+	public  Game(int width,int height,String name) {
+	MakeWindow("test", 640,480);
+	start();
 	}
 	/**
 	 * this is all you need to call to run the engine
 	 */
 	public void updateGame() {
-		start();
 		while(!windowClosed) {
 			CoreEngine.UpdateInput();
 		    Update();
@@ -41,10 +43,24 @@ public abstract class Game {
 		 Close();
 	}
 	
-	private final void MakeWindow(String name,int width,int height,String shader) {
+	private final void MakeWindow(String name,int width,int height) {
 		window=new Window(width,height,name);
-		this.MainShader=new ShaderProgram(shader);
-		start();
+		this.batchedShader= new ShaderProgram("BatchShader");
+		batchedShader.bind();
+		Render.s=this.batchedShader;
+		try {
+			
+			Render.location=batchedShader.makeLocation("sampler");
+			Render.Projection=batchedShader.makeLocation("projection");
+			Render.RTS=batchedShader.makeLocation("rts");
+			Render.UIProjection=batchedShader.makeLocation("UIProjection");
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			System.exit(20);
+		}
+		Render.cam=new Camera(width,height);
 	}
 	
 	

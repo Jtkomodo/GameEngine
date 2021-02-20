@@ -25,6 +25,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.system.MemoryUtil;
 import org.newdawn.slick.opengl.PNGDecoder;
 
+import core.CoreEngine;
+
 /**Create a texture using {@linkplain #Texture(String)}
  * and then bind it to the gpu's texture location using
  * {@link #bind(int)}
@@ -107,7 +109,7 @@ public Texture(String path) {
 	    textures.add(this);
 	  loadTexture(data);
 	  MemoryUtil.memFree(data);
-	  System.out.println("[OK]Texture "+location+" loaded");
+	  CoreEngine.DebugPrint("[OK]Texture "+location+" loaded");
 	  } catch (IOException e) {
 		     System.err.println("[ERROR]Texture "+location+" failed");
 		     e.printStackTrace();

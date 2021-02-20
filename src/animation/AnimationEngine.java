@@ -1,6 +1,7 @@
 package animation;
 
 import java.util.LinkedList;
+import java.util.UUID;
 
 public class AnimationEngine {
 
@@ -10,7 +11,11 @@ public class AnimationEngine {
 	
 	public static void update() {
 		
-		
+		while(!AnimationStack.isEmpty()) {
+			AnimationData data=AnimationStack.pop();
+			UUID ID=data.entityID;
+			
+		}
 		
 	}
 	
