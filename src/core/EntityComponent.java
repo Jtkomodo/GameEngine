@@ -4,6 +4,8 @@ public abstract class  EntityComponent {
 
 	private final int ID;//all entity components start with hex  2000 so EnttityComponent- 2 would be 0x2002
 
+	protected Entity currentEntity;
+	
 	protected EntityComponent(int ID) {
 		this.ID=ID;
 	}

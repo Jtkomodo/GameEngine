@@ -112,6 +112,11 @@ public Model(float width,float height,float u,float v,float texWidth,float texHe
 		
 
 	
+
+
+
+
+
 /**
  * Changes both vertices and UVs<strong> this deletes and reallocates buffers<strong>	
  * @param vertices the new vertices

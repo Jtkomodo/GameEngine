@@ -1,8 +1,13 @@
 package test;
 
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
+import animation.Animation;
+import animation.SpriteSheet;
+import core.ComponentAnimation;
+import core.ComponentRenderModel;
 import core.CoreEngine;
 import core.Entity;
 import core.EntityComponent;
@@ -13,31 +18,48 @@ import rendering.Model;
 import rendering.RenderEntity;
 import rendering.Texture;
 
-public class start extends Game {
+public class Start extends Game {
 
-	private Texture player;
-	private Model p;
-	private Entity entity;
-
-	public start(int width, int height, String name) {
+	private Texture playerTex;
+	private Model playerModel;
+	private Entity player;
+    private SpriteSheet playerSheet;
+	private Animation walkingAnimation;
+	
+	public Start(int width, int height, String name) {
 		super(width, height, name);
 	}
 
 	@Override
 	public void start() {   
-	    p=new Model(32, 46, 0, 0, 138, 138);
-	    player=new Texture("Spritesheets/playerSpriteSheet");
+	    playerModel=new Model(32, 46, 0, 0, 138, 138);
+	    playerSheet=new SpriteSheet("playerSpriteSheet", 138);
+	    playerTex=playerSheet.getTexture();
+	    walkingAnimation=new Animation(playerSheet, 0, 7, 7);
+	    player=new Entity(playerTex,new EntityComponent[]{
+	    	new ComponentRenderModel(playerModel),
+	    	new ComponentAnimation(walkingAnimation)
+	    	
+	    }) ;
+	    
+	
+	    
+	    
+	    CoreEngine.AddEntity(player);
+	
 	}
 
 	@Override
 	public void GameLoop() {
-	     MainRenderHandler.addEntity(new RenderEntity(p, new Vector3f(), 0,1,player));
-	     CoreEngine.DebugPrint("KEY I="+InputPoller.checkState(GLFW.GLFW_KEY_I));
+		
+	
+		
+		
 	}
 
 	public static void main(String[] args) {
-		start game =new start(640,480,"test");
-	   
+		Start game =new Start(640,480,"test");
+	    
 		game.updateGame();
 		
 	}		

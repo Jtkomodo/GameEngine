@@ -1,17 +1,18 @@
 package core;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.UUID;
 
+import animation.AnimationEngine;
 import input.InputPoller;
 import rendering.MainBatchRender;
 import rendering.MainRenderHandler;
-import rendering.OneTextureBatchedModel;
 
 public class CoreEngine {
     public static boolean DebugPrint=true;
     
-    private static HashMap<UUID,Entity> entites=new HashMap<UUID,Entity>();
+    private static HashMap<UUID,Entity> entities=new HashMap<UUID,Entity>();
     
     protected static void updateEngine() {
     	UpdatePhysicsEngine();
@@ -23,6 +24,8 @@ public class CoreEngine {
     
     private static void UpdateAnimationEngine() {
 		
+    	AnimationEngine.update();
+    	
 	}
 
 
@@ -35,6 +38,16 @@ public class CoreEngine {
 		
 	}
 	private static void UpdateRenderEngine() {
+	      Iterator<Entity> I=entities.values().iterator();		
+		 while(I.hasNext()) {
+			 
+            EntityComponent[] components=I.next().getComponents();	 
+		    for(int i=0;i<components.length;i++) {
+		    	components[i].RENDER_TICK();
+		    }
+		 }
+	      
+	      
 		 MainRenderHandler.SortEntities();
 		 MainRenderHandler.addToBatchedRender();
 		 MainBatchRender.draw();
@@ -42,7 +55,8 @@ public class CoreEngine {
 	}
 	
     public static void AddEntity(Entity e) {
-    	
+    	 entities.put(e.ID, e);
+         e.Init();
     }
 	
 	
@@ -54,7 +68,10 @@ public class CoreEngine {
 			System.out.println(s);
 		}
 	}
-
+    public static Entity getEntity(UUID ID) {
+    	return  entities.get(ID);
+    			
+    }
 
 
 	public static void DebugPrint(String string,Class calledFrom) {
