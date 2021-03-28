@@ -7,8 +7,12 @@ import java.util.UUID;
 
 import org.joml.Vector2f;
 
+import core.ComponentAnimation;
 import core.CoreEngine;
 import core.Entity;
+import core.PASSABLE_BOOL;
+import core.PASSABLE_INT;
+import core.PassableData;
 import core.Timer;
 
 public class AnimationEngine {
@@ -63,8 +67,11 @@ public class AnimationEngine {
 		   }
 		   AnimationData d=A.data[A.currentFrame];
 		  
-		   AnimationScripterData data=new AnimationScripterData(ID,d.sheet,d.frame);
-		   sendAnimationData(data);
+		   CoreEngine.sendData(ID,ComponentAnimation.VAR_SPRITE_SHEET,d.sheet);
+		   CoreEngine.sendData(ID,ComponentAnimation.VAR_FRAME,new PASSABLE_INT(d.frame));
+		   CoreEngine.sendData(ID,ComponentAnimation.VAR_UPDATED,new PASSABLE_BOOL(true));
+		   
+		  
 			if(frametime>=1.0) {
 
 				frametime=0;
@@ -75,10 +82,6 @@ public class AnimationEngine {
    }
 
 
-private static void sendAnimationData(AnimationScripterData data) {
-    CoreEngine.getEntity(data.entity).TakeInAniationSctipterData(data);
-	
-}
 
 
 public static void removeEntityAnimation(UUID iD) {

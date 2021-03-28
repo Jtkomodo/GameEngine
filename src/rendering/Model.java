@@ -11,6 +11,8 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.system.MemoryUtil;
 
 import core.CoreEngine;
+import core.PASSBLE_DATA_TYPE;
+import core.PassableData;
 
 /**This is the class that makes the model for the gpu to use
  * every thing that is drawn to the screen has some sort of model whether it be
@@ -30,7 +32,7 @@ import core.CoreEngine;
  * @author Jesse Talbot
  *
  */
-public class Model extends ModelFramwork{
+public class Model extends ModelFramwork implements PassableData{
     private int drawCount;
 	private int vao_id,v_id,tex_id,ind_id;
 	private static  boolean draw=true;
@@ -278,6 +280,14 @@ protected void delete() {
 	glDeleteVertexArrays(vao_id);
 	glDeleteBuffers(new int[] {this.v_id,this.tex_id,this.ind_id});
 	
+}
+
+
+
+
+@Override
+public PASSBLE_DATA_TYPE getID() {
+	return PASSBLE_DATA_TYPE.MODEL;
 }
 
 

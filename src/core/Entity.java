@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.UUID;
 
 import org.joml.Vector2f;
-
-import animation.AnimationScripterData;
 import rendering.Texture;
 
 public class Entity {
@@ -24,7 +22,8 @@ public class Entity {
 	public boolean RENDERING=true;
 	
 	
-	private HashMap<Integer,EntityComponent> components=new HashMap<Integer,EntityComponent>(); 
+	protected HashMap<String, PassableData> Entity_Data=new HashMap<String, PassableData>();
+	private HashMap<COMPONENT_TYPE,EntityComponent> components=new HashMap<COMPONENT_TYPE,EntityComponent>(); 
 
 	
 	public Entity(Texture texture,EntityComponent[] components){
@@ -54,27 +53,32 @@ public class Entity {
 		this.components.put(c.getID(), c);
 	}
 	
-	
-	public <T extends EntityComponent> T getComponent(int id){
+	public boolean hasComponent(COMPONENT_TYPE type) {
+		if(components.containsKey(type)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	public <T extends EntityComponent> T getComponent(COMPONENT_TYPE id){
 	   if(components.containsKey(id)) {
 		return(T)components.get(id);	
 	   }else {
 		   return null;
 	   }
 	}
+	public <T extends PassableData> T getData(String name){
+		   if(Entity_Data.containsKey(name)) {
+			return(T)Entity_Data.get(name);	
+		   }else {
+			   return null;
+		   }
+		}
 	
 	
-	public void TakeInAniationSctipterData(AnimationScripterData data) {
-		  if(data.getEntity()==ID && ANIMATION) {
-			  ComponentRenderModel renderComponent= getComponent(ComponentRenderModel.COMPID);
-			  if(renderComponent!=null) {
-				  renderComponent.changeFrame(data.getSheet(), data.getFrame());
-			  }
-		  }
-		
-		
+	public void TakeInData(String NAME,PassableData data) {
+		this.Entity_Data.put(NAME,data);
 	}
-	
 	protected EntityComponent[] getComponents() {
 		return this.components.values().toArray(new EntityComponent[this.components.size()]);
 	}

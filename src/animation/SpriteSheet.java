@@ -6,10 +6,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
+import core.PASSBLE_DATA_TYPE;
+import core.PassableData;
 import rendering.Texture;
 
 
-public class SpriteSheet {
+public class SpriteSheet implements PassableData{
  
     private HashMap<Integer,float[]> Values=new HashMap<Integer,float[]>();//this is the frame(the int) and the correct u and v coords,width and height
     private int lastFrame;
@@ -146,6 +148,13 @@ public class SpriteSheet {
 
 	public void setTexture(Texture texture) {
 		this.texture = texture;
+	}
+
+
+
+	@Override
+	public PASSBLE_DATA_TYPE getID() {
+		return PASSBLE_DATA_TYPE.SPRITESHEET;
 	}
 	
 	

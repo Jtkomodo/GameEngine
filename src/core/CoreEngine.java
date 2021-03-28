@@ -13,13 +13,15 @@ public class CoreEngine {
     public static boolean DebugPrint=true;
     
     private static HashMap<UUID,Entity> entities=new HashMap<UUID,Entity>();
-    
+    /**
+     * main game loop this updates everything in the game
+     */
     protected static void updateEngine() {
     	UpdatePhysicsEngine();
     	UpdateAnimationEngine();
     	UpdateRenderEngine();
     }
-    
+   
     
     
     private static void UpdateAnimationEngine() {
@@ -36,9 +38,17 @@ public class CoreEngine {
     
 	private static void UpdatePhysicsEngine() {
 		
+		 Iterator<Entity> I=entities.values().iterator();		
+		 while(I.hasNext()) {
+			 
+            EntityComponent[] components=I.next().getComponents();	 
+		    for(int i=0;i<components.length;i++) {
+		    	components[i].GAMELOOP_TICK();
+		    }
+		 }
 	}
 	private static void UpdateRenderEngine() {
-	      Iterator<Entity> I=entities.values().iterator();		
+	     Iterator<Entity> I=entities.values().iterator();		
 		 while(I.hasNext()) {
 			 
             EntityComponent[] components=I.next().getComponents();	 
@@ -71,6 +81,13 @@ public class CoreEngine {
     public static Entity getEntity(UUID ID) {
     	return  entities.get(ID);
     			
+    }
+    public static void sendData(UUID ENTITY_ID,String name,PassableData data) {
+        Entity e=getEntity(ENTITY_ID);
+        if(e!=null) {
+        	e.TakeInData(name,data);
+        }
+    	
     }
 
 
