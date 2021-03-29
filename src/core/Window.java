@@ -58,10 +58,11 @@ public Window(int width, int height,String name) {
 		glfwSetWindowTitle(window,name);
 		glfwShowWindow(window);
 		glfwMakeContextCurrent(window);
+		
 		//glfwSwapInterval(1);
 		glfwSwapInterval( 0 );CoreEngine.DebugPrint("vsnc off"); //this is for the vsync uncomment this when testing frame rates 
 		
-GL.createCapabilities();
+        GL.createCapabilities();
 
 		glEnable(GL_TEXTURE_2D);
 		//glClearColor(.0f, 0.0f, 0.0f, 0.0f);
@@ -134,7 +135,7 @@ width=w;height=h;
 			glViewport(0, 0, vidmode.width(),vidmode.height()); //this changes the view to the size of the monitor so that it won't be small
 				//System.out.println(fullscreen);
 			width=vidmode.width();height=vidmode.height();
-			glfwSwapInterval(1);
+		
     	}
     	else {
     		
@@ -142,7 +143,7 @@ width=w;height=h;
     		glViewport(0,0,dW,dH);
     		width=dW;height=dH;
     	
-    		glfwSwapInterval(1);
+    	
 		}
     		
     	

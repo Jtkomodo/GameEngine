@@ -86,8 +86,8 @@ public class InputPoller {
 		
 	}
 	public static boolean NOT_REALESED(int key) {
-		
-		return checkState(key)>0;
+		 int state=checkState(key);
+		return state>0 && state!=JUST_REALEASED;
 	}
 	
 	public static byte checkState(int key) {

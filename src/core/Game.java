@@ -41,9 +41,9 @@ public abstract class Game {
 	 */
 	public void updateGame() {
 		while(!windowClosed) {
-			CoreEngine.UpdateInput();
+			
 		    Update();
-		    CoreEngine.updateEngine();
+		   
 		}
 		 Close();
 	}
@@ -70,9 +70,10 @@ public abstract class Game {
 	
 	
 	private final void Update() {
-		
+		CoreEngine.UpdateInput();
 		window.update();
 		GameLoop();
+		CoreEngine.updateEngine();
 		window.render();
 		window.clear();
 		this.windowClosed=window.isExited();

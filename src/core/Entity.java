@@ -90,4 +90,8 @@ public class Entity {
 	public void setVelocity(Vector2f velocity) {
 		Velocity = velocity;
 	}
+
+	public Vector2f getPosition() {
+		return position;
+	}
 }

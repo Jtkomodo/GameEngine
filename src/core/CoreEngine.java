@@ -13,13 +13,18 @@ public class CoreEngine {
     public static boolean DebugPrint=true;
     
     private static HashMap<UUID,Entity> entities=new HashMap<UUID,Entity>();
+    private static double last_frame=Timer.getTIme();
+    public static double deltaT;
     /**
      * main game loop this updates everything in the game
      */
     protected static void updateEngine() {
+    	double time1=core.Timer.getTIme();
+    	deltaT=time1-last_frame;
     	UpdatePhysicsEngine();
     	UpdateAnimationEngine();
     	UpdateRenderEngine();
+    	last_frame=Timer.getTIme();
     }
    
     
