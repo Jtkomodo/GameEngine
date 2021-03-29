@@ -3,6 +3,8 @@ package input;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWKeyCallback;
 
+import core.CoreEngine;
+
 
 
 //this class is needed to use glfwKeyCallback in Window class 

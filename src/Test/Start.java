@@ -26,6 +26,13 @@ public class Start extends Game {
     private SpriteSheet playerSheet;
 	private Animation walkingAnimation;
 	
+	public static void main(String[] args) {
+		Start game =new Start(640,480,"test");
+	    
+		game.updateGame();
+		
+	}	
+	
 	public Start(int width, int height, String name) {
 		super(width, height, name);
 	}
@@ -51,18 +58,14 @@ public class Start extends Game {
 
 	@Override
 	public void GameLoop() {
-		
-	
+		if(InputPoller.JustPushed(GLFW.GLFW_KEY_F)) {
+			CoreEngine.DebugPrint("JUST");
+		}
 		
 		
 	}
 
-	public static void main(String[] args) {
-		Start game =new Start(640,480,"test");
-	    
-		game.updateGame();
 		
-	}		
 	
 	
 }

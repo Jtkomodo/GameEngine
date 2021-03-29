@@ -69,7 +69,7 @@ public class ComponentAnimation extends EntityComponent {
 	}
 	@Override
 	protected void GAMELOOP_TICK() {
-		// TODO Auto-generated method stub
+	
 
 	}
 

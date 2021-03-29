@@ -15,10 +15,6 @@ public abstract class  EntityComponent {
 	
     
 	protected Entity currentEntity;
-	/**
-	 * When a comonent type is created we make sure to pass in it's COMPID so we can retrieve the component later
-	 * @param ID COMPNENT_ID of the component
-	 */
 	
     /**
      * INIT this is what is called when we add the component all the init code goes here

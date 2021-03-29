@@ -22,6 +22,11 @@ public abstract class Game {
 	 */
 	public abstract void GameLoop();
 	
+	
+	public void toggleFullscreen() {
+		window.toggleFullscreen();
+	}
+	
 	public void CloseWindow() {
 		window.CloseWIndow();
 	}

@@ -34,6 +34,7 @@ public class CoreEngine {
 
 	public static void UpdateInput() {
     	InputPoller.POll();
+    	
     }
     
 	private static void UpdatePhysicsEngine() {
