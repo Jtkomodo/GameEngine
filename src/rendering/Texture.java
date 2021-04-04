@@ -26,6 +26,8 @@ import org.lwjgl.system.MemoryUtil;
 import org.newdawn.slick.opengl.PNGDecoder;
 
 import core.CoreEngine;
+import core.PASSBLE_DATA_TYPE;
+import core.PassableData;
 
 /**Create a texture using {@linkplain #Texture(String)}
  * and then bind it to the gpu's texture location using
@@ -34,7 +36,7 @@ import core.CoreEngine;
  * @author Jesse Talbot
  *
  */
-public class Texture {
+public class Texture implements PassableData{
 private  int TEXid;
 
 private static LinkedList<Texture> textures=new LinkedList<Texture>();
@@ -193,6 +195,13 @@ public int getH() {
 
 public int getW() {
 	return w;
+}
+
+
+@Override
+public PASSBLE_DATA_TYPE getID() {
+	// TODO Auto-generated method stub
+	return PASSBLE_DATA_TYPE.TEXTURE;
 }
 
 

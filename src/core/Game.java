@@ -3,6 +3,7 @@ package core;
 import rendering.Camera;
 import rendering.Render;
 import rendering.ShaderProgram;
+import rendering.Texture;
 
 /**
  * 
@@ -10,9 +11,14 @@ import rendering.ShaderProgram;
  *this is the engines entry point
  */
 public abstract class Game {
+	
+	public static Texture DEFAULT_TEXTURE;
+	
 	private Window window;
 	private boolean windowClosed=false;
-	private ShaderProgram batchedShader;
+	private ShaderProgram batchedShader;	
+	
+	
 	/**
      * This is where the initialization before the game loop will be put
      */
@@ -32,8 +38,8 @@ public abstract class Game {
 	}
 	
 	
-	public  Game(int width,int height,String name) {
-	MakeWindow("test", 640,480);
+	public  Game(int width,int height,String name) {	
+	MakeWindow(name, 640,480);
 	start();
 	}
 	/**
@@ -66,6 +72,9 @@ public abstract class Game {
 			System.exit(20);
 		}
 		Render.cam=new Camera(width,height);
+		if(DEFAULT_TEXTURE==null) {
+		DEFAULT_TEXTURE=new Texture("whitebox");
+		}
 	}
 	
 	

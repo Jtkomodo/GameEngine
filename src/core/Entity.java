@@ -11,25 +11,33 @@ import rendering.Texture;
 public class Entity {
 
 	
+	public final static String VAR_SPRITE_SHEET="SPRITE_SHEET"; 
+	public final static String VAR_FRAME="ANIMATION_FRAME"; 
+	public final static String VAR_ANIMATION_UPDATED="ANIMATION_UPDATED";
+	public final static String VAR_MODEL="MODEL";
+	public final static String VAR_MODEL_UPDATED="MODEL_UPDATED";
+	public final static String VAR_TEXTURE="TEXTURE";
+	public final static String VAR_POSITION="POSITION";
+	public final static String VAR_VELOCITY="VELOCITY";	
 	
 	public final UUID ID;
-	protected Vector2f position=new Vector2f();
-	protected Texture texture;
-	protected Vector2f Velocity=new Vector2f();
-	protected Vector2f UV=new Vector2f();
 	public boolean PHYSICS=true;
 	public boolean ANIMATION=true;
 	public boolean RENDERING=true;
+	
+	
+	
+	
 	
 	
 	protected HashMap<String, PassableData> Entity_Data=new HashMap<String, PassableData>();
 	private HashMap<COMPONENT_TYPE,EntityComponent> components=new HashMap<COMPONENT_TYPE,EntityComponent>(); 
 
 	
-	public Entity(Texture texture,EntityComponent[] components){
+	public Entity(EntityComponent[] components){
 		this.ID=UUID.randomUUID();
 		addComponents(components);
-		this.texture=texture;
+		
 	}
 	
 	public void addComponents(EntityComponent[] components) {
@@ -75,23 +83,20 @@ public class Entity {
 		   }
 		}
 	
-	
 	public void TakeInData(String NAME,PassableData data) {
 		this.Entity_Data.put(NAME,data);
 	}
+	public void INITData(String NAME,PassableData data) {
+		if(!this.Entity_Data.containsKey(NAME)) {
+		   this.Entity_Data.put(NAME,data);
+		}
+	}
+	
+	
+	
 	protected EntityComponent[] getComponents() {
 		return this.components.values().toArray(new EntityComponent[this.components.size()]);
 	}
 
-	public void setPosition(Vector2f position) {
-		this.position = position;
-	}
-
-	public void setVelocity(Vector2f velocity) {
-		Velocity = velocity;
-	}
-
-	public Vector2f getPosition() {
-		return position;
-	}
+	
 }

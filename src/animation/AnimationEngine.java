@@ -67,9 +67,9 @@ public class AnimationEngine {
 		   }
 		   AnimationData d=A.data[A.currentFrame];
 		  
-		   CoreEngine.sendData(ID,ComponentAnimation.VAR_SPRITE_SHEET,d.sheet);
-		   CoreEngine.sendData(ID,ComponentAnimation.VAR_FRAME,new PASSABLE_INT(d.frame));
-		   CoreEngine.sendData(ID,ComponentAnimation.VAR_UPDATED,new PASSABLE_BOOL(true));
+		   CoreEngine.sendData(ID,Entity.VAR_SPRITE_SHEET,d.sheet);
+		   CoreEngine.sendData(ID,Entity.VAR_FRAME,new PASSABLE_INT(d.frame));
+		   CoreEngine.sendData(ID,Entity.VAR_ANIMATION_UPDATED,new PASSABLE_BOOL(true));
 		   
 		  
 			if(frametime>=1.0) {

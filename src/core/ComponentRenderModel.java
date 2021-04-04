@@ -1,25 +1,27 @@
 package core;
 
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import animation.SpriteSheet;
 import rendering.MainRenderHandler;
 import rendering.Model;
 import rendering.RenderEntity;
+import rendering.Texture;
 
 public class ComponentRenderModel extends EntityComponent {
 
 	
 	
-	public final static String VAR_MODEL="MODEL";
-	public final static String VAR_MODEL_UPDATED="MODEL_UPDATED";
+	
+    
 	protected Model model;
+	protected Texture texture;
 	
 	
-	
-	public ComponentRenderModel(Model model) {
+	public ComponentRenderModel(Model model,Texture texture) {
 		this.model=new Model(model.getVertices(),model.getUv_coords());
-	
+	    this.texture=texture;
 	}
 
 	
@@ -30,7 +32,9 @@ public class ComponentRenderModel extends EntityComponent {
 	@Override
 	protected void INIT(Entity entity) {
 	     this.currentEntity=entity;
-	     entity.Entity_Data.put(VAR_MODEL,this.model);     
+	     entity.TakeInData(Entity.VAR_TEXTURE,this.texture);
+	     entity.INITData(Entity.VAR_POSITION,new PASSABLE_VEC2F(new Vector2f()));
+	     entity.TakeInData(Entity.VAR_MODEL,this.model);     
 	
 	}
 
@@ -42,8 +46,11 @@ public class ComponentRenderModel extends EntityComponent {
 
 	@Override
 	protected void RENDER_TICK() {
-		MainRenderHandler.addEntity(new RenderEntity(model, new Vector3f(this.currentEntity.position,10),0,1,this.currentEntity.texture));
-
+		PASSABLE_VEC2F position=this.currentEntity.getData(Entity.VAR_POSITION);
+		Texture texture=this.currentEntity.getData(Entity.VAR_TEXTURE);
+		if(texture!=null && position!=null) {
+		MainRenderHandler.addEntity(new RenderEntity(model, new Vector3f(position.value,10),0,1,texture));
+		}
 	}
 
 	@Override
