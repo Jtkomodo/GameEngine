@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.system.MemoryUtil;
 
 import core.CoreEngine;
-import core.PASSBLE_DATA_TYPE;
+import core.PASSABLE_DATA_TYPE;
 import core.PassableData;
 
 /**This is the class that makes the model for the gpu to use
@@ -286,8 +286,8 @@ protected void delete() {
 
 
 @Override
-public PASSBLE_DATA_TYPE getID() {
-	return PASSBLE_DATA_TYPE.MODEL;
+public PASSABLE_DATA_TYPE getType() {
+	return PASSABLE_DATA_TYPE.MODEL;
 }
 
 

@@ -6,7 +6,7 @@ public interface PassableData {
 	
 	
 	
-	public PASSBLE_DATA_TYPE  getID(); 
+	public PASSABLE_DATA_TYPE getType(); 
 	
 	
 	

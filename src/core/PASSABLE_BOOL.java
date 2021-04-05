@@ -15,9 +15,9 @@ public class PASSABLE_BOOL implements PassableData {
 
 
 	@Override
-	public PASSBLE_DATA_TYPE getID() {
+	public PASSABLE_DATA_TYPE getType() {
 		// TODO Auto-generated method stub
-		return PASSBLE_DATA_TYPE.BOOL;
+		return PASSABLE_DATA_TYPE.BOOL;
 	}
 
 }

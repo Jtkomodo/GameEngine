@@ -12,6 +12,7 @@ import core.CoreEngine;
 import core.Entity;
 import core.EntityComponent;
 import core.Game;
+import core.PASSABLE_BOOL;
 import core.PASSABLE_VEC2F;
 import input.InputPoller;
 import rendering.MainRenderHandler;
@@ -94,6 +95,13 @@ public class Start extends Game {
 		PASSABLE_VEC2F P=player.getData(Entity.VAR_POSITION);
 	    Vector2f position=new Vector2f();
 	    Vector2f direction=new Vector2f();
+	    PASSABLE_BOOL m=player.getData(Entity.VAR_MIRROR);
+	    
+	    boolean mirror=false;
+	    if(m!=null) {
+	    	mirror=m.value;
+	    }
+	    
 	    if(P!=null) {
 	    	 position=P.value;	
 		
@@ -104,10 +112,11 @@ public class Start extends Game {
 		}
 		if(InputPoller.NOT_REALESED(GLFW.GLFW_KEY_LEFT)) {
 			movement.x=-1;
-			
+			mirror=false;
 		}
         if(InputPoller.NOT_REALESED(GLFW.GLFW_KEY_RIGHT)) {
         	movement.x=1;
+        	mirror=true;
         }
         if(InputPoller.NOT_REALESED(GLFW.GLFW_KEY_UP)) {
 			movement.y=1;
@@ -125,8 +134,9 @@ public class Start extends Game {
        direction.mul((float)(100*speed*CoreEngine.deltaT),movement);
        player.TakeInData(Entity.VAR_POSITION,new PASSABLE_VEC2F(position.add(movement,new Vector2f())));
        player.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(movement));
-       }	
-		
+       }
+       
+	   player.TakeInData(Entity.VAR_MIRROR,new PASSABLE_BOOL(mirror));
 	}
 	
 	

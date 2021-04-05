@@ -34,6 +34,7 @@ public class ComponentRenderModel extends EntityComponent {
 	     this.currentEntity=entity;
 	     entity.TakeInData(Entity.VAR_TEXTURE,this.texture);
 	     entity.INITData(Entity.VAR_POSITION,new PASSABLE_VEC2F(new Vector2f()));
+	     entity.INITData(Entity.VAR_MIRROR,new PASSABLE_BOOL(false));
 	     entity.TakeInData(Entity.VAR_MODEL,this.model);     
 	
 	}
@@ -47,9 +48,10 @@ public class ComponentRenderModel extends EntityComponent {
 	@Override
 	protected void RENDER_TICK() {
 		PASSABLE_VEC2F position=this.currentEntity.getData(Entity.VAR_POSITION);
+		PASSABLE_BOOL mirror=this.currentEntity.getData(Entity.VAR_MIRROR);
 		Texture texture=this.currentEntity.getData(Entity.VAR_TEXTURE);
-		if(texture!=null && position!=null) {
-		MainRenderHandler.addEntity(new RenderEntity(model, new Vector3f(position.value,10),0,1,texture));
+		if(texture!=null && position!=null && mirror!=null) {
+		MainRenderHandler.addEntity(new RenderEntity(model, new Vector3f(position.value,10),0,1,texture,mirror.value));
 		}
 	}
 

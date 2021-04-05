@@ -6,24 +6,35 @@ import java.util.Iterator;
 import java.util.UUID;
 
 import org.joml.Vector2f;
+
+import animation.SpriteSheet;
+import rendering.Model;
 import rendering.Texture;
 
 public class Entity {
 
 	
-	public final static String VAR_SPRITE_SHEET="SPRITE_SHEET"; 
-	public final static String VAR_FRAME="ANIMATION_FRAME"; 
-	public final static String VAR_ANIMATION_UPDATED="ANIMATION_UPDATED";
-	public final static String VAR_MODEL="MODEL";
-	public final static String VAR_MODEL_UPDATED="MODEL_UPDATED";
-	public final static String VAR_TEXTURE="TEXTURE";
-	public final static String VAR_POSITION="POSITION";
-	public final static String VAR_VELOCITY="VELOCITY";	
+	
+	
+	
+	
+	public final static VAR<SpriteSheet> VAR_SPRITE_SHEET=new VAR<SpriteSheet>("SPRITE_SHEET"); 
+	public final static VAR<PASSABLE_INT> VAR_FRAME=new VAR<PASSABLE_INT>("ANIMATION_FRAME");
+    public final static VAR<PASSABLE_BOOL> VAR_ANIMATION_UPDATED=new VAR<PASSABLE_BOOL>("ANIMATION_UPDATED");
+    public final static VAR<Model> VAR_MODEL=new VAR<Model>("MODEL");
+	public final static VAR<PASSABLE_BOOL> VAR_MODEL_UPDATED=new VAR<PASSABLE_BOOL>("MODEL_UPDATED");
+	public final static VAR<Texture> VAR_TEXTURE=new VAR<Texture>("TEXTURE");
+	public final static VAR<PASSABLE_VEC2F> VAR_POSITION=new VAR<PASSABLE_VEC2F>("POSITION");
+	public final static VAR<PASSABLE_VEC2F> VAR_VELOCITY=new VAR<PASSABLE_VEC2F>("VELOCITY");		
+	public final static VAR<PASSABLE_BOOL> VAR_MIRROR=new VAR<PASSABLE_BOOL>("MIRROR");	
+	
+	
+
+	
+	
 	
 	public final UUID ID;
-	public boolean PHYSICS=true;
-	public boolean ANIMATION=true;
-	public boolean RENDERING=true;
+	
 	
 	
 	
@@ -75,20 +86,23 @@ public class Entity {
 		   return null;
 	   }
 	}
-	public <T extends PassableData> T getData(String name){
-		   if(Entity_Data.containsKey(name)) {
-			return(T)Entity_Data.get(name);	
+	public <T extends PassableData> T getData(VAR<T> var){
+	
+		   if(Entity_Data.containsKey(var.name)) {
+	     	 return (T)Entity_Data.get(var.name);	
 		   }else {
-			   return null;
+			  return null;
 		   }
 		}
 	
-	public void TakeInData(String NAME,PassableData data) {
-		this.Entity_Data.put(NAME,data);
+	public <T extends PassableData> void TakeInData(VAR<T> var,T data) {
+	
+		this.Entity_Data.put(var.name,data);
 	}
-	public void INITData(String NAME,PassableData data) {
-		if(!this.Entity_Data.containsKey(NAME)) {
-		   this.Entity_Data.put(NAME,data);
+	
+	public <T extends PassableData> void INITData(VAR<T> var,T data) {
+		if(!this.Entity_Data.containsKey(var.name)) {
+		   TakeInData(var,data);
 		}
 	}
 	

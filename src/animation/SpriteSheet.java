@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
-import core.PASSBLE_DATA_TYPE;
+import core.PASSABLE_DATA_TYPE;
 import core.PassableData;
 import rendering.Texture;
 
@@ -153,8 +153,8 @@ public class SpriteSheet implements PassableData{
 
 
 	@Override
-	public PASSBLE_DATA_TYPE getID() {
-		return PASSBLE_DATA_TYPE.SPRITESHEET;
+	public PASSABLE_DATA_TYPE getType() {
+		return PASSABLE_DATA_TYPE.SPRITESHEET;
 	}
 	
 	

@@ -1,6 +1,6 @@
 package core;
 
-public enum PASSBLE_DATA_TYPE {
+public enum PASSABLE_DATA_TYPE {
   
 	SPRITESHEET,INT,BOOL,MODEL,VEC2F,TEXTURE
 }

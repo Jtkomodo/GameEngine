@@ -14,9 +14,9 @@ public class PASSABLE_INT implements PassableData {
 
 
 	@Override
-	public PASSBLE_DATA_TYPE getID() {
+	public PASSABLE_DATA_TYPE getType() {
 		// TODO Auto-generated method stub
-		return PASSBLE_DATA_TYPE.INT;
+		return PASSABLE_DATA_TYPE.INT;
 	}
 
 

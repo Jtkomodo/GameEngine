@@ -88,10 +88,10 @@ public class CoreEngine {
     	return  entities.get(ID);
     			
     }
-    public static void sendData(UUID ENTITY_ID,String name,PassableData data) {
+    public static void sendData(UUID ENTITY_ID,VAR var,PassableData data) {
         Entity e=getEntity(ENTITY_ID);
         if(e!=null) {
-        	e.TakeInData(name,data);
+        	e.TakeInData(var,data);
         }
     	
     }
