@@ -90,15 +90,16 @@ public class ComponentAnimation extends EntityComponent {
 			}
 
 		}
+	    
 	}
 	
 
 	@Override
 	protected boolean DISABLE() {
 		AnimationEngine.removeEntityAnimation(currentEntity.ID);
-		this.currentEntity.Entity_Data.remove(Entity.VAR_SPRITE_SHEET);
-		this.currentEntity.Entity_Data.remove(Entity.VAR_FRAME);
-		this.currentEntity.Entity_Data.remove(Entity.VAR_ANIMATION_UPDATED);
+		this.currentEntity.Entity_Data.remove(Entity.VAR_SPRITE_SHEET.name);
+		this.currentEntity.Entity_Data.remove(Entity.VAR_FRAME.name);
+		this.currentEntity.Entity_Data.remove(Entity.VAR_ANIMATION_UPDATED.name);
 		return false;
 	}
 

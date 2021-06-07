@@ -7,10 +7,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.joml.Vector2f;
 
 import core.CoreEngine;
+import core.Entity;
 import physics.AABB;
 
 public class MapFIle {
@@ -178,9 +180,12 @@ public class MapFIle {
 	private void writeAABB(AABB a,DataOutputStream stream) {
 		
 	
+	    	Entity e=CoreEngine.getEntity(a.getID());
+		if(e!=null && e.hasVAR(Entity.VAR_POSITION)) {
 			
+		
 		   
-			Vector2f position=a.getPosition();
+			Vector2f position=e.getData(Entity.VAR_POSITION).value;
 			float x=position.x;
 			float y=position.y;
 			float width=a.getwidth();
@@ -193,8 +198,8 @@ public class MapFIle {
 		    stream.writeFloat(height);
 		    stream.writeFloat(r);
 		    
-		   }catch(IOException e){
-			   e.printStackTrace();
+		   }catch(IOException ex){
+			   ex.printStackTrace();
 			   return;
 			   
 		   }	
@@ -203,7 +208,7 @@ public class MapFIle {
 			
 		
        CoreEngine.DebugPrint("done"+(int)x+","+(int)y);
-
+		}
 		
 	}
 	
@@ -358,7 +363,7 @@ public class MapFIle {
    			    x-=width;
    			    y+=height;
    			     
-   			  AABB A=new AABB(new Vector2f(x,y),width,height,r);
+   			  AABB A=new AABB(UUID.randomUUID(),width,height,r);
    			  //A.setPosition(new Vector2f(x,y));  
    			     return A;
    			   

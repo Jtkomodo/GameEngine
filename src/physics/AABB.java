@@ -1,21 +1,61 @@
 package physics;
 
-import org.joml.Vector2f;
+import java.util.UUID;
 
-public class AABB {
+import org.joml.Vector2f;
+import org.joml.Vector3f;
+
+import core.Constants;
+import core.CoreEngine;
+import core.Entity;
+import core.Game;
+import core.PASSABLE_DATA_TYPE;
+import core.PASSABLE_VEC2F;
+import core.PassableData;
+import rendering.MainRenderHandler;
+import rendering.Model;
+import rendering.RenderEntity;
+
+public class AABB implements PassableData {
 
 	
-	private Vector2f position,bottom_left,top_right; 
+	
 	private float width,height;
+	private UUID ID;
 	private float resistance;
-	private Vector2f position_before_collision=new Vector2f();;
-	public AABB(Vector2f position, float width, float height, float resistance) {
-		this.position = position;
+	private Model m;
+	
+	
+	
+	public AABB(UUID ID, float width, float height,float resistance) {
+		this.ID=ID;
+	    CoreEngine.InitData(ID,Entity.VAR_BEFORE_POSITION,new PASSABLE_VEC2F(new Vector2f()));
 		this.width = width;
 		this.height = height;
-		this.resistance = resistance;
-		position.add(width/2,-height/2, top_right);
-		position.sub(width/2,height/2, bottom_left);
+		this.resistance=resistance;
+		
+		float widthR=0.5f;
+		float heightR=0.5f;
+		float[] Vert= {
+				 -widthR,+heightR,
+					widthR,heightR,
+					widthR,-heightR,
+					-widthR,-heightR
+				 };
+			float[] uvBg={
+					0,0,
+					1,0,
+					1,1,
+					0,1
+					
+					};
+			int[] ind= {
+					0,1,2,
+					2,3,0	
+						
+				};
+			m=new Model(Vert,uvBg);
+		
 		/*
 	       _____________rc
 	       |           |        
@@ -39,16 +79,28 @@ public class AABB {
 		Vector2f rcB=new Vector2f(0,0);
 		Vector2f lcA=new Vector2f(0,0);
 		Vector2f rcA=new Vector2f(0,0);
+		Vector2f positionA=new Vector2f();
+		Vector2f positionB=new Vector2f();
+		PASSABLE_VEC2F p =CoreEngine.getEntity(ID).getData(Entity.VAR_POSITION);
+		PASSABLE_VEC2F p2 =CoreEngine.getEntity(box.ID).getData(Entity.VAR_POSITION);
+		if(p!=null && p2!=null) {
+			
 		
-		lcA=this.bottom_left;
-		rcA=this.top_right;
-		lcB=box.bottom_left;
-		rcB=box.top_right;
+		positionA=p.value;
+		positionB=p2.value;
+		
+		
+		
+		
+		positionA.sub(width,height,lcA);
+		positionB.sub(box.width,box.height,lcB);
+		positionA.add(width,height,rcA);
+		positionB.add(box.width,box.height,rcB);
+		
+	;
 	
 		
 		if((rcA.x<lcB.x) || (rcB.x<lcA.x)) {// if the right side of A comes before the left side of B or vice versa return false(they can not be colliding)
-		
-		
 			return false;
 			
 		}
@@ -62,42 +114,54 @@ public class AABB {
 		else {//if both all sides have been checked and not resulted in no collision then there must be a collision			
 			return true;
 		}
-	  
+		}else {
+			return false;
+		}
 		
 
 	}
 	
    
 	
-	public Vector2f findVector(Vector2f position, Vector2f movement,Vector2f direction,AABB box) {
-		//position is the current position before movement
+	public Vector2f findVector(Vector2f positionNow,Vector2f velocity,Vector2f direction,AABB box) {
+		//oldposition is the current position before movement
 		//movement is the current step we are taking
 		//direction is a normalized version of the current velocity
 		//box is the box we are checking collision with
 
+     
 
-		//  Start.DebugPrint("("+ColisionHandeler.amountThrough+")");
+		Vector2f oldPosition=new Vector2f();
+		positionNow.sub(velocity,oldPosition);
+
+	
+		Vector2f newMOvement=positionNow; //this is the return value   
+		Entity e=CoreEngine.getEntity(ID);
+		Entity e2=CoreEngine.getEntity(box.ID);
+		
+		
+		
+		if(e!=null && e2!=null) {
+	
+			
+		//check to mare sure we have all the required VARS
+		if(e.hasAllVars(new String[]{Entity.VAR_POSITION.name,Entity.VAR_BEFORE_POSITION.name}) && e2.hasAllVars(new String[] {Entity.VAR_BEFORE_POSITION.name,Entity.VAR_POSITION.name})) {	
+			
+			
+		
+			
+			
+			
+			
+		
+			
+			
+	
+		
 
 
 
-		Vector2f currentmovement=new Vector2f(0,0);
-		movement.add(new Vector2f(position.x,position.y),currentmovement);//this is the current position after addition of the movement
-		//		 Vector2f magangle=VectorMath.getMagAndAngleComponet(movement);
-		//	
-		//		 
-		//		//   MainRenderHandler.addEntity(new Entity(piont, new Vector3f(position,z+10),-magangle.y,magangle.x*10,Start.VectorTex,Constants.RED));
-		//		   
-		//		 Start.DebugPrint(""+magangle.y);
-		//		   
-
-
-
-		Vector2f newMOvement=currentmovement; //this is the return value   
-
-
-
-		Vector2f penetration=new Vector2f(0,0);//this is the vector representing how much into the box we are in
-
+		
 
 
 
@@ -110,43 +174,98 @@ public class AABB {
 		if(amount!=0 && amount!=1) {     
 
 
-			newMOvement=position.lerp(currentmovement, amount);
+			newMOvement=oldPosition.lerp(positionNow, amount);
 
 		}else if(amount==0) {
+			//get all of the varaibles we will need to get the resultant vector
+			PASSABLE_VEC2F var_beforePos_a=e.getData(Entity.VAR_BEFORE_POSITION);
+			PASSABLE_VEC2F var_beforePos_b=e2.getData(Entity.VAR_BEFORE_POSITION);
+			PASSABLE_VEC2F var_position_b=e2.getData(Entity.VAR_POSITION);
+			
+			
+			//now get all the correct values fron the VARS
+			
+			Vector2f before_position_a=var_beforePos_a.value;
+			Vector2f before_position_b=var_beforePos_b.value;
+			Vector2f position_b=var_position_b.value;
+			
+			Vector2f penetration=new Vector2f(0,0);//this is the vector representing how much into the box we are in
 
 
-				Vector2f d3= new Vector2f(0,0);
+		     Vector2f d3= new Vector2f(0,0);
 				//Vector2f d32= new Vector2f(0,0);
-				this.position_before_collision.sub(box.position,d3);
+			Vector2f lcB=new Vector2f(0,0);
+			Vector2f rcB=new Vector2f(0,0);
+			Vector2f lcA=new Vector2f(0,0);
+			Vector2f rcA=new Vector2f(0,0);
+				 
+			positionNow.sub(width,height,lcA);
+			position_b.sub(box.width,box.height,lcB);
+			positionNow.add(width,height,rcA);
+			position_b.add(box.width,box.height,rcB);	
+				
+			//find the closest positionns
+			
+			
+		
+			
+			
+			
+			
+			Vector2f Point_B=new Vector2f();//this is the point that will be the closest point to the before collision box on box B
+			Vector2f d2=new Vector2f();//this is the vector of the position of box B  minus the position before collision
+		    before_position_a.sub(position_b,d2);
+		    
+		    
+		    
+		    
+		    
+		    //now we clamp a point on that vector to the box b that way we can find the closest position on box B to the box before collision
+		    float Point_B_X=clamp(position_b.x+d2.x,lcB.x,rcB.x);
+		    float Point_B_Y=clamp(position_b.y+d2.y,lcB.y,rcB.y);
+		    Point_B=new Vector2f(Point_B_X,Point_B_Y); 
+			if( e2.DEBUG && CoreEngine.Debugdraw) {
+				MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f(Point_B,100),0, 3,Game.DEFAULT_TEXTURE,Constants.RED));
+			}
+			
+			Vector2f Point_A=new Vector2f();//this will be the point that is the point on the opposite side of box A this is the second point we need to find out how much we have penetrated the box 
+			Vector2f d=new Vector2f();//this is the vector of the position of box A minus the position before collision
+			Point_B.sub(before_position_a,d);
+			float Point_A_X=clamp(positionNow.x+d.x,lcA.x,rcA.x);
+			float Point_A_Y=clamp(positionNow.y+d.y,lcA.y,rcA.y);   
+			Point_A=new Vector2f(Point_A_X,Point_A_Y); 
+			if( e2.DEBUG && CoreEngine.Debugdraw) {
+				MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f(Point_A,100),0, 3,Game.DEFAULT_TEXTURE,Constants.RED));
+			}
+			
+			//now that we have those two points we have the penetration vector be subtracting them
+			Point_A.sub(Point_B,penetration);
+			
+			//now we just make sure we move the box out just a bit more than the exact value so it is not in the box at all
+			
+			Vector2f smallMovement=new Vector2f();
+			direction.mul(.001f,smallMovement);
+			
+			penetration.add(smallMovement);
+			//now subtract that from the posiition now to get the correct movement
+			positionNow.sub(penetration,newMOvement);
+			
+				
+		
 
-			   Vector2f ClosestPosition=new Vector2f(clamp(box.position.x+d3.x,box.bottom_left.x,box.bottom_left.x),clamp(box.position.y+d3.y,box.bottom_left.y,box.top_right.y));
-
-
-				Vector2f closesta=ClosestPosition;
-				Vector2f closestb;
-				Vector2f d2=new Vector2f();
-				closesta.sub(this.position_before_collision,d2);
-				closestb=new Vector2f(clamp(currentmovement.x+d2.x,bottom_left.x,bottom_left.x),clamp(currentmovement.y+d2.y,bottom_left.y,bottom_left.y));
-				closestb.sub(closesta, penetration);
-
-
-
-
-				currentmovement.sub(penetration.add(direction.mul(.001f,new Vector2f()),new Vector2f()), newMOvement); 
-
-
-
+				}
 
 
 			
-
-		}else if(amount==1) {
-			return currentmovement;
+		
+		
+		else if(amount==1) {
+			return positionNow;
 		}
 
 
 		//   Start.DebugPrint("("+amountThrough+")"+"nm="+newMOvement);
-
+		}}
 		return newMOvement;
 		   
 		   
@@ -171,9 +290,7 @@ public class AABB {
 		   }
 
 
-	public Vector2f getPosition() {
-		return this.position;
-	}
+	
 
 
 	public float getwidth() {
@@ -191,6 +308,18 @@ public class AABB {
 	public float getResistance() {
 		// TODO Auto-generated method stub
 		return this.resistance;
+	}
+
+
+	@Override
+	public PASSABLE_DATA_TYPE getType() {
+		// TODO Auto-generated method stub
+		return PASSABLE_DATA_TYPE.AABB;
+	}
+
+
+	public UUID getID() {
+		return ID;
 	}
 	
 	

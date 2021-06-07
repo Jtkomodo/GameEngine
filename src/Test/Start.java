@@ -7,6 +7,7 @@ import org.lwjgl.glfw.GLFW;
 import animation.Animation;
 import animation.SpriteSheet;
 import core.ComponentAnimation;
+import core.ComponentColision;
 import core.ComponentRenderModel;
 import core.CoreEngine;
 import core.Entity;
@@ -42,35 +43,7 @@ public class Start extends Game {
 		
 	}	
 	
-	public Start(int width, int height, String name) {
-		super(width, height, name);
-	}
-
-	@Override
-	public void start() {   
-	    playerModel=new Model(32, 46, 0, 0, 138, 138);
-	    playerSheet=new SpriteSheet("playerSpriteSheet", 138);
-	    mapTextue=new Texture("newsprite");
-	    playerTex=playerSheet.getTexture();
-	    walkingAnimation=new Animation(playerSheet, 0, 7, 7);
-	    player=new Entity(new EntityComponent[]{
-	    	new ComponentRenderModel(playerModel,playerTex),
-	    	new ComponentAnimation(walkingAnimation)
-	    	
-	    });
-	    
 	
-	    
-	    
-	    CoreEngine.AddEntity(player);
-	    
-	    
-	    MapFIle map=new MapFIle("Map1TEST");
-	    map.readMap();
-	    currentMap=new MapLoader(mapTextue,map,128);
-	      
-	}
-
 	@Override
 	public void GameLoop() {
 		input();
@@ -90,6 +63,53 @@ public class Start extends Game {
 		
 	}
 	
+	public Start(int width, int height, String name) {
+		super(width, height, name);
+	}
+
+	@Override
+	public void start() {   
+		CoreEngine.Debugdraw=true;
+	    playerModel=new Model(32, 46, 0, 0, 138, 138);
+	    playerSheet=new SpriteSheet("playerSpriteSheet", 138);
+	    mapTextue=new Texture("newsprite");
+	    playerTex=playerSheet.getTexture();
+	    walkingAnimation=new Animation(playerSheet, 0, 7, 7);
+	    player=new Entity(new EntityComponent[]{
+	    	new ComponentRenderModel(playerModel,playerTex),
+	    	new ComponentAnimation(walkingAnimation),
+	    	new ComponentColision(16,42,0)
+	    });
+	    
+	
+	    
+	   Entity player2=new Entity(new EntityComponent[]{
+		    	new ComponentColision(100,10,0)
+		    });
+	   Entity player3=new Entity(new EntityComponent[]{
+		    	new ComponentColision(50,50,0)
+		    });
+		    
+	    CoreEngine.AddEntity(player);
+	    CoreEngine.AddEntity(player2);
+	    CoreEngine.AddEntity(player3);
+	    player3.DEBUG=true;
+	    player2.DEBUG=true;
+	    //player2.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(.1f,0)));
+	    player.DEBUG=true;
+	    player.TakeInData(Entity.VAR_POSITION,new PASSABLE_VEC2F(new Vector2f(0,100)));
+	    player2.TakeInData(Entity.VAR_POSITION,new PASSABLE_VEC2F(new Vector2f(-200,0)));
+	    player2.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(0.5f,0)));
+	    player3.TakeInData(Entity.VAR_POSITION,new PASSABLE_VEC2F(new Vector2f(200*2,0)));
+	    player3.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(-0.5f,0)));
+	    MapFIle map=new MapFIle("Map1TEST");
+	    map.readMap();
+	    currentMap=new MapLoader(mapTextue,map,128);
+	      
+	}
+
+	
+	
 	private void input() {
 		Vector2f movement=new Vector2f();
 		PASSABLE_VEC2F P=player.getData(Entity.VAR_POSITION);
@@ -106,7 +126,10 @@ public class Start extends Game {
 	    	 position=P.value;	
 		
 	    }
-		float speed=1;
+		float speed=2;
+		if(InputPoller.JustPushed(GLFW.GLFW_KEY_ESCAPE)) {
+			super.CloseWindow();
+		}
 		if(InputPoller.NOT_REALESED(GLFW.GLFW_KEY_LEFT_CONTROL) && InputPoller.JustPushed(GLFW.GLFW_KEY_F)) {
 		    super.toggleFullscreen();
 		}
@@ -130,16 +153,29 @@ public class Start extends Game {
         }
         
        if(movement.length()!=0) {
+    	   
        movement.normalize(direction);
        direction.mul((float)(100*speed*CoreEngine.deltaT),movement);
-       player.TakeInData(Entity.VAR_POSITION,new PASSABLE_VEC2F(position.add(movement,new Vector2f())));
        player.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(movement));
+       PlayAnimation(player);
+       }else {
+         stopAnimation(player);
+         player.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f()));
+         
        }
        
 	   player.TakeInData(Entity.VAR_MIRROR,new PASSABLE_BOOL(mirror));
 	}
+	private static void PlayAnimation(Entity e) {
+		 e.TakeInData(Entity.VAR_ANAIMATION_PAUSE,new PASSABLE_BOOL(false));
+	}
 	
 	
+	
+	private static void stopAnimation(Entity e) {
+		  e.TakeInData(Entity.VAR_ANAIMATION_RESET,new PASSABLE_BOOL(true));
+	      e.TakeInData(Entity.VAR_ANAIMATION_PAUSE,new PASSABLE_BOOL(true));
+	}
 
 	private void RenderMap(MapLoader loader,int gridx,int gridy) {
 		  for(int i=-amountHeight+2;i<amountHeight-1;i++) {

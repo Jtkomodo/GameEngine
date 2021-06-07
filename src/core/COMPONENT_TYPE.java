@@ -1,5 +1,5 @@
 package core;
 
 public enum COMPONENT_TYPE {
-     ANIMAITON,RENDER
+     ANIMAITON,RENDER,COLLISION
 }

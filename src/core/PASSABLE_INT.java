@@ -3,7 +3,7 @@ package core;
 public class PASSABLE_INT implements PassableData {
 
 	
-	int Value;
+	public int Value;
 	
 	
 	

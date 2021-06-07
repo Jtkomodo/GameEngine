@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import animation.AnimationEngine;
 import input.InputPoller;
+import physics.PhysicsEngine;
 import rendering.MainBatchRender;
 import rendering.MainRenderHandler;
 
@@ -15,6 +16,8 @@ public class CoreEngine {
     private static HashMap<UUID,Entity> entities=new HashMap<UUID,Entity>();
     private static double last_frame=Timer.getTIme();
     public static double deltaT;
+
+	public static boolean Debugdraw=false;
     /**
      * main game loop this updates everything in the game
      */
@@ -44,14 +47,7 @@ public class CoreEngine {
     
 	private static void UpdatePhysicsEngine() {
 		
-		 Iterator<Entity> I=entities.values().iterator();		
-		 while(I.hasNext()) {
-			 
-            EntityComponent[] components=I.next().getComponents();	 
-		    for(int i=0;i<components.length;i++) {
-		    	components[i].GAMELOOP_TICK();
-		    }
-		 }
+		PhysicsEngine.update();
 	}
 	private static void UpdateRenderEngine() {
 	     Iterator<Entity> I=entities.values().iterator();		
@@ -88,10 +84,17 @@ public class CoreEngine {
     	return  entities.get(ID);
     			
     }
-    public static void sendData(UUID ENTITY_ID,VAR var,PassableData data) {
+    public static<T extends PassableData> void sendData(UUID ENTITY_ID,VAR<T> var,T data) {
         Entity e=getEntity(ENTITY_ID);
         if(e!=null) {
         	e.TakeInData(var,data);
+        }
+    	
+    }
+    public static<T extends PassableData> void InitData(UUID ENTITY_ID,VAR<T> var,T data) {
+        Entity e=getEntity(ENTITY_ID);
+        if(e!=null) {
+        	e.INITData(var,data);
         }
     	
     }
