@@ -15,7 +15,14 @@ import core.EntityComponent;
 import core.Game;
 import core.PASSABLE_BOOL;
 import core.PASSABLE_VEC2F;
+import events.ActionDebugPrint;
+import events.Condition;
+import events.EventAction;
+import events.Events;
+import events.Flag;
 import input.InputPoller;
+import physics.Collision;
+import physics.PhysicsEngine;
 import rendering.MainRenderHandler;
 import rendering.Model;
 import rendering.Render;
@@ -35,6 +42,7 @@ public class Start extends Game {
 	private Texture mapTextue;
 	private float Rendercamx;
 	private float Rendercamy;
+	private Flag test;
 	public static int amountWidth=Math.round((width/64)),amountHeight=Math.round((height/64));
 	
 	public static void main(String[] args) {
@@ -69,6 +77,7 @@ public class Start extends Game {
 
 	@Override
 	public void start() {   
+		test=new Flag(false);
 		CoreEngine.Debugdraw=true;
 	    playerModel=new Model(32, 46, 0, 0, 138, 138);
 	    playerSheet=new SpriteSheet("playerSpriteSheet", 138);
@@ -105,7 +114,14 @@ public class Start extends Game {
 	    MapFIle map=new MapFIle("Map1TEST");
 	    map.readMap();
 	    currentMap=new MapLoader(mapTextue,map,128);
-	      
+	    if(player.hasVAR(Entity.VAR_AABB) && player2.hasVAR(Entity.VAR_AABB)){
+	     Collision col=new Collision(player.getData(Entity.VAR_AABB),player2.getData(Entity.VAR_AABB));
+	     PhysicsEngine.WatchForCollision(col, test);
+	     Events e=new Events(new Condition[] {new Condition(test,true)},new ActionDebugPrint("player colided with player2"));
+	     e.ActivateFlags();
+	    } 
+	  
+	   
 	}
 
 	

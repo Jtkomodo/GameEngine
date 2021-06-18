@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.UUID;
 
 import animation.AnimationEngine;
+import events.FlagHandler;
 import input.InputPoller;
 import physics.PhysicsEngine;
 import rendering.MainBatchRender;
@@ -24,6 +25,7 @@ public class CoreEngine {
     protected static void updateEngine() {
     	double time1=core.Timer.getTIme();
     	deltaT=time1-last_frame;
+    	FlagHandler.updateFlags();
     	UpdatePhysicsEngine();
     	UpdateAnimationEngine();
     	UpdateRenderEngine();

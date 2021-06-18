@@ -3,6 +3,7 @@ package core;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
+import events.Flag;
 import physics.AABB;
 import physics.PhysicsEngine;
 import rendering.MainRenderHandler;
@@ -16,17 +17,11 @@ public class ComponentColision extends EntityComponent {
     private Model m;
 	public boolean debug=false;
 	
-	
-
 	public ComponentColision(float width,float height,float r) {
 		this.width=width;
 		this.height=height;
 		this.r=r;
 	}
-	
-	
-	
-	
 	
 
 	@Override
@@ -84,7 +79,8 @@ public class ComponentColision extends EntityComponent {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
+	
 	@Override
 	public COMPONENT_TYPE getID() {
 		

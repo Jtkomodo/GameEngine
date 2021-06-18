@@ -1,5 +1,6 @@
 package physics;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.UUID;
 
@@ -9,11 +10,26 @@ import core.CoreEngine;
 import core.Entity;
 import core.EntityComponent;
 import core.PASSABLE_VEC2F;
+import events.Flag;
 
 public class PhysicsEngine {
 
-	public static LinkedList<Collision> collisionsColided=new LinkedList<Collision>();
-	public static LinkedList<UUID> entities=new LinkedList<UUID>();
+	private static LinkedList<Collision> collisionsColided=new LinkedList<Collision>();
+	private static LinkedList<UUID> entities=new LinkedList<UUID>();
+	
+	private static HashMap<Collision,Flag> collisionsWatched=new HashMap<Collision,Flag>();  
+	
+	
+	
+	/**
+	 * This will add a collision(two AABBs colliding with each other) to a watch list when the collision changes it will update the flag
+	 * @param colision the two collisions that will be checked
+	 * @param flagEffected the flag that will be set if the collision happens
+	 */
+	public static void WatchForCollision(Collision colision,Flag flagEffected) {
+		collisionsWatched.put(colision, flagEffected);
+	
+	}
 	
 	
 	
@@ -100,24 +116,35 @@ public class PhysicsEngine {
 					if(e_1!=null && e_2!=null) {
 						if(e_1.hasVAR(Entity.VAR_AABB) && e_2.hasVAR(Entity.VAR_AABB)) {
 							//if there is a collision then add that collision to the list
+							Collision col=new Collision(e_1.getData(Entity.VAR_AABB),e_2.getData(Entity.VAR_AABB));
 							if(e_1.getData(Entity.VAR_AABB).vsAABB(e_2.getData(Entity.VAR_AABB))) {
 								collision=true;
-								Collision col=new Collision(e_1.getData(Entity.VAR_AABB),e_2.getData(Entity.VAR_AABB));
+							
+								if(collisionsWatched.containsKey(col)) {
+									collisionsWatched.get(col).setState(true);
+								}
 								if(!collisionsColided.contains(col)) {
 									collisionsColided.add(col);
 								}
-
+                                e_1.getData(Entity.VAR_AABB).setFlagState(true);
+							}else {
+								if(collisionsWatched.containsKey(col)) {
+									collisionsWatched.get(col).setState(false);
+								}
 							}
 
 						}
 					}
 				}
 			}
-			//if there was no collision at all with that box then set the before collision position to the position now
+			//if there was no collision at all with that box then set the before collision position to the position now and set the state of the flag to false
 			if(!collision) {
 				UUID ID=entities.get(i_1);
 				Entity e=CoreEngine.getEntity(ID);
-
+                if(e.hasVAR(Entity.VAR_AABB)) {
+                	e.getData(Entity.VAR_AABB).setFlagState(false);
+                	
+                }
 				if(e!=null) {
 					PASSABLE_VEC2F position=e.getData(Entity.VAR_POSITION);
 					e.TakeInData(Entity.VAR_BEFORE_POSITION,position);

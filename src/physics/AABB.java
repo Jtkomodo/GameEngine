@@ -12,6 +12,7 @@ import core.Game;
 import core.PASSABLE_DATA_TYPE;
 import core.PASSABLE_VEC2F;
 import core.PassableData;
+import events.Flag;
 import rendering.MainRenderHandler;
 import rendering.Model;
 import rendering.RenderEntity;
@@ -23,6 +24,7 @@ public class AABB implements PassableData {
 	private float width,height;
 	private UUID ID;
 	private float resistance;
+	private Flag flag=new Flag(false);
 	private Model m;
 	
 	
@@ -111,7 +113,7 @@ public class AABB implements PassableData {
 			return false;
 		}
 		
-		else {//if both all sides have been checked and not resulted in no collision then there must be a collision			
+		else {//if both all sides have been checked and not resulted in no collision then there must be a collision
 			return true;
 		}
 		}else {
@@ -290,8 +292,12 @@ public class AABB implements PassableData {
 		   }
 
 
-	
-
+	public void setFlagState(boolean state) {
+		this.flag.setState(state);
+	}
+    public Flag getFlag() {
+    	return this.flag;
+    }
 
 	public float getwidth() {
 		// TODO Auto-generated method stub
