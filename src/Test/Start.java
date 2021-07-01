@@ -1,5 +1,7 @@
 package test;
 
+import java.awt.Component;
+
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
@@ -15,12 +17,14 @@ import core.EntityComponent;
 import core.Game;
 import core.PASSABLE_BOOL;
 import core.PASSABLE_VEC2F;
+import core.VAR;
 import events.ActionDebugPrint;
 import events.Condition;
 import events.EventAction;
 import events.Events;
 import events.Flag;
 import input.InputPoller;
+import physics.AABB;
 import physics.Collision;
 import physics.PhysicsEngine;
 import rendering.MainRenderHandler;
@@ -30,6 +34,7 @@ import rendering.RenderEntity;
 import rendering.Texture;
 import test.map.MapFIle;
 import test.map.MapLoader;
+import textrendering.TextBuilder;
 
 public class Start extends Game {
 	public static final int width=640,height=480;
@@ -43,6 +48,8 @@ public class Start extends Game {
 	private float Rendercamx;
 	private float Rendercamy;
 	private Flag test;
+	private TextBuilder text;
+	
 	public static int amountWidth=Math.round((width/64)),amountHeight=Math.round((height/64));
 	
 	public static void main(String[] args) {
@@ -58,7 +65,7 @@ public class Start extends Game {
 	    PASSABLE_VEC2F P=player.getData(Entity.VAR_POSITION);
 	    Vector2f position=new Vector2f(0,0);
 	    if(P!=null) {
-	    	 position=P.value;	
+	    	 position=P.getValue();	
 		
 	    }
 	    Render.cam.setPosition(new Vector2f(-position.x,-position.y));
@@ -77,6 +84,7 @@ public class Start extends Game {
 
 	@Override
 	public void start() {   
+		text=new TextBuilder("aakar",512);
 		test=new Flag(false);
 		CoreEngine.Debugdraw=true;
 	    playerModel=new Model(32, 46, 0, 0, 138, 138);
@@ -87,13 +95,16 @@ public class Start extends Game {
 	    player=new Entity(new EntityComponent[]{
 	    	new ComponentRenderModel(playerModel,playerTex),
 	    	new ComponentAnimation(walkingAnimation),
-	    	new ComponentColision(16,42,0)
+	    	new ComponentColision(16,42,0),
+	    	new ComponentTest(),
+	    	new ComponentTest2()
+	    	
 	    });
 	    
 	
 	    
 	   Entity player2=new Entity(new EntityComponent[]{
-		    	new ComponentColision(100,10,0)
+		    	new ComponentColision(100,10,1)
 		    });
 	   Entity player3=new Entity(new EntityComponent[]{
 		    	new ComponentColision(50,50,0)
@@ -102,26 +113,32 @@ public class Start extends Game {
 	    CoreEngine.AddEntity(player);
 	    CoreEngine.AddEntity(player2);
 	    CoreEngine.AddEntity(player3);
+	    
+	    
+	    
+	  
 	    player3.DEBUG=true;
 	    player2.DEBUG=true;
 	    //player2.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(.1f,0)));
-	    player.DEBUG=true;
+	    //player.DEBUG=true;
 	    player.TakeInData(Entity.VAR_POSITION,new PASSABLE_VEC2F(new Vector2f(0,100)));
 	    player2.TakeInData(Entity.VAR_POSITION,new PASSABLE_VEC2F(new Vector2f(-200,0)));
-	    player2.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(0.5f,0)));
+	   // player2.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(0.5f,0)));
 	    player3.TakeInData(Entity.VAR_POSITION,new PASSABLE_VEC2F(new Vector2f(200*2,0)));
-	    player3.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(-0.5f,0)));
+	 //   player3.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(-0.5f,0)));
 	    MapFIle map=new MapFIle("Map1TEST");
 	    map.readMap();
+	
+	    
+	    
 	    currentMap=new MapLoader(mapTextue,map,128);
 	    if(player.hasVAR(Entity.VAR_AABB) && player2.hasVAR(Entity.VAR_AABB)){
-	     Collision col=new Collision(player.getData(Entity.VAR_AABB),player2.getData(Entity.VAR_AABB));
+	     Collision col=new Collision(player.getData(Entity.VAR_AABB).getValue(),player2.getData(Entity.VAR_AABB).getValue());
 	     PhysicsEngine.WatchForCollision(col, test);
 	     Events e=new Events(new Condition[] {new Condition(test,true)},new ActionDebugPrint("player colided with player2"));
 	     e.ActivateFlags();
 	    } 
 	  
-	   
 	}
 
 	
@@ -135,14 +152,23 @@ public class Start extends Game {
 	    
 	    boolean mirror=false;
 	    if(m!=null) {
-	    	mirror=m.value;
+	    	mirror=m.getValue();
 	    }
 	    
 	    if(P!=null) {
-	    	 position=P.value;	
+	    	 position=P.getValue();	
 		
 	    }
 		float speed=2;
+		
+		if(InputPoller.JustPushed(GLFW.GLFW_KEY_P)) {
+			if(player.hasVAR(ComponentTest.VAR_TEST)) {
+				player.TakeInData(ComponentTest.VAR_TEST,new PASSABLE_BOOL(!(player.getData(ComponentTest.VAR_TEST).getValue())));
+					
+				
+			}
+		
+		}
 		if(InputPoller.JustPushed(GLFW.GLFW_KEY_ESCAPE)) {
 			super.CloseWindow();
 		}
@@ -177,10 +203,17 @@ public class Start extends Game {
        }else {
          stopAnimation(player);
          player.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f()));
+          
+         
          
        }
        
 	   player.TakeInData(Entity.VAR_MIRROR,new PASSABLE_BOOL(mirror));
+	   
+	   
+	   
+	   
+	   
 	}
 	private static void PlayAnimation(Entity e) {
 		 e.TakeInData(Entity.VAR_ANAIMATION_PAUSE,new PASSABLE_BOOL(false));
@@ -203,7 +236,7 @@ public class Start extends Game {
 			  
 		    //loader.getModel().setDrawMethod(GL_LINES);
 			  loader.drawtiles(mapTextue);
-			   currentMap.flushModel();
+			  currentMap.flushModel();
 		
 	}
 	

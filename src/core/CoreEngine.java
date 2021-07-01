@@ -10,6 +10,7 @@ import input.InputPoller;
 import physics.PhysicsEngine;
 import rendering.MainBatchRender;
 import rendering.MainRenderHandler;
+import rendering.RenderingEngine;
 
 public class CoreEngine {
     public static boolean DebugPrint=true;
@@ -52,28 +53,32 @@ public class CoreEngine {
 		PhysicsEngine.update();
 	}
 	private static void UpdateRenderEngine() {
-	     Iterator<Entity> I=entities.values().iterator();		
-		 while(I.hasNext()) {
-			 
-            EntityComponent[] components=I.next().getComponents();	 
-		    for(int i=0;i<components.length;i++) {
-		    	components[i].RENDER_TICK();
-		    }
-		 }
+	     RenderingEngine.update();    
 	      
 	      
-		 MainRenderHandler.SortEntities();
-		 MainRenderHandler.addToBatchedRender();
-		 MainBatchRender.draw();
-		 MainBatchRender.flushModel();
+	
 	}
 	
     public static void AddEntity(Entity e) {
     	 entities.put(e.ID, e);
          e.Init();
     }
-	
-	
+	public static boolean removeEntity(Entity e) {
+		if(entities.containsKey(e.ID)) {
+		  boolean success=e.DISABLE();
+		  entities.remove(e.ID);
+	      return success;
+			
+			
+		}else {
+			return false;
+		}
+	    
+		
+	}
+	public static boolean hasEntity(Entity e) {
+		return entities.containsKey(e.ID);
+	}
 	
 	
 	
@@ -86,14 +91,14 @@ public class CoreEngine {
     	return  entities.get(ID);
     			
     }
-    public static<T extends PassableData> void sendData(UUID ENTITY_ID,VAR<T> var,T data) {
+    public static<ST,T extends PassableData<ST>> void sendData(UUID ENTITY_ID,VAR<T> var,T data) {
         Entity e=getEntity(ENTITY_ID);
         if(e!=null) {
         	e.TakeInData(var,data);
         }
     	
     }
-    public static<T extends PassableData> void InitData(UUID ENTITY_ID,VAR<T> var,T data) {
+    public static<ST,T extends PassableData<ST>> void InitData(UUID ENTITY_ID,VAR<T> var,T data) {
         Entity e=getEntity(ENTITY_ID);
         if(e!=null) {
         	e.INITData(var,data);

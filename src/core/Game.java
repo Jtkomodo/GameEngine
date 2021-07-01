@@ -12,6 +12,7 @@ import rendering.Texture;
  */
 public abstract class Game {
 	
+	
 	public static Texture DEFAULT_TEXTURE;
 	
 	private Window window;

@@ -5,13 +5,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.UUID;
 
 import core.PASSABLE_DATA_TYPE;
 import core.PassableData;
 import rendering.Texture;
 
 
-public class SpriteSheet implements PassableData{
+public class SpriteSheet{
+	
  
     private HashMap<Integer,float[]> Values=new HashMap<Integer,float[]>();//this is the frame(the int) and the correct u and v coords,width and height
     private int lastFrame;
@@ -28,6 +30,12 @@ public class SpriteSheet implements PassableData{
 	}
 	
 	
+
+	public SpriteSheet() {
+	
+	}
+
+
 
 	public void setValues(HashMap<Integer, float[]> values) {
 		Values = values;
@@ -152,11 +160,8 @@ public class SpriteSheet implements PassableData{
 
 
 
-	@Override
-	public PASSABLE_DATA_TYPE getType() {
-		return PASSABLE_DATA_TYPE.SPRITESHEET;
-	}
 	
+
 	
 	
 	

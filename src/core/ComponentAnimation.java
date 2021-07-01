@@ -1,5 +1,7 @@
 package core;
 
+import java.util.UUID;
+
 import animation.Animation;
 import animation.AnimationEngine;
 import animation.SpriteSheet;
@@ -8,7 +10,7 @@ import rendering.Model;
 public class ComponentAnimation extends EntityComponent {
 
 	
-	
+	public static final UUID ID=UUID.randomUUID();
 	
 	public Animation a;
 	
@@ -22,14 +24,14 @@ public class ComponentAnimation extends EntityComponent {
 	@Override
 	protected void INIT(Entity entity) {
      this.currentEntity=entity;  
-     this.currentEntity.INITData(Entity.VAR_TEXTURE,Game.DEFAULT_TEXTURE);
+     this.currentEntity.INITData(Entity.VAR_TEXTURE,new PASSABLE_TEXTURE(Game.DEFAULT_TEXTURE));
 	 AnimationEngine.addEntityAnimation(entity.ID, a);
 
 	}
 	
     protected void changeFrame(SpriteSheet sheet,int frame) {
-		this.currentEntity.TakeInData(Entity.VAR_ANIMATION_UPDATED,new PASSABLE_BOOL(false));
-    	Model model=this.currentEntity.getData(Entity.VAR_MODEL);	
+		if(this.currentEntity.hasVAR(Entity.VAR_MODEL)) {this.currentEntity.TakeInData(Entity.VAR_ANIMATION_UPDATED,new PASSABLE_BOOL(false));
+    	Model model=this.currentEntity.getData(Entity.VAR_MODEL).getValue();	
     	if(model!=null) {
     	
 		float  Texwidth=sheet.getSize();//gets the size of the sheet itself
@@ -61,7 +63,7 @@ public class ComponentAnimation extends EntityComponent {
 		this.currentEntity.TakeInData(Entity.VAR_MODEL_UPDATED,new PASSABLE_BOOL(true));
 	 //   CoreEngine.DebugPrint("changed frame"); 
 		}	
-		
+    	}
     	}
 		
 		
@@ -76,11 +78,11 @@ public class ComponentAnimation extends EntityComponent {
 	protected void RENDER_TICK() {
 		PASSABLE_BOOL animaitonChanged=this.currentEntity.getData(Entity.VAR_ANIMATION_UPDATED);
 		if(animaitonChanged!=null) {
-			if(animaitonChanged.value) {
-				SpriteSheet sheet= this.currentEntity.getData(Entity.VAR_SPRITE_SHEET);
+			if(animaitonChanged.getValue()) {
+				SpriteSheet sheet= this.currentEntity.getData(Entity.VAR_SPRITE_SHEET).getValue();
 				PASSABLE_INT pass_i=this.currentEntity.getData(Entity.VAR_FRAME);
 				if(pass_i!=null && sheet!=null) {
-					int frame=pass_i.Value;
+					int frame=pass_i.getValue();
 					changeFrame(sheet,frame);
 				}else {
 					CoreEngine.DebugPrint("ERROR "+Entity.VAR_FRAME+" does not exist in the entity!");
@@ -97,16 +99,19 @@ public class ComponentAnimation extends EntityComponent {
 	@Override
 	protected boolean DISABLE() {
 		AnimationEngine.removeEntityAnimation(currentEntity.ID);
-		this.currentEntity.Entity_Data.remove(Entity.VAR_SPRITE_SHEET.name);
-		this.currentEntity.Entity_Data.remove(Entity.VAR_FRAME.name);
-		this.currentEntity.Entity_Data.remove(Entity.VAR_ANIMATION_UPDATED.name);
-		return false;
+		this.currentEntity.removeVAR(Entity.VAR_FRAME);
+		this.currentEntity.removeVAR(Entity.VAR_ANIMATION_UPDATED);
+		return true;
 	}
 
 
 	@Override
-	public COMPONENT_TYPE getID() {
-		return COMPONENT_TYPE.ANIMAITON;
+	public UUID getCOMPONENTID() {
+		// TODO Auto-generated method stub
+		return ID;
 	}
+
+
+	
 
 }

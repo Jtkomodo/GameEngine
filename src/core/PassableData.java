@@ -1,12 +1,13 @@
 package core;
 
+import java.util.UUID;
 
-public interface PassableData {
+public interface PassableData<T> {
 
 	
-	
-	
-	public PASSABLE_DATA_TYPE getType(); 
+    public String getType();
+	public T getValue();
+	public UUID getDATAID(); 
 	
 	
 	

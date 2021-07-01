@@ -17,10 +17,8 @@ import rendering.MainRenderHandler;
 import rendering.Model;
 import rendering.RenderEntity;
 
-public class AABB implements PassableData {
+public class AABB {
 
-	
-	
 	private float width,height;
 	private UUID ID;
 	private float resistance;
@@ -29,9 +27,9 @@ public class AABB implements PassableData {
 	
 	
 	
-	public AABB(UUID ID, float width, float height,float resistance) {
-		this.ID=ID;
-	    CoreEngine.InitData(ID,Entity.VAR_BEFORE_POSITION,new PASSABLE_VEC2F(new Vector2f()));
+	public AABB(float width, float height,float resistance) {
+		
+	    CoreEngine.InitData(ID,Entity.VAR_BEFORE_POSITION,new PASSABLE_VEC2F(new Vector2f(0)));
 		this.width = width;
 		this.height = height;
 		this.resistance=resistance;
@@ -72,6 +70,9 @@ public class AABB implements PassableData {
 	
 	
 	*/
+	}
+	public void TIE_ENTITY(UUID ID) {
+		this.ID=ID;
 	}
 	
 	
@@ -147,7 +148,7 @@ public class AABB implements PassableData {
 	
 			
 		//check to mare sure we have all the required VARS
-		if(e.hasAllVars(new String[]{Entity.VAR_POSITION.name,Entity.VAR_BEFORE_POSITION.name}) && e2.hasAllVars(new String[] {Entity.VAR_BEFORE_POSITION.name,Entity.VAR_POSITION.name})) {	
+		if(e.hasAllVars(new String[]{Entity.VAR_POSITION.getName(),Entity.VAR_BEFORE_POSITION.getName()}) && e2.hasAllVars(new String[] {Entity.VAR_BEFORE_POSITION.getName(),Entity.VAR_POSITION.getName()})) {	
 			
 			
 		
@@ -316,18 +317,11 @@ public class AABB implements PassableData {
 		return this.resistance;
 	}
 
-
-	@Override
-	public PASSABLE_DATA_TYPE getType() {
-		// TODO Auto-generated method stub
-		return PASSABLE_DATA_TYPE.AABB;
-	}
-
-
+	
 	public UUID getID() {
 		return ID;
 	}
-	
+
 	
 	
       

@@ -363,9 +363,9 @@ public class MapFIle {
    			    x-=width;
    			    y+=height;
    			     
-   			  AABB A=new AABB(UUID.randomUUID(),width,height,r);
+   			  AABB A=new AABB(width,height,r);
    			  //A.setPosition(new Vector2f(x,y));  
-   			     return A;
+   			  return A;
    			   
 			
    		     

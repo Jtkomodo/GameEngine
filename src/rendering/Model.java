@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 
 import java.nio.*;
+import java.util.UUID;
 
 import  org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL30;
@@ -32,7 +33,8 @@ import core.PassableData;
  * @author Jesse Talbot
  *
  */
-public class Model extends ModelFramwork implements PassableData{
+public class Model extends ModelFramwork{
+	
     private int drawCount;
 	private int vao_id,v_id,tex_id,ind_id;
 	private static  boolean draw=true;
@@ -281,15 +283,6 @@ protected void delete() {
 	glDeleteBuffers(new int[] {this.v_id,this.tex_id,this.ind_id});
 	
 }
-
-
-
-
-@Override
-public PASSABLE_DATA_TYPE getType() {
-	return PASSABLE_DATA_TYPE.MODEL;
-}
-
 
 
 

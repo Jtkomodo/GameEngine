@@ -12,6 +12,7 @@ import core.CoreEngine;
 import core.Entity;
 import core.PASSABLE_BOOL;
 import core.PASSABLE_INT;
+import core.PASSABLE_SPRITESHEET;
 import core.PassableData;
 import core.Timer;
 
@@ -47,11 +48,11 @@ public class AnimationEngine {
 		  if(e!=null) {
 			  boolean paused=false;
 			  if(e.hasVAR(Entity.VAR_ANAIMATION_PAUSE)) {
-			   paused=e.getData(Entity.VAR_ANAIMATION_PAUSE).value;
+			   paused=e.getData(Entity.VAR_ANAIMATION_PAUSE).getValue();
 			  }
 			  boolean reset=false;
 			  if(e.hasVAR(Entity.VAR_ANAIMATION_RESET)) {
-			   reset=e.getData(Entity.VAR_ANAIMATION_RESET).value;
+			   reset=e.getData(Entity.VAR_ANAIMATION_RESET).getValue();
 			  }
 			
 			  
@@ -76,7 +77,7 @@ public class AnimationEngine {
 	  A.currentFrame=0;
 	   AnimationData d=A.data[A.currentFrame];
 	
-	   CoreEngine.sendData(ID,Entity.VAR_SPRITE_SHEET,d.sheet);
+	   CoreEngine.sendData(ID,Entity.VAR_SPRITE_SHEET,new PASSABLE_SPRITESHEET(d.sheet));
 	   CoreEngine.sendData(ID,Entity.VAR_FRAME,new PASSABLE_INT(d.frame));
 	   CoreEngine.sendData(ID,Entity.VAR_ANIMATION_UPDATED,new PASSABLE_BOOL(true));
 	   CoreEngine.sendData(ID,Entity.VAR_ANAIMATION_RESET,new PASSABLE_BOOL(false));
@@ -105,7 +106,7 @@ private static void updateAnimation(UUID ID,Entity e,Animation A) {
 	   }
 	   AnimationData d=A.data[A.currentFrame];
 	
-	   CoreEngine.sendData(ID,Entity.VAR_SPRITE_SHEET,d.sheet);
+	   CoreEngine.sendData(ID,Entity.VAR_SPRITE_SHEET,new PASSABLE_SPRITESHEET(d.sheet));
 	   CoreEngine.sendData(ID,Entity.VAR_FRAME,new PASSABLE_INT(d.frame));
 	   CoreEngine.sendData(ID,Entity.VAR_ANIMATION_UPDATED,new PASSABLE_BOOL(true));
 	   

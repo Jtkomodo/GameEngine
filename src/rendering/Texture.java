@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.LinkedList;
+import java.util.UUID;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -36,7 +37,8 @@ import core.PassableData;
  * @author Jesse Talbot
  *
  */
-public class Texture implements PassableData{
+public class Texture{
+
 private  int TEXid;
 
 private static LinkedList<Texture> textures=new LinkedList<Texture>();
@@ -197,15 +199,6 @@ public int getH() {
 public int getW() {
 	return w;
 }
-
-
-@Override
-public PASSABLE_DATA_TYPE getType() {
-	// TODO Auto-generated method stub
-	return PASSABLE_DATA_TYPE.TEXTURE;
-}
-
-
 
 
 

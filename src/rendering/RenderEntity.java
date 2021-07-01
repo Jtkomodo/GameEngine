@@ -146,8 +146,12 @@ this.hasNonSqaureSize=false;
 		return hasColor;
 	}
 	public void setColor(Vector4f color) {
+		if(!(color.x==1 && color.y==1 && color.z==1 && color.w==1) ) {
+			
+		
 		this.color = color;
 		this.hasColor=true;
+		}
 	}
     
 

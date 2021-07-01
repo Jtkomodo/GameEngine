@@ -61,9 +61,9 @@ public class PhysicsEngine {
 		    Entity A=CoreEngine.getEntity(A_ID);
 		    Entity B=CoreEngine.getEntity(B_ID);
 		    if(A!=null && B!=null) {
-		    	if(A.hasAllVars(new String[] {Entity.VAR_AABB.name,Entity.VAR_POSITION.name,Entity.VAR_VELOCITY.name})) {
-		    	AABB a=A.getData(Entity.VAR_AABB);
-		    	AABB b=B.getData(Entity.VAR_AABB);
+		    	if(A.hasAllVars(new String[] {Entity.VAR_AABB.getName(),Entity.VAR_POSITION.getName(),Entity.VAR_VELOCITY.getName()})) {
+		    	AABB a=A.getData(Entity.VAR_AABB).getValue();
+		    	AABB b=B.getData(Entity.VAR_AABB).getValue();
 		    	
 		    	
 		    	
@@ -116,8 +116,8 @@ public class PhysicsEngine {
 					if(e_1!=null && e_2!=null) {
 						if(e_1.hasVAR(Entity.VAR_AABB) && e_2.hasVAR(Entity.VAR_AABB)) {
 							//if there is a collision then add that collision to the list
-							Collision col=new Collision(e_1.getData(Entity.VAR_AABB),e_2.getData(Entity.VAR_AABB));
-							if(e_1.getData(Entity.VAR_AABB).vsAABB(e_2.getData(Entity.VAR_AABB))) {
+							Collision col=new Collision(e_1.getData(Entity.VAR_AABB).getValue(),e_2.getData(Entity.VAR_AABB).getValue());
+							if(e_1.getData(Entity.VAR_AABB).getValue().vsAABB(e_2.getData(Entity.VAR_AABB).getValue())) {
 								collision=true;
 							
 								if(collisionsWatched.containsKey(col)) {
@@ -126,7 +126,7 @@ public class PhysicsEngine {
 								if(!collisionsColided.contains(col)) {
 									collisionsColided.add(col);
 								}
-                                e_1.getData(Entity.VAR_AABB).setFlagState(true);
+                                e_1.getData(Entity.VAR_AABB).getValue().setFlagState(true);
 							}else {
 								if(collisionsWatched.containsKey(col)) {
 									collisionsWatched.get(col).setState(false);
@@ -142,7 +142,7 @@ public class PhysicsEngine {
 				UUID ID=entities.get(i_1);
 				Entity e=CoreEngine.getEntity(ID);
                 if(e.hasVAR(Entity.VAR_AABB)) {
-                	e.getData(Entity.VAR_AABB).setFlagState(false);
+                	e.getData(Entity.VAR_AABB).getValue().setFlagState(false);
                 	
                 }
 				if(e!=null) {

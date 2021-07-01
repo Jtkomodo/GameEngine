@@ -1,23 +1,44 @@
 package core;
 
-public class PASSABLE_BOOL implements PassableData {
+import java.util.UUID;
+
+public class PASSABLE_BOOL implements PassableData<Boolean> {
 
 	
+	public static final UUID ID=UUID.randomUUID();
 	
-	public boolean value;
+	
+	private boolean value=false;
 	
 	
+    private PASSABLE_BOOL() {
+    	
+    }
 	
 	public PASSABLE_BOOL(boolean value) {
 		this.value = value;
 	}
 
-
+	@Override
+	public UUID getDATAID() {
+		// TODO Auto-generated method stub
+		return ID;
+	}
 
 	@Override
-	public PASSABLE_DATA_TYPE getType() {
-		// TODO Auto-generated method stub
-		return PASSABLE_DATA_TYPE.BOOL;
+	public Boolean getValue() {
+		return value;
 	}
+
+	@Override
+	public String getType() {
+		return "BOOL";
+	}
+    
+    public static DATA_HANDLE<PASSABLE_BOOL> getHandle() {
+    	     return new DATA_HANDLE<PASSABLE_BOOL>(new PASSABLE_BOOL());
+    }
+
+	
 
 }

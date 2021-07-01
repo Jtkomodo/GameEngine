@@ -1,4 +1,7 @@
 package core;
+
+import java.util.UUID;
+
 /**
  * This is a abstract class that all our components will inherit from
  * each component type will have a ID specific to that type. You can only have
@@ -9,13 +12,24 @@ package core;
  * @author Jesse Talbot
  *
  */
-public abstract class  EntityComponent {
+public abstract class  EntityComponent  {
 	
    
 	
     
 	protected Entity currentEntity;
 	
+	
+	
+	
+	 protected static <ST,T extends PassableData<ST>> VAR<T> createNewVAR(String name,DATA_HANDLE<T> handle){
+		  return VAR.makeNewVar(name,handle);
+	 }
+	
+	
+	
+	
+
     /**
      * INIT this is what is called when we add the component all the init code goes here
      * @param entity
@@ -42,7 +56,7 @@ public abstract class  EntityComponent {
 	 *  tell if a entity has this component type
 	 * @return
 	 */
-    public abstract COMPONENT_TYPE getID();
+    public abstract UUID getCOMPONENTID();
 
 
 
