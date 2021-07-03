@@ -13,7 +13,7 @@ public class PASSABLE_MODEL implements PassableData<Model> {
 	
 	
 	
-	public PASSABLE_MODEL(Model value) {
+	protected PASSABLE_MODEL(Model value) {
 		this.value=value;
 	}
 	

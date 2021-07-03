@@ -1,8 +1,12 @@
 package core;
 
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 import org.joml.Vector2f;
@@ -34,6 +38,8 @@ public class Entity {
 	public final static VAR<PASSABLE_BOOL> VAR_MODEL_UPDATED=VAR.makeNewVar("MODEL_UPDATED",PASSABLE_BOOL.getHandle());
 	public final static VAR<PASSABLE_VEC4F> VAR_COLOR=VAR.makeNewVar("COLOR",PASSABLE_VEC4F.getHandle());
 	
+	
+	public final static VAR<PASSABLE_LINKED_LIST<Boolean>> VAR_TESTLIST=VAR.makeNewVar("TESTLIST",PASSABLE_LINKED_LIST.getHandle(PASSABLE_BOOL.getHandle()));
 	
 	
 	
@@ -190,6 +196,79 @@ public class Entity {
 		    	 data.setValue(value);
 		         TakeInData(newVar,data); 
 	}
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void setList(VAR<T> var,ST[] values) {
+	      	 
+          VAR<T> newVar=VAR.makeNewVar(var.getRealName(),var.getHandle());
+        
+          T data=newVar.getType();
+          data.setListFromArray(values);
+          TakeInData(newVar,data); 
+           
+		
+    }
+	
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> ST[]  getListAsArray(VAR<T> var,ST[] array) {
+	      T data=getData(var);
+		
+		if(data!=null) {
+		  return data.getListAsArray(array);
+		}else {
+			return null;
+		}
+		
+		
+  }
+	
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> boolean  isListEmptyy(VAR<T> var) { 
+		   T data=getData(var);
+			
+			if(data!=null) {
+			  return data.isListEmpty();
+			}else {
+				return false;
+			} 
+
+
+}
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void  ClearList(VAR<T> var) { 
+	        
+		  T data=getData(var);
+			
+			if(data!=null) {
+			  data.clearList();;
+			}
+	}
+	
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> int  ListSize(VAR<T> var) {
+		  T data=getData(var);
+			
+			if(data!=null) {
+			  return data.getListSize();
+			}else {
+				return 0;
+			}
+		
+		
+	}
+	
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void  setListAtIndex(VAR<T> var,int index,ST value) {
+		    T data=getData(var);
+			
+			if(data!=null) {
+			   data.setValueAtIndex(index, value);;
+			}
+		
+	}
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> ST  getValueAtIndex(VAR<T> var,int index) {
+	    T data=getData(var);
+		
+		if(data!=null) {
+		   return data.getValueAtIndex(index);
+		}else {
+			return null;
+		}
+	
+}
 	
 	
 	

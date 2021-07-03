@@ -14,7 +14,7 @@ public class PASSABLE_TEXTURE implements PassableData<Texture> {
 	
 	
 	
-	public PASSABLE_TEXTURE(Texture value) {
+	protected PASSABLE_TEXTURE(Texture value) {
 		this.value = value;
 	}
 

@@ -11,7 +11,7 @@ public class PASSABLE_SPRITESHEET implements PassableData<SpriteSheet>{
 	public static final UUID ID=UUID.randomUUID();
 	private SpriteSheet value;
 	
-	public PASSABLE_SPRITESHEET(SpriteSheet value) {
+	protected PASSABLE_SPRITESHEET(SpriteSheet value) {
 		this.value=value;
 	}
 	

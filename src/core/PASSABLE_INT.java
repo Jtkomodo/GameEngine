@@ -8,7 +8,7 @@ public class PASSABLE_INT implements PassableData<Integer> {
 	private int Value;
 	
 	
-	public PASSABLE_INT() {
+	private PASSABLE_INT() {
 		
 	}
 	

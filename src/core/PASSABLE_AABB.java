@@ -10,7 +10,7 @@ public class PASSABLE_AABB implements PassableData<AABB> {
 
 	private AABB value;
 	
-    private  PASSABLE_AABB() {
+    protected  PASSABLE_AABB() {
     	
     }
 	
@@ -59,6 +59,9 @@ public class PASSABLE_AABB implements PassableData<AABB> {
 	public <S extends PassableData<AABB>> S getNewType() {
 		return (S) new PASSABLE_AABB();
 	}
+
+
+
 
   
 

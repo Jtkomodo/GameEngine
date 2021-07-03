@@ -1,5 +1,8 @@
 package test;
 
+import java.util.Collections;
+import java.util.LinkedList;
+
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
@@ -55,7 +58,7 @@ public class Start extends Game {
 	@Override
 	public void GameLoop() {
 		input();
-		
+	
 		if(player.hasVAR(Entity.VAR_POSITION)){
 	  
 	    Vector2f position=player.getVar(Entity.VAR_POSITION);
@@ -106,8 +109,16 @@ public class Start extends Game {
 	   CoreEngine.AddEntity(player2);
 	   CoreEngine.AddEntity(player3);
 	 
+	 
+      
+      
+     
 	    
+	
+	       
 	  
+	
+		
 	    player3.DEBUG=true;
 	    player2.DEBUG=true;
 	    //player2.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(.1f,0)));
@@ -119,9 +130,9 @@ public class Start extends Game {
 	 //   player3.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(-0.5f,0)));
 	    MapFIle map=new MapFIle("Map1TEST");
 	    map.readMap();
-	
-	    
-	    
+	 
+	  
+	  
 	    currentMap=new MapLoader(mapTextue,map,128);
 	    if(player.hasVAR(Entity.VAR_AABB) && player2.hasVAR(Entity.VAR_AABB)){
 	     Collision col=new Collision(player.getVar(Entity.VAR_AABB),player2.getVar(Entity.VAR_AABB));
