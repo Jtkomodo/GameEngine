@@ -77,7 +77,10 @@ public class ComponentColision extends EntityComponent {
 		this.currentEntity=entity;
 		this.aabb.TIE_ENTITY(entity.ID);
 		
-		this.currentEntity.TakeInData(Entity.VAR_AABB,new PASSABLE_AABB(this.aabb));
+		this.currentEntity.setVar(Entity.VAR_AABB,this.aabb);
+		this.currentEntity.INITVar(Entity.VAR_POSITION,new Vector2f());
+		this.currentEntity.INITVar(Entity.VAR_BEFORE_POSITION,new Vector2f());
+		this.currentEntity.INITVar(Entity.VAR_VELOCITY,new Vector2f());
 		
 		PhysicsEngine.addEntity(entity);
 		RenderingEngine.addEntity(currentEntity);
@@ -88,18 +91,18 @@ public class ComponentColision extends EntityComponent {
 
 	@Override
 	protected void GAMELOOP_TICK() {
-		if(this.currentEntity.hasAllVars(new String[] {Entity.VAR_POSITION.getName(),Entity.VAR_VELOCITY.getName()})) {
-		this.currentEntity.TakeInData(Entity.VAR_POSITION,new PASSABLE_VEC2F(this.currentEntity.getData(Entity.VAR_POSITION).getValue().add(this.currentEntity.getData(Entity.VAR_VELOCITY).getValue(),new Vector2f())));
+		if(this.currentEntity.hasAllVars(new VAR<?>[]{Entity.VAR_POSITION,Entity.VAR_VELOCITY})) {
+		this.currentEntity.setVar(Entity.VAR_POSITION,this.currentEntity.getVar(Entity.VAR_POSITION).add(this.currentEntity.getVar(Entity.VAR_VELOCITY),new Vector2f()));
 		}
 		}
 
 	@Override
 	protected void RENDER_TICK() {
 	   if(this.currentEntity.DEBUG && CoreEngine.Debugdraw) {
-		   
-		  MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f(this.currentEntity.getData(Entity.VAR_POSITION).getValue(),100),0, 1,Game.DEFAULT_TEXTURE,Constants.COL_COLOR_BLUE));
-		  //MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f(this.currentEntity.getData(Entity.VAR_BEFORE_POSITION).getValue(),100),0, 1,Game.DEFAULT_TEXTURE,Constants.COL_COLOR_RED));
-	   }
+			if(this.currentEntity.hasAllVars(new VAR<?>[]{Entity.VAR_POSITION,Entity.VAR_VELOCITY})) {
+		  MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f(this.currentEntity.getVar(Entity.VAR_POSITION),100),0, 1,Game.DEFAULT_TEXTURE,Constants.COL_COLOR_BLUE));
+			}
+			}
 
 	}
 

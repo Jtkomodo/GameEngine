@@ -36,11 +36,11 @@ public class ComponentRenderModel extends EntityComponent {
 	@Override
 	protected void INIT(Entity entity) {
 		this.currentEntity=entity;
-		entity.TakeInData(Entity.VAR_TEXTURE,new PASSABLE_TEXTURE(this.texture));
-		entity.INITData(Entity.VAR_POSITION,new PASSABLE_VEC2F(new Vector2f()));
-		entity.INITData(Entity.VAR_MIRROR,new PASSABLE_BOOL(false));
-		entity.INITData(Entity.VAR_COLOR,new PASSABLE_VEC4F(Constants.DEFAULT_COLOR));
-		entity.TakeInData(Entity.VAR_MODEL,new PASSABLE_MODEL(this.model));
+		entity.setVar(Entity.VAR_TEXTURE,this.texture);
+		entity.INITVar(Entity.VAR_POSITION,new Vector2f());
+		entity.INITVar(Entity.VAR_MIRROR,false);
+		entity.INITVar(Entity.VAR_COLOR,Constants.DEFAULT_COLOR);
+		entity.setVar(Entity.VAR_MODEL,this.model);
 		RenderingEngine.addEntity(entity);
 
 	}
@@ -53,15 +53,16 @@ public class ComponentRenderModel extends EntityComponent {
 
 	@Override
 	protected void RENDER_TICK() {
-		PASSABLE_VEC4F color=this.currentEntity.getData(Entity.VAR_COLOR);
-		PASSABLE_VEC2F position=this.currentEntity.getData(Entity.VAR_POSITION);
-		PASSABLE_BOOL mirror=this.currentEntity.getData(Entity.VAR_MIRROR);
-		PASSABLE_TEXTURE texture=this.currentEntity.getData(Entity.VAR_TEXTURE);
 		
          
 		
-		if(color!=null && texture!=null && position!=null && mirror!=null) {
-			MainRenderHandler.addEntity(new RenderEntity(model, new Vector3f(position.getValue(),10),0,1,texture.getValue(),color.getValue(),mirror.getValue()));
+		if(this.currentEntity.hasAllVars(new VAR<?>[] {Entity.VAR_COLOR,Entity.VAR_POSITION,Entity.VAR_MIRROR,Entity.VAR_TEXTURE})) {
+			Vector4f color=this.currentEntity.getVar(Entity.VAR_COLOR);
+			Vector2f position=this.currentEntity.getVar(Entity.VAR_POSITION);
+			boolean mirror=this.currentEntity.getVar(Entity.VAR_MIRROR);
+			Texture  texture=this.currentEntity.getVar(Entity.VAR_TEXTURE);
+			
+			MainRenderHandler.addEntity(new RenderEntity(model, new Vector3f(position,10),0,1,texture,color,mirror));
 		}
 	}
 

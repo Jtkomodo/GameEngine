@@ -91,17 +91,60 @@ public class CoreEngine {
     	return  entities.get(ID);
     			
     }
-    public static<ST,T extends PassableData<ST>> void sendData(UUID ENTITY_ID,VAR<T> var,T data) {
+    
+    
+    
+    
+    public static<T extends PassableData<?>> boolean HasALLVars(UUID ENTITY_ID,VAR<T>[] vars) {
         Entity e=getEntity(ENTITY_ID);
         if(e!=null) {
-        	e.TakeInData(var,data);
+        	return e.hasAllVars(vars);
+        }else {
+        	return false;
         }
     	
     }
-    public static<ST,T extends PassableData<ST>> void InitData(UUID ENTITY_ID,VAR<T> var,T data) {
+    
+    
+    
+    
+    public static<ST,T extends PassableData<ST>> boolean HasVar(UUID ENTITY_ID,VAR<T> var) {
         Entity e=getEntity(ENTITY_ID);
         if(e!=null) {
-        	e.INITData(var,data);
+        	return e.hasVAR(var);
+        }else {
+        	return false;
+        }
+    	
+    }
+    
+    
+    
+    public static<ST,T extends PassableData<ST>> ST RecieveData(UUID ENTITY_ID,VAR<T> var) {
+        Entity e=getEntity(ENTITY_ID);
+        if(e!=null) {
+        	return e.getVar(var);
+        }else {
+        	return null;
+        }
+    	
+    }
+    
+    
+    
+    
+    
+    public static<ST,T extends PassableData<ST>> void sendData(UUID ENTITY_ID,VAR<T> var,ST data) {
+        Entity e=getEntity(ENTITY_ID);
+        if(e!=null) {
+        	e.setVar(var,data);
+        }
+    	
+    }
+    public static<ST,T extends PassableData<ST>> void InitData(UUID ENTITY_ID,VAR<T> var,ST data) {
+        Entity e=getEntity(ENTITY_ID);
+        if(e!=null) {
+        	e.INITVar(var,data);
         }
     	
     }

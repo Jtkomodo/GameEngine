@@ -180,12 +180,12 @@ public class MapFIle {
 	private void writeAABB(AABB a,DataOutputStream stream) {
 		
 	
-	    	Entity e=CoreEngine.getEntity(a.getID());
-		if(e!=null && e.hasVAR(Entity.VAR_POSITION)) {
+	    	
+		if(CoreEngine.HasVar(a.getID(),Entity.VAR_POSITION)) {
 			
 		
 		   
-			Vector2f position=e.getData(Entity.VAR_POSITION).value;
+			Vector2f position=CoreEngine.RecieveData(a.getID(),Entity.VAR_POSITION);
 			float x=position.x;
 			float y=position.y;
 			float width=a.getwidth();

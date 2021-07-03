@@ -22,7 +22,7 @@ public abstract class  EntityComponent  {
 	
 	
 	
-	 protected static <ST,T extends PassableData<ST>> VAR<T> createNewVAR(String name,DATA_HANDLE<T> handle){
+	 protected static <ST,T extends PassableData<ST>> VAR<T> createNewVAR(String name,DATA_HANDLE<ST,T> handle){
 		  return VAR.makeNewVar(name,handle);
 	 }
 	

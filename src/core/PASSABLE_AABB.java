@@ -15,7 +15,7 @@ public class PASSABLE_AABB implements PassableData<AABB> {
     }
 	
 	
-	public PASSABLE_AABB(AABB value) {
+	protected PASSABLE_AABB(AABB value) {
 		this.value=value;
 	}
 	
@@ -44,11 +44,24 @@ public class PASSABLE_AABB implements PassableData<AABB> {
 		// TODO Auto-generated method stub
 		return "AABB";
 	}
-
-
-	public static DATA_HANDLE<PASSABLE_AABB> getHandle() {
-		return new DATA_HANDLE<PASSABLE_AABB>(new PASSABLE_AABB());
+	@Override
+	public void setValue(AABB value) {
+		 this.value=value;
+		
 	}
+
+	public static   DATA_HANDLE<AABB,PASSABLE_AABB> getHandle() {
+		return new DATA_HANDLE<AABB,PASSABLE_AABB>(new PASSABLE_AABB());
+	}
+
+
+	@Override
+	public <S extends PassableData<AABB>> S getNewType() {
+		return (S) new PASSABLE_AABB();
+	}
+
+  
+
 
     
 

@@ -1,9 +1,6 @@
 package test;
 
-import java.awt.Component;
-
 import org.joml.Vector2f;
-import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
 import animation.Animation;
@@ -20,17 +17,13 @@ import core.PASSABLE_VEC2F;
 import core.VAR;
 import events.ActionDebugPrint;
 import events.Condition;
-import events.EventAction;
 import events.Events;
 import events.Flag;
 import input.InputPoller;
-import physics.AABB;
 import physics.Collision;
 import physics.PhysicsEngine;
-import rendering.MainRenderHandler;
 import rendering.Model;
 import rendering.Render;
-import rendering.RenderEntity;
 import rendering.Texture;
 import test.map.MapFIle;
 import test.map.MapLoader;
@@ -62,12 +55,11 @@ public class Start extends Game {
 	@Override
 	public void GameLoop() {
 		input();
-	    PASSABLE_VEC2F P=player.getData(Entity.VAR_POSITION);
-	    Vector2f position=new Vector2f(0,0);
-	    if(P!=null) {
-	    	 position=P.getValue();	
 		
-	    }
+		if(player.hasVAR(Entity.VAR_POSITION)){
+	  
+	    Vector2f position=player.getVar(Entity.VAR_POSITION);
+	    
 	    Render.cam.setPosition(new Vector2f(-position.x,-position.y));
 		this.Rendercamx=-Render.cam.getPosition().x;
 		this.Rendercamy=-Render.cam.getPosition().y;
@@ -75,7 +67,7 @@ public class Start extends Game {
 	    int gridx= Math.round(newvec.x);
 	    int gridy=Math.round(newvec.y);
 		RenderMap(currentMap,gridx,gridy);
-		
+		}
 	}
 	
 	public Start(int width, int height, String name) {
@@ -110,21 +102,20 @@ public class Start extends Game {
 		    	new ComponentColision(50,50,0)
 		    });
 		    
-	    CoreEngine.AddEntity(player);
-	    CoreEngine.AddEntity(player2);
-	    CoreEngine.AddEntity(player3);
-	    
-	    
+	   CoreEngine.AddEntity(player);
+	   CoreEngine.AddEntity(player2);
+	   CoreEngine.AddEntity(player3);
+	 
 	    
 	  
 	    player3.DEBUG=true;
 	    player2.DEBUG=true;
 	    //player2.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(.1f,0)));
-	    //player.DEBUG=true;
-	    player.TakeInData(Entity.VAR_POSITION,new PASSABLE_VEC2F(new Vector2f(0,100)));
-	    player2.TakeInData(Entity.VAR_POSITION,new PASSABLE_VEC2F(new Vector2f(-200,0)));
+	    //player.DEBUG=true;	    
+	    
+	    player2.setVar(Entity.VAR_POSITION,new Vector2f(-200,0));
 	   // player2.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(0.5f,0)));
-	    player3.TakeInData(Entity.VAR_POSITION,new PASSABLE_VEC2F(new Vector2f(200*2,0)));
+	    player3.setVar(Entity.VAR_POSITION,new Vector2f(200*2,0));
 	 //   player3.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(-0.5f,0)));
 	    MapFIle map=new MapFIle("Map1TEST");
 	    map.readMap();
@@ -133,7 +124,7 @@ public class Start extends Game {
 	    
 	    currentMap=new MapLoader(mapTextue,map,128);
 	    if(player.hasVAR(Entity.VAR_AABB) && player2.hasVAR(Entity.VAR_AABB)){
-	     Collision col=new Collision(player.getData(Entity.VAR_AABB).getValue(),player2.getData(Entity.VAR_AABB).getValue());
+	     Collision col=new Collision(player.getVar(Entity.VAR_AABB),player2.getVar(Entity.VAR_AABB));
 	     PhysicsEngine.WatchForCollision(col, test);
 	     Events e=new Events(new Condition[] {new Condition(test,true)},new ActionDebugPrint("player colided with player2"));
 	     e.ActivateFlags();
@@ -144,26 +135,20 @@ public class Start extends Game {
 	
 	
 	private void input() {
-		Vector2f movement=new Vector2f();
-		PASSABLE_VEC2F P=player.getData(Entity.VAR_POSITION);
-	    Vector2f position=new Vector2f();
+		if(player.hasAllVars(new VAR<?>[] {Entity.VAR_POSITION,Entity.VAR_MIRROR})){
+	    boolean mirror=player.getVar(Entity.VAR_MIRROR);
+		Vector2f position=player.getVar(Entity.VAR_POSITION);
+	    Vector2f movement=new Vector2f();
 	    Vector2f direction=new Vector2f();
-	    PASSABLE_BOOL m=player.getData(Entity.VAR_MIRROR);
+	 
 	    
-	    boolean mirror=false;
-	    if(m!=null) {
-	    	mirror=m.getValue();
-	    }
+	  
 	    
-	    if(P!=null) {
-	    	 position=P.getValue();	
-		
-	    }
-		float speed=2;
+	  		float speed=2;
 		
 		if(InputPoller.JustPushed(GLFW.GLFW_KEY_P)) {
 			if(player.hasVAR(ComponentTest.VAR_TEST)) {
-				player.TakeInData(ComponentTest.VAR_TEST,new PASSABLE_BOOL(!(player.getData(ComponentTest.VAR_TEST).getValue())));
+				player.setVar(ComponentTest.VAR_TEST,!player.getVar(ComponentTest.VAR_TEST));
 					
 				
 			}
@@ -198,32 +183,32 @@ public class Start extends Game {
     	   
        movement.normalize(direction);
        direction.mul((float)(100*speed*CoreEngine.deltaT),movement);
-       player.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(movement));
+       player.setVar(Entity.VAR_VELOCITY,movement);
        PlayAnimation(player);
        }else {
          stopAnimation(player);
-         player.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f()));
+         player.setVar(Entity.VAR_VELOCITY,new Vector2f());
           
          
          
        }
        
-	   player.TakeInData(Entity.VAR_MIRROR,new PASSABLE_BOOL(mirror));
+	   player.setVar(Entity.VAR_MIRROR,mirror);
 	   
 	   
 	   
-	   
+		}
 	   
 	}
 	private static void PlayAnimation(Entity e) {
-		 e.TakeInData(Entity.VAR_ANAIMATION_PAUSE,new PASSABLE_BOOL(false));
+		 e.setVar(Entity.VAR_ANAIMATION_PAUSE,false);
 	}
 	
 	
 	
 	private static void stopAnimation(Entity e) {
-		  e.TakeInData(Entity.VAR_ANAIMATION_RESET,new PASSABLE_BOOL(true));
-	      e.TakeInData(Entity.VAR_ANAIMATION_PAUSE,new PASSABLE_BOOL(true));
+		  e.setVar(Entity.VAR_ANAIMATION_RESET,true);
+	      e.setVar(Entity.VAR_ANAIMATION_PAUSE,true);
 	}
 
 	private void RenderMap(MapLoader loader,int gridx,int gridy) {

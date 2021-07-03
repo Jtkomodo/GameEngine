@@ -15,7 +15,7 @@ public class PASSABLE_BOOL implements PassableData<Boolean> {
     	
     }
 	
-	public PASSABLE_BOOL(boolean value) {
+	protected PASSABLE_BOOL(boolean value) {
 		this.value = value;
 	}
 
@@ -35,9 +35,22 @@ public class PASSABLE_BOOL implements PassableData<Boolean> {
 		return "BOOL";
 	}
     
-    public static DATA_HANDLE<PASSABLE_BOOL> getHandle() {
-    	     return new DATA_HANDLE<PASSABLE_BOOL>(new PASSABLE_BOOL());
+	@Override
+	public void setValue(Boolean value) {
+		this.value=value;
+		
+	}
+	
+	
+	
+    public static DATA_HANDLE<Boolean,PASSABLE_BOOL> getHandle() {
+    	     return new DATA_HANDLE<Boolean,PASSABLE_BOOL>(new PASSABLE_BOOL());
     }
+
+	@Override
+	public <S extends PassableData<Boolean>> S getNewType() {
+		return (S) new PASSABLE_BOOL();
+	}
 
 	
 

@@ -20,7 +20,7 @@ public class ComponentTest2 extends EntityComponent {
 	
 	@Override
 	protected void INIT(Entity entity) {
-		   entity.TakeInData(VAR_TEST,new PASSABLE_INT(155));
+		   entity.setVar(VAR_TEST,155);
 		
 		   
 		   

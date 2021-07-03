@@ -27,9 +27,9 @@ public class ComponentTest extends EntityComponent {
 	@Override
 	protected void INIT(Entity entity) {
 		
-		entity.INITData(VAR_TEST,new PASSABLE_BOOL(false));
+		entity.INITVar(VAR_TEST,false);
 		this.currentEntity=entity;
-		
+	
 		
 		
 		
@@ -37,17 +37,17 @@ public class ComponentTest extends EntityComponent {
 
 	@Override
 	protected void GAMELOOP_TICK() {
-		PASSABLE_BOOL test=this.currentEntity.getData(VAR_TEST);
 		
-		if(test!=null) {
+		
+		if(this.currentEntity.hasVAR(VAR_TEST)) {
 			
-			if(test.getValue()) {
+			if(this.currentEntity.getVar(VAR_TEST)) {
 
-				this.currentEntity.TakeInData(Entity.VAR_COLOR, new PASSABLE_VEC4F(Constants.SPRITE_NOT_SELECTED_COLOR));
+				this.currentEntity.setVar(Entity.VAR_COLOR,Constants.SPRITE_NOT_SELECTED_COLOR);
 			
 			
 			}else {
-				this.currentEntity.TakeInData(Entity.VAR_COLOR, new PASSABLE_VEC4F(Constants.DEFAULT_COLOR));
+				this.currentEntity.setVar(Entity.VAR_COLOR,Constants.DEFAULT_COLOR);
 			}
 			
 		}

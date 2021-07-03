@@ -46,10 +46,22 @@ public class PASSABLE_VEC2F implements PassableData<Vector2f> {
 	public String getType() {
 		return "VEC2F";
 	}
-
-	public static DATA_HANDLE<PASSABLE_VEC2F> getHandle(){
-    	return new DATA_HANDLE<PASSABLE_VEC2F>(new PASSABLE_VEC2F());
+	@Override
+	public void setValue(Vector2f value) {
+		 this.value=value;
+		
+	}
+	public static DATA_HANDLE<Vector2f,PASSABLE_VEC2F> getHandle(){
+    	return new DATA_HANDLE<Vector2f,PASSABLE_VEC2F>(new PASSABLE_VEC2F());
     }
+
+
+
+
+	@Override
+	public <S extends PassableData<Vector2f>> S getNewType() {
+		return (S) new PASSABLE_VEC2F();
+	}
 	
 
 

@@ -17,18 +17,13 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
 import java.util.LinkedList;
-import java.util.UUID;
 
-import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.system.MemoryUtil;
 import org.newdawn.slick.opengl.PNGDecoder;
 
 import core.CoreEngine;
-import core.PASSABLE_DATA_TYPE;
-import core.PassableData;
 
 /**Create a texture using {@linkplain #Texture(String)}
  * and then bind it to the gpu's texture location using

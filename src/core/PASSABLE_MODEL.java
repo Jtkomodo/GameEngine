@@ -47,9 +47,22 @@ public class PASSABLE_MODEL implements PassableData<Model> {
 		// TODO Auto-generated method stub
 		return "MODEL";
 	}
-	public static DATA_HANDLE<PASSABLE_MODEL> getHandle(){
-    	return new DATA_HANDLE<PASSABLE_MODEL>(new PASSABLE_MODEL());
+	@Override
+	public void setValue(Model value) {
+		this.value=value;
+		
+	}
+	public static DATA_HANDLE<Model,PASSABLE_MODEL> getHandle(){
+    	return new DATA_HANDLE<Model,PASSABLE_MODEL>(new PASSABLE_MODEL());
     }
+
+
+
+
+	@Override
+	public <S extends PassableData<Model>> S getNewType() {
+		return (S)new PASSABLE_MODEL();
+	}
 	
 
 }

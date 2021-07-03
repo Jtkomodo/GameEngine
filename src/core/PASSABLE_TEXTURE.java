@@ -36,9 +36,18 @@ public class PASSABLE_TEXTURE implements PassableData<Texture> {
 		// TODO Auto-generated method stub
 		return "TEXTURE";
 	}
-
-	public static DATA_HANDLE<PASSABLE_TEXTURE> getHandle(){
-    	return new DATA_HANDLE<PASSABLE_TEXTURE>(new PASSABLE_TEXTURE());
+	@Override
+	public void setValue(Texture value) {
+		this.value=value;
+		
+	}
+	public static DATA_HANDLE<Texture,PASSABLE_TEXTURE> getHandle(){
+    	return new DATA_HANDLE<Texture,PASSABLE_TEXTURE>(new PASSABLE_TEXTURE());
     }
+
+	@Override
+	public <S extends PassableData<Texture>> S getNewType() {
+		return (S) new PASSABLE_TEXTURE();
+	}
 	
 }

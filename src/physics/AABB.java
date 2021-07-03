@@ -9,9 +9,8 @@ import core.Constants;
 import core.CoreEngine;
 import core.Entity;
 import core.Game;
-import core.PASSABLE_DATA_TYPE;
 import core.PASSABLE_VEC2F;
-import core.PassableData;
+import core.VAR;
 import events.Flag;
 import rendering.MainRenderHandler;
 import rendering.Model;
@@ -29,7 +28,7 @@ public class AABB {
 	
 	public AABB(float width, float height,float resistance) {
 		
-	    CoreEngine.InitData(ID,Entity.VAR_BEFORE_POSITION,new PASSABLE_VEC2F(new Vector2f(0)));
+	    CoreEngine.InitData(ID,Entity.VAR_BEFORE_POSITION,new Vector2f(0));
 		this.width = width;
 		this.height = height;
 		this.resistance=resistance;
@@ -82,15 +81,12 @@ public class AABB {
 		Vector2f rcB=new Vector2f(0,0);
 		Vector2f lcA=new Vector2f(0,0);
 		Vector2f rcA=new Vector2f(0,0);
-		Vector2f positionA=new Vector2f();
-		Vector2f positionB=new Vector2f();
-		PASSABLE_VEC2F p =CoreEngine.getEntity(ID).getData(Entity.VAR_POSITION);
-		PASSABLE_VEC2F p2 =CoreEngine.getEntity(box.ID).getData(Entity.VAR_POSITION);
-		if(p!=null && p2!=null) {
-			
 		
-		positionA=p.value;
-		positionB=p2.value;
+		
+		if(CoreEngine.HasVar(ID,Entity.VAR_POSITION) && CoreEngine.HasVar(box.ID,Entity.VAR_POSITION) ) {
+        Vector2f positionA =CoreEngine.RecieveData(ID,Entity.VAR_POSITION);
+	    Vector2f positionB =CoreEngine.RecieveData(box.ID,Entity.VAR_POSITION);	
+		
 		
 		
 		
@@ -148,7 +144,7 @@ public class AABB {
 	
 			
 		//check to mare sure we have all the required VARS
-		if(e.hasAllVars(new String[]{Entity.VAR_POSITION.getName(),Entity.VAR_BEFORE_POSITION.getName()}) && e2.hasAllVars(new String[] {Entity.VAR_BEFORE_POSITION.getName(),Entity.VAR_POSITION.getName()})) {	
+		if(e.hasAllVars(new VAR<?>[]{Entity.VAR_POSITION,Entity.VAR_BEFORE_POSITION}) && e2.hasAllVars(new VAR<?>[] {Entity.VAR_BEFORE_POSITION,Entity.VAR_POSITION})) {	
 			
 			
 		
@@ -181,16 +177,10 @@ public class AABB {
 
 		}else if(amount==0) {
 			//get all of the varaibles we will need to get the resultant vector
-			PASSABLE_VEC2F var_beforePos_a=e.getData(Entity.VAR_BEFORE_POSITION);
-			PASSABLE_VEC2F var_beforePos_b=e2.getData(Entity.VAR_BEFORE_POSITION);
-			PASSABLE_VEC2F var_position_b=e2.getData(Entity.VAR_POSITION);
 			
-			
-			//now get all the correct values fron the VARS
-			
-			Vector2f before_position_a=var_beforePos_a.value;
-			Vector2f before_position_b=var_beforePos_b.value;
-			Vector2f position_b=var_position_b.value;
+			Vector2f before_position_a=e.getVar(Entity.VAR_BEFORE_POSITION);
+			Vector2f before_position_b=e2.getVar(Entity.VAR_BEFORE_POSITION);
+			Vector2f position_b=e2.getVar(Entity.VAR_POSITION);
 			
 			Vector2f penetration=new Vector2f(0,0);//this is the vector representing how much into the box we are in
 

@@ -125,50 +125,91 @@ public class Entity {
 		   return null;
 	   }
 	}
-	public <ST,T extends PassableData<ST>>  boolean hasVAR(VAR<T> var) {
-		return Entity_Data.containsKey(var.getName()) && (Entity_Data.get(var.getName())!=null);
-	}
-	public boolean hasAllVars(String[] varNames) {
-	 int i=0;
-	while(i<varNames.length) {
-     String varName=varNames[i];
-	if(!Entity_Data.containsKey(varName) || (Entity_Data.get(varName)==null)) {
-		return false;
-	}
-		 
-	i++;	 
-	 }
+	
+	
+	public boolean hasAllVars(VAR<?>[] vars){
+		int i=0;
+		while(i<vars.length) {
+			String varName=vars[i].getMangledName();
+			if(!Entity_Data.containsKey(varName) || (Entity_Data.get(varName)==null)) {
+				return false;
+			}else if(Entity_Data.get(varName).getValue()==null) {
+				return false;
+			}
+				 
+			i++;	 
+			 }
+				
+				return true;
+			}	
 		
-		return true;
-	}
+		
+		
+	
+	
+	
 	
 
-	public <ST,T extends PassableData<ST>>  T getData(VAR<T> var){
+	private <ST,T extends PassableData<ST>>  T getData(VAR<T> var){
 	
-		   if(Entity_Data.containsKey(var.getName())) {
-	     	 return (T)Entity_Data.get(var.getName());	
+		   if(Entity_Data.containsKey(var.getMangledName())) {
+	     	 return (T)Entity_Data.get(var.getMangledName());	
 		   }else {
 			  return null;
 		   }
 		}
 	
 	
+   public  <ST,T extends PassableData<ST>> boolean hasVAR(VAR<T> var){
 	
-	public  <ST,T extends PassableData<ST>>  void TakeInData(VAR<T> var,T data) {
+		   return getVar(var)!=null;
+	 
+   }
+	
+	
+	
+	public <ST,T extends PassableData<ST>> ST getVar(VAR<T> var) {
+		T data=getData(var);
+		
+		if(data!=null) {
+		  return data.getValue();
+		}else {
+			return null;
+		}
+	}
+	
+	
+	
+	public  <ST,T extends PassableData<ST>> void setVar(VAR<T> var,ST value) {
+		    
+		         VAR<T> newVar=VAR.makeNewVar(var.getRealName(),var.getHandle());
+		         
+		         T data=newVar.getType();
+		         
+		    	
+		    	 data.setValue(value);
+		         TakeInData(newVar,data); 
+	}
+	
+	
+	
+	
+	private  <ST,T extends PassableData<ST>>  void TakeInData(VAR<T> var,T data) {
 	  
-			this.Entity_Data.put(var.getName(),data);
+			this.Entity_Data.put(var.getMangledName(),data);
 	 
 	}
 	
-	
-	
-	public <ST,T extends PassableData<ST>> void INITData(VAR<T> var,T data) {
-		if(!this.Entity_Data.containsKey(var.getName())) {
-		   TakeInData(var,data);
+	public <ST,T extends PassableData<ST>> void INITVar(VAR<T> var,ST defaultValue){
+		if(!hasVAR(var)) {
+			setVar(var,defaultValue);
 		}
 	}
+	
+	
+
    	public <ST,T extends PassableData<ST>> void removeVAR(VAR<T> var) {
-   	         this.Entity_Data.remove(var.getName());
+   	         this.Entity_Data.remove(var.getMangledName());
    	}
     
 	

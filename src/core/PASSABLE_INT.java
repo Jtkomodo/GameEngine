@@ -14,7 +14,7 @@ public class PASSABLE_INT implements PassableData<Integer> {
 	
 	
 	
-	public PASSABLE_INT(int value) {
+	protected PASSABLE_INT(int value) {
 		Value = value;
 	}
 
@@ -49,10 +49,21 @@ public class PASSABLE_INT implements PassableData<Integer> {
 	public String getType() {
 		return "INT";
 	}
-
-    public static DATA_HANDLE<PASSABLE_INT> getHandle(){
-    	return new DATA_HANDLE<PASSABLE_INT>(new PASSABLE_INT());
+	@Override
+	public void setValue(Integer value) {
+		this.Value=value;
+		
+	}
+    public static DATA_HANDLE<Integer,PASSABLE_INT> getHandle(){
+    	return new DATA_HANDLE<Integer,PASSABLE_INT>(new PASSABLE_INT());
     }
+
+
+
+	@Override
+	public <S extends PassableData<Integer>> S getNewType() {
+		return (S)new PASSABLE_INT();
+	}
 	
 
 }

@@ -48,11 +48,11 @@ public class AnimationEngine {
 		  if(e!=null) {
 			  boolean paused=false;
 			  if(e.hasVAR(Entity.VAR_ANAIMATION_PAUSE)) {
-			   paused=e.getData(Entity.VAR_ANAIMATION_PAUSE).getValue();
+			   paused=e.getVar(Entity.VAR_ANAIMATION_PAUSE);
 			  }
 			  boolean reset=false;
 			  if(e.hasVAR(Entity.VAR_ANAIMATION_RESET)) {
-			   reset=e.getData(Entity.VAR_ANAIMATION_RESET).getValue();
+			   reset=e.getVar(Entity.VAR_ANAIMATION_RESET);
 			  }
 			
 			  
@@ -77,10 +77,10 @@ public class AnimationEngine {
 	  A.currentFrame=0;
 	   AnimationData d=A.data[A.currentFrame];
 	
-	   CoreEngine.sendData(ID,Entity.VAR_SPRITE_SHEET,new PASSABLE_SPRITESHEET(d.sheet));
-	   CoreEngine.sendData(ID,Entity.VAR_FRAME,new PASSABLE_INT(d.frame));
-	   CoreEngine.sendData(ID,Entity.VAR_ANIMATION_UPDATED,new PASSABLE_BOOL(true));
-	   CoreEngine.sendData(ID,Entity.VAR_ANAIMATION_RESET,new PASSABLE_BOOL(false));
+	   CoreEngine.sendData(ID,Entity.VAR_SPRITE_SHEET,d.sheet);
+	   CoreEngine.sendData(ID,Entity.VAR_FRAME,d.frame);
+	   CoreEngine.sendData(ID,Entity.VAR_ANIMATION_UPDATED,true);
+	   CoreEngine.sendData(ID,Entity.VAR_ANAIMATION_RESET,false);
 	 }
 		if(frametime>=1.0) {
 
@@ -106,9 +106,9 @@ private static void updateAnimation(UUID ID,Entity e,Animation A) {
 	   }
 	   AnimationData d=A.data[A.currentFrame];
 	
-	   CoreEngine.sendData(ID,Entity.VAR_SPRITE_SHEET,new PASSABLE_SPRITESHEET(d.sheet));
-	   CoreEngine.sendData(ID,Entity.VAR_FRAME,new PASSABLE_INT(d.frame));
-	   CoreEngine.sendData(ID,Entity.VAR_ANIMATION_UPDATED,new PASSABLE_BOOL(true));
+	   CoreEngine.sendData(ID,Entity.VAR_SPRITE_SHEET,d.sheet);
+	   CoreEngine.sendData(ID,Entity.VAR_FRAME,d.frame);
+	   CoreEngine.sendData(ID,Entity.VAR_ANIMATION_UPDATED,true);
 	   
 	 }
 		if(frametime>=1.0) {

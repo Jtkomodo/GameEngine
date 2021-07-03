@@ -60,10 +60,25 @@ public class PASSABLE_VEC4F implements PassableData<Vector4f> {
 		// TODO Auto-generated method stub
 		return "VEC4F";
 	}
-	
-	public static DATA_HANDLE<PASSABLE_VEC4F> getHandle(){
-    	return new DATA_HANDLE<PASSABLE_VEC4F>(new PASSABLE_VEC4F());
+	@Override
+	public void setValue(Vector4f value) {
+		this.value=value;
+		
+	}
+	public static DATA_HANDLE<Vector4f,PASSABLE_VEC4F> getHandle(){
+    	return new DATA_HANDLE<Vector4f,PASSABLE_VEC4F>(new PASSABLE_VEC4F());
     }
+
+
+
+
+
+
+
+	@Override
+	public <S extends PassableData<Vector4f>> S getNewType() {
+		return (S)new PASSABLE_VEC4F();
+	}
 	
 
 }

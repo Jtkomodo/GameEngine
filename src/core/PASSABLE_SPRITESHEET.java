@@ -44,10 +44,22 @@ public class PASSABLE_SPRITESHEET implements PassableData<SpriteSheet>{
 	public String getType() {
 		return "SPRITESHEET";
 	}
-	
-	public static DATA_HANDLE<PASSABLE_SPRITESHEET> getHandle(){
-    	return new DATA_HANDLE<PASSABLE_SPRITESHEET>(new PASSABLE_SPRITESHEET());
+	@Override
+	public void setValue(SpriteSheet value) {
+		this.value=value;
+		
+	}
+	public static DATA_HANDLE<SpriteSheet,PASSABLE_SPRITESHEET> getHandle(){
+    	return new DATA_HANDLE<SpriteSheet,PASSABLE_SPRITESHEET>(new PASSABLE_SPRITESHEET());
     }
+
+
+
+
+	@Override
+	public <S extends PassableData<SpriteSheet>> S getNewType() {
+		return (S)new PASSABLE_SPRITESHEET();
+	}
 	
 
 }

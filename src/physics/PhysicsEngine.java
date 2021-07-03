@@ -10,6 +10,7 @@ import core.CoreEngine;
 import core.Entity;
 import core.EntityComponent;
 import core.PASSABLE_VEC2F;
+import core.VAR;
 import events.Flag;
 
 public class PhysicsEngine {
@@ -61,16 +62,15 @@ public class PhysicsEngine {
 		    Entity A=CoreEngine.getEntity(A_ID);
 		    Entity B=CoreEngine.getEntity(B_ID);
 		    if(A!=null && B!=null) {
-		    	if(A.hasAllVars(new String[] {Entity.VAR_AABB.getName(),Entity.VAR_POSITION.getName(),Entity.VAR_VELOCITY.getName()})) {
-		    	AABB a=A.getData(Entity.VAR_AABB).getValue();
-		    	AABB b=B.getData(Entity.VAR_AABB).getValue();
+		    	if(A.hasAllVars(new VAR<?>[] {Entity.VAR_AABB,Entity.VAR_POSITION,Entity.VAR_VELOCITY})) {
 		    	
 		    	
 		    	
 		    	
-		    	
-		    	Vector2f velocity=A.getData(Entity.VAR_VELOCITY).value;
-		    	Vector2f position=A.getData(Entity.VAR_POSITION).value;
+		    	AABB a=A.getVar(Entity.VAR_AABB);
+			    AABB b=B.getVar(Entity.VAR_AABB);
+			    Vector2f velocity=A.getVar(Entity.VAR_VELOCITY);
+		    	Vector2f position=A.getVar(Entity.VAR_POSITION);
 		    	
 		    	
 		    	Vector2f direction=new Vector2f();
@@ -86,7 +86,7 @@ public class PhysicsEngine {
 		    	
 		    	Vector2f newMovement=a.findVector(position,velocity,direction, b);
 		         if(newMovement!=null) {
-		        	 A.TakeInData(Entity.VAR_POSITION,new PASSABLE_VEC2F(newMovement));
+		        	 A.setVar(Entity.VAR_POSITION,newMovement);
 		         }
 		    
 		    	
@@ -108,16 +108,20 @@ public class PhysicsEngine {
 
 
 					UUID ID_1=entities.get(i_1);
-					Entity e_1=CoreEngine.getEntity(ID_1);
-					UUID ID_2=entities.get(i_2);
-					Entity e_2=CoreEngine.getEntity(ID_2);
+				    UUID ID_2=entities.get(i_2);
+					
 
-
-					if(e_1!=null && e_2!=null) {
-						if(e_1.hasVAR(Entity.VAR_AABB) && e_2.hasVAR(Entity.VAR_AABB)) {
+				
+						if(CoreEngine.HasVar(ID_1,Entity.VAR_AABB) && CoreEngine.HasVar(ID_2, Entity.VAR_AABB)) {
+							AABB A=CoreEngine.RecieveData(ID_1,Entity.VAR_AABB);
+							AABB B=CoreEngine.RecieveData(ID_2,Entity.VAR_AABB);
+							
 							//if there is a collision then add that collision to the list
-							Collision col=new Collision(e_1.getData(Entity.VAR_AABB).getValue(),e_2.getData(Entity.VAR_AABB).getValue());
-							if(e_1.getData(Entity.VAR_AABB).getValue().vsAABB(e_2.getData(Entity.VAR_AABB).getValue())) {
+						
+							
+							Collision col=new Collision(A,B);
+							
+							if(A.vsAABB(B)) {
 								collision=true;
 							
 								if(collisionsWatched.containsKey(col)) {
@@ -126,7 +130,7 @@ public class PhysicsEngine {
 								if(!collisionsColided.contains(col)) {
 									collisionsColided.add(col);
 								}
-                                e_1.getData(Entity.VAR_AABB).getValue().setFlagState(true);
+                               A.setFlagState(true);
 							}else {
 								if(collisionsWatched.containsKey(col)) {
 									collisionsWatched.get(col).setState(false);
@@ -134,21 +138,20 @@ public class PhysicsEngine {
 							}
 
 						}
-					}
+					
 				}
 			}
 			//if there was no collision at all with that box then set the before collision position to the position now and set the state of the flag to false
 			if(!collision) {
 				UUID ID=entities.get(i_1);
-				Entity e=CoreEngine.getEntity(ID);
-                if(e.hasVAR(Entity.VAR_AABB)) {
-                	e.getData(Entity.VAR_AABB).getValue().setFlagState(false);
-                	
+			
+                if(CoreEngine.HasALLVars(ID,new VAR<?>[] {Entity.VAR_AABB,Entity.VAR_POSITION})) {
+                	CoreEngine.RecieveData(ID,Entity.VAR_AABB).setFlagState(false);
+                    Vector2f position=CoreEngine.RecieveData(ID,Entity.VAR_POSITION);
+    				CoreEngine.sendData(ID,Entity.VAR_BEFORE_POSITION,position);
+    				  
                 }
-				if(e!=null) {
-					PASSABLE_VEC2F position=e.getData(Entity.VAR_POSITION);
-					e.TakeInData(Entity.VAR_BEFORE_POSITION,position);
-				}
+			
 			}
 		}
 	}
