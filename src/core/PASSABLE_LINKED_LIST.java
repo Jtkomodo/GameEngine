@@ -31,7 +31,7 @@ public class PASSABLE_LINKED_LIST<T> implements PassableData<LinkedList<T>>,Pass
 
 	@Override
 	public String getType() {
-		return "LIST-"+this.typeName;
+		return "L_L-"+this.typeName;
 	}
 
 	@Override

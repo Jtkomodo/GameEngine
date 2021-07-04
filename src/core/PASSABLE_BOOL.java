@@ -15,9 +15,7 @@ public class PASSABLE_BOOL implements PassableData<Boolean> {
     	
     }
 	
-	protected PASSABLE_BOOL(boolean value) {
-		this.value = value;
-	}
+	
 
 	@Override
 	public UUID getDATAID() {

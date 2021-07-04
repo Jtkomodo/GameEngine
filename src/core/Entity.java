@@ -40,12 +40,12 @@ public class Entity {
 	
 	
 	public final static VAR<PASSABLE_LINKED_LIST<Boolean>> VAR_TESTLIST=VAR.makeNewVar("TESTLIST",PASSABLE_LINKED_LIST.getHandle(PASSABLE_BOOL.getHandle()));
+	public final static VAR<PASSABLE_HASH_MAP<String,Integer>> VAR_TESTHASH=VAR.makeNewVar("TESTHASH",PASSABLE_HASH_MAP.getHandle(PASSABLE_STRING.getHandle(), PASSABLE_INT.getHandle()));
 	
 	
 	
 	
-	
-	public final UUID ID;
+	public final UUID ID=UUID.randomUUID();
 	
 	
 	
@@ -57,7 +57,7 @@ public class Entity {
 	private HashMap<UUID,EntityComponent> components=new HashMap<UUID,EntityComponent>(); 
 
 	public Entity(EntityComponent[] components){
-		this.ID=UUID.randomUUID();
+
 		addComponents(components);
 		
 	}
@@ -196,7 +196,83 @@ public class Entity {
 		    	 data.setValue(value);
 		         TakeInData(newVar,data); 
 	}
-	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void setList(VAR<T> var,ST[] values) {
+	
+	public <K,V> void HashMapPut(VAR<PASSABLE_HASH_MAP<K,V>> var,K key,V value) {
+	         PASSABLE_HASH_MAP<K,V> data=getData(var);
+		
+				if(data!=null) {
+				   data.put(key, value);
+				}else {
+				    VAR<PASSABLE_HASH_MAP<K,V>> newVar=VAR.makeNewVar(var.getRealName(),var.getHandle());
+			         
+			          data=newVar.getType();
+			         
+			    	
+			    	 data.put(key, value);
+			         TakeInData(newVar,data); 
+					
+				}
+	}
+	public <K,V> V HashMapGet(VAR<PASSABLE_HASH_MAP<K,V>> var,K key) {
+        PASSABLE_HASH_MAP<K,V> data=getData(var);
+	
+			if(data!=null) {
+			   return data.get(key);
+			}else {
+				return null;
+			}
+}
+	public <K,V> V HashMapGetOrDefault(VAR<PASSABLE_HASH_MAP<K,V>> var,K key,V defaultValue) {
+        PASSABLE_HASH_MAP<K,V> data=getData(var);
+	
+			if(data!=null) {
+			   return data.getOrDefault(key, defaultValue);
+			}else {
+				return defaultValue;
+			}
+}	
+	public <K,V> boolean HashMapIsEmpty(VAR<PASSABLE_HASH_MAP<K,V>> var) {
+		   PASSABLE_HASH_MAP<K,V> data=getData(var);
+		
+		  if(data!=null) {
+			  return data.isEmpty();
+		  }else {
+			  return false;
+		  }
+		
+	}
+	public <K,V> boolean HashMapContainsKey(VAR<PASSABLE_HASH_MAP<K,V>> var,K key) {
+		   PASSABLE_HASH_MAP<K,V> data=getData(var);
+		
+		  if(data!=null) {
+			  return data.containsKey(key);
+		  }else {
+			  return false;
+		  }
+		
+	}
+	public <K,V> boolean HashMapContainsValue(VAR<PASSABLE_HASH_MAP<K,V>> var,V value) {
+		   PASSABLE_HASH_MAP<K,V> data=getData(var);
+		
+		  if(data!=null) {
+			  return data.containsValue(value);
+		  }else {
+			  return false;
+		  }
+		
+	}
+	
+	public <K,V> void HashMapClear(VAR<PASSABLE_HASH_MAP<K,V>> var) {
+		      PASSABLE_HASH_MAP<K,V> data=getData(var);
+			
+			  if(data!=null) {
+				   data.clearMap();
+			  }
+		
+	}
+	
+	
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void ListSet(VAR<T> var,ST[] values) {
 	      	 
           VAR<T> newVar=VAR.makeNewVar(var.getRealName(),var.getHandle());
         
@@ -207,7 +283,7 @@ public class Entity {
 		
     }
 	
-	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> ST[]  getListAsArray(VAR<T> var,ST[] array) {
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> ST[]  ListGetAsArray(VAR<T> var,ST[] array) {
 	      T data=getData(var);
 		
 		if(data!=null) {
@@ -219,7 +295,7 @@ public class Entity {
 		
   }
 	
-	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> boolean  isListEmptyy(VAR<T> var) { 
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> boolean  ListIsEmptyy(VAR<T> var) { 
 		   T data=getData(var);
 			
 			if(data!=null) {
@@ -230,7 +306,7 @@ public class Entity {
 
 
 }
-	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void  ClearList(VAR<T> var) { 
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void  ListClear(VAR<T> var) { 
 	        
 		  T data=getData(var);
 			
@@ -251,7 +327,7 @@ public class Entity {
 		
 	}
 	
-	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void  setListAtIndex(VAR<T> var,int index,ST value) {
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void  ListSetAtIndex(VAR<T> var,int index,ST value) {
 		    T data=getData(var);
 			
 			if(data!=null) {
@@ -259,7 +335,7 @@ public class Entity {
 			}
 		
 	}
-	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> ST  getValueAtIndex(VAR<T> var,int index) {
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> ST  ListGetValueAtIndex(VAR<T> var,int index) {
 	    T data=getData(var);
 		
 		if(data!=null) {

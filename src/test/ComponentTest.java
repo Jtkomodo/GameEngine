@@ -19,7 +19,7 @@ public class ComponentTest extends EntityComponent {
 	
 	
 	public static final VAR<PASSABLE_BOOL> VAR_TEST=createNewVAR("TEST",PASSABLE_BOOL.getHandle());
-	
+
 	
 	
 	

@@ -113,10 +113,9 @@ public class Start extends Game {
       
       
      
-	    
 	
-	       
-	  
+	
+	   
 	
 		
 	    player3.DEBUG=true;
