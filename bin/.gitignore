@@ -1,5 +1,11 @@
+/animation/
+/audio/
+/core/
+/events/
+/input/
+/physics/
 /rendering/
+/res/
+/shaders/
 /test/
 /textrendering/
-/core/
-/audio/

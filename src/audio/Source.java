@@ -9,8 +9,9 @@ public class Source {
    
 	private static boolean SOUNDON=true;//just so I can have my sound on for other stuff but mute my game
 	private Vector2f position;
-	private int sourceID;
-	private float gain,pitch,rollOff,refrenceDistance,MaxDistance;
+	protected int sourceID;
+	protected float gainOriginal;
+	protected float gain,pitch,rollOff,refrenceDistance,MaxDistance;
 	
 	/*MaxDistance only works in a linear Distance attenuation model*/
 	
@@ -24,8 +25,8 @@ public class Source {
 		   this.rollOff=rollOff;
 		   this.refrenceDistance=referenceDistance;
 		   this.MaxDistance=MaxDistance;
-		   
-		  sourceID=alGenSources();
+		   this.gainOriginal=gain;
+		   sourceID=alGenSources();
 		   
 		   alSourcef(sourceID, AL_GAIN, gain);
 		   alSourcef(sourceID, AL_PITCH, pitch);
@@ -87,6 +88,33 @@ public class Source {
 			CoreEngine.DebugPrint("SOUND IS OFF------------------------------\nChange SOUNDON=true in Source.java for sound------------------------------");
 		}
 	  }
+	public void playMusic(Music music){
+		if(SOUNDON) {
+			if (!isPlaying()) {
+				 setGain(1);
+				music.play(this);
+			}
+			
+			
+		}else {
+			CoreEngine.DebugPrint("SOUND IS OFF------------------------------\nChange SOUNDON=true in Source.java for sound------------------------------");
+		}
+	  }
+	public void updateMusic(Music music) {
+		if(SOUNDON) {
+			
+	            music.update(this);
+			
+			
+			
+		}else {
+			CoreEngine.DebugPrint("SOUND IS OFF------------------------------\nChange SOUNDON=true in Source.java for sound------------------------------");
+		}
+	  }
+	
+	
+	
+	
 	
 	  public void SetPosition(Vector2f position) {
 		  this.position=position;

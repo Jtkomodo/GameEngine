@@ -8,6 +8,7 @@ import org.lwjgl.glfw.GLFW;
 
 import animation.Animation;
 import animation.SpriteSheet;
+import audio.Music;
 import audio.Sound;
 import audio.Source;
 import core.ComponentAnimation;
@@ -54,7 +55,8 @@ public class Start extends Game {
 	private Sound Back;
 	private Sound NO;
 	private Sound TimedBad;
-	private Source source1;
+	private Music testMusic;
+	private Source musicSource;
 	private Source source;
 	
 	public static int amountWidth=Math.round((width/64)),amountHeight=Math.round((height/64));
@@ -68,6 +70,7 @@ public class Start extends Game {
 	
 	@Override
 	public void GameLoop() {
+		musicSource.updateMusic(testMusic);
 		input();
 	
 		if(player.hasVAR(Entity.VAR_POSITION)){
@@ -153,12 +156,13 @@ public class Start extends Game {
 		Back=new Sound("Back_GUI");
 		NO=new Sound("NO_GUI");
 		TimedBad=new Sound("Timed_Button_BAD");
+		testMusic=new Music("TEST");
 		
 
-        source1=new Source(new Vector2f(0),1,1, 1,200, 0);
+        musicSource=new Source(new Vector2f(0),1,1, 1,200, 0);
         source=new Source(new Vector2f(0), 1, 1, 0, 0,0);
 		source.setSourceRelitive(true);	
-         
+        musicSource.playMusic(testMusic);       
 	  
 	}
 
@@ -179,7 +183,7 @@ public class Start extends Game {
 		if(InputPoller.JustPushed(GLFW.GLFW_KEY_P)) {
 			if(player.hasVAR(ComponentTest.VAR_TEST)) {
 				player.setVar(ComponentTest.VAR_TEST,!player.getVar(ComponentTest.VAR_TEST));
-				source1.play(Select);	
+				musicSource.play(Select);	
 				
 			}
 		

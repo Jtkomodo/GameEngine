@@ -1,6 +1,7 @@
 package core;
 
 import audio.AudioInit;
+import audio.Music;
 import rendering.Camera;
 import rendering.MainBatchRender;
 import rendering.Render;
@@ -97,6 +98,7 @@ public abstract class Game {
 	private final void Close() {
 		CoreEngine.DebugPrint("Closing.....");
 		window.destroy();
+		Music.close();
 		MainBatchRender.deleteResources();
 		AudioInit.destroy();
 		System.exit(0);

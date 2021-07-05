@@ -132,5 +132,7 @@
 	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-zstd-natives-windows.jar"/>
 	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-zstd-sources.jar"/>
 	<classpathentry kind="lib" path="D:/Engine/libwin/slick-util.jar"/>
+	<classpathentry kind="lib" path="D:/Engine/libwin/jogg-0.0.7.jar"/>
+	<classpathentry kind="lib" path="D:/Engine/libwin/jorbis-0.0.15.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

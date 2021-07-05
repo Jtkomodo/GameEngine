@@ -146,7 +146,7 @@ public class MultipleTextureBatchedModel {
 		 
 		 
 		 drawCount=drawCount+(6*quads);//used for telling the amount of triangles to draw when the drawcall is made
-		drawCount2=drawCount*4;//this is for the correct pionter to the next value in the indeces buffer
+		 drawCount2=drawCount*4;//this is for the correct pionter to the next value in the indeces buffer
 		
 		
 		 pionter=pionter+(v.length*4);//pionter to the next value in the vertex buffer so that it won't write over the old one
