@@ -1,6 +1,8 @@
 package core;
 
+import audio.AudioInit;
 import rendering.Camera;
+import rendering.MainBatchRender;
 import rendering.Render;
 import rendering.ShaderProgram;
 import rendering.Texture;
@@ -76,6 +78,7 @@ public abstract class Game {
 		if(DEFAULT_TEXTURE==null) {
 		DEFAULT_TEXTURE=new Texture("whitebox");
 		}
+        AudioInit.InitAudio();
 	}
 	
 	
@@ -94,6 +97,8 @@ public abstract class Game {
 	private final void Close() {
 		CoreEngine.DebugPrint("Closing.....");
 		window.destroy();
+		MainBatchRender.deleteResources();
+		AudioInit.destroy();
 		System.exit(0);
 		
 	}

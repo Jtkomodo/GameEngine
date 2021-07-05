@@ -8,6 +8,8 @@ import org.lwjgl.glfw.GLFW;
 
 import animation.Animation;
 import animation.SpriteSheet;
+import audio.Sound;
+import audio.Source;
 import core.ComponentAnimation;
 import core.ComponentColision;
 import core.ComponentRenderModel;
@@ -46,6 +48,14 @@ public class Start extends Game {
 	private float Rendercamy;
 	private Flag test;
 	private TextBuilder text;
+	private Sound Heal;
+	private Sound Select;
+	private Sound Move;
+	private Sound Back;
+	private Sound NO;
+	private Sound TimedBad;
+	private Source source1;
+	private Source source;
 	
 	public static int amountWidth=Math.round((width/64)),amountHeight=Math.round((height/64));
 	
@@ -113,14 +123,7 @@ public class Start extends Game {
 	 
       
       
-    player.HashMapPut(Entity.VAR_TESTHASH_AABBB,"player",player.getVar(Entity.VAR_AABB));
-    player.HashMapPut(Entity.VAR_TESTHASH_AABBB,"player2",player2.getVar(Entity.VAR_AABB));
-    player.HashMapPut(Entity.VAR_TESTHASH_AABBB,"player3",player3.getVar(Entity.VAR_AABB));
-	
-  
-    player.ListSet(Entity.VAR_TESTLIST,new AABB[] {player.getVar(Entity.VAR_AABB),player2.getVar(Entity.VAR_AABB)});
-	   
-	player.ListClear(Entity.VAR_TESTLIST);
+    
 		
 	    player3.DEBUG=true;
 	    player2.DEBUG=true;
@@ -144,6 +147,18 @@ public class Start extends Game {
 	     e.ActivateFlags();
 	     player.DebugPrintAllVars("player");
 	    } 
+		Heal=new Sound("healing sound");
+		Select=new Sound("select_GUI");
+		Move=new Sound("move_GUI");
+		Back=new Sound("Back_GUI");
+		NO=new Sound("NO_GUI");
+		TimedBad=new Sound("Timed_Button_BAD");
+		
+
+        source1=new Source(new Vector2f(0),1,1, 1,200, 0);
+        source=new Source(new Vector2f(0), 1, 1, 0, 0,0);
+		source.setSourceRelitive(true);	
+         
 	  
 	}
 
@@ -164,7 +179,7 @@ public class Start extends Game {
 		if(InputPoller.JustPushed(GLFW.GLFW_KEY_P)) {
 			if(player.hasVAR(ComponentTest.VAR_TEST)) {
 				player.setVar(ComponentTest.VAR_TEST,!player.getVar(ComponentTest.VAR_TEST));
-					
+				source1.play(Select);	
 				
 			}
 		
