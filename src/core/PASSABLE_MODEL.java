@@ -63,6 +63,14 @@ public class PASSABLE_MODEL implements PassableData<Model> {
 	public <S extends PassableData<Model>> S getNewType() {
 		return (S)new PASSABLE_MODEL();
 	}
+
+
+
+
+	@Override
+	public String printValue(String indent) {
+		return ""+this.value;
+	}
 	
 
 }

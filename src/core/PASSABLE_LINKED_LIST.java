@@ -12,16 +12,19 @@ public class PASSABLE_LINKED_LIST<T> implements PassableData<LinkedList<T>>,Pass
 	public static final UUID ID=UUID.randomUUID();
 	
 	private LinkedList<T> list;
+	private PassableData<T> type;
+	
 	private String typeName;
-	private PASSABLE_LINKED_LIST(String typeName) {
-		this.typeName=typeName;
+	private <Type extends PassableData<T>>PASSABLE_LINKED_LIST(Type type) {
+		this.typeName=type.getType();
+		this.type=type;
 		list=new LinkedList<T>();
 	}
 	
 	
 	@Override
 	public <S extends PassableData<LinkedList<T>>> S getNewType() {
-		return (S) new PASSABLE_LINKED_LIST<T>(this.typeName);
+		return (S) new PASSABLE_LINKED_LIST<T>(this.type);
 	}
 
 	@Override
@@ -45,7 +48,7 @@ public class PASSABLE_LINKED_LIST<T> implements PassableData<LinkedList<T>>,Pass
 	}
 
 	public static  < T extends PassableData<K>,K>  DATA_HANDLE<LinkedList<K>,PASSABLE_LINKED_LIST<K>>  getHandle(DATA_HANDLE<K,T> handle){
-	         return new DATA_HANDLE<LinkedList<K>,PASSABLE_LINKED_LIST<K>>(new PASSABLE_LINKED_LIST<K>(handle.getType().getType()));
+	         return new DATA_HANDLE<LinkedList<K>,PASSABLE_LINKED_LIST<K>>(new PASSABLE_LINKED_LIST<K>(handle.getType()));
 	}
 	
 
@@ -97,6 +100,20 @@ public class PASSABLE_LINKED_LIST<T> implements PassableData<LinkedList<T>>,Pass
 		
 		return this.list.get(index);
 		 
+	}
+
+
+	@Override
+	public String printValue(String indent) {
+		String S="LinkedList{";
+		for(int i=0;i<this.list.size();i++) {
+			
+			type.setValue(this.list.get(i));
+			S=S.concat("\n"+indent+"			LinkedListValue:"+type.printValue(indent+"	"));
+		}
+		
+		S=S.concat("\n"+indent+"		}");
+		return S;
 	}
 
 

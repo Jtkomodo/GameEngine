@@ -61,6 +61,21 @@ public class PASSABLE_AABB implements PassableData<AABB> {
 	}
 
 
+	@Override
+	public String printValue(String indent) {
+		if(value!=null) {
+		return      "AABB{"+"\n"+
+					indent+"			Widht:"+value.getwidth()+"\n"+
+					indent+"			Height:"+value.getHeight()+"\n"+
+					indent+"			Resistance:"+value.getResistance()+"\n"+
+					indent+"			ID:"+value.getID()+"\n"+
+					indent+"		}";
+		}else {		
+			return "null";
+		}
+	}
+
+
 
 
   

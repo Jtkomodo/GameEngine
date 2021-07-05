@@ -54,4 +54,10 @@ public class PASSABLE_UUID implements PassableData<UUID> {
 	public static DATA_HANDLE<UUID,PASSABLE_UUID> getHandle(){
     	return new DATA_HANDLE<UUID,PASSABLE_UUID>(new PASSABLE_UUID());
     }
+
+
+	@Override
+	public String printValue(String indent) {
+		return ""+this.value;
+	}
 }

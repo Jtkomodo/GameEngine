@@ -49,5 +49,10 @@ public class PASSABLE_TEXTURE implements PassableData<Texture> {
 	public <S extends PassableData<Texture>> S getNewType() {
 		return (S) new PASSABLE_TEXTURE();
 	}
+
+	@Override
+	public String printValue(String indent) {
+		return this.value.getPath();
+	}
 	
 }

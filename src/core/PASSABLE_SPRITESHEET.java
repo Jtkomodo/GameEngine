@@ -60,6 +60,14 @@ public class PASSABLE_SPRITESHEET implements PassableData<SpriteSheet>{
 	public <S extends PassableData<SpriteSheet>> S getNewType() {
 		return (S)new PASSABLE_SPRITESHEET();
 	}
+
+
+
+
+	@Override
+	public String printValue(String indent) {
+		return this.value.getTexture().getPath();
+	}
 	
 
 }

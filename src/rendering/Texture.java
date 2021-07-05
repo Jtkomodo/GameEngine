@@ -196,6 +196,11 @@ public int getW() {
 }
 
 
+public String getPath() {
+	return Path;
+}
+
+
 
 
 }

@@ -46,6 +46,16 @@ public class PASSABLE_STRING implements PassableData<String> {
 	public static DATA_HANDLE<String,PASSABLE_STRING> getHandle(){
 		return new DATA_HANDLE<String,PASSABLE_STRING>(new PASSABLE_STRING());
 	}
+
+
+
+
+
+
+	@Override
+	public String printValue(String indent) {
+		return this.value;
+	}
 	
 
 }

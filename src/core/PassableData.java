@@ -40,8 +40,12 @@ public interface PassableData<T> {
 	 * 
 	 * @return the ID of the type
 	 */
-	public UUID getDATAID(); 
-	
+    public UUID getDATAID(); 
+	/**
+	 * This is the method that is called so that can know what to print when debug print is called in entity
+	 * @return String to tell us what the value is
+	 */
+	public String printValue(String indent);
 	
 	
 }

@@ -62,6 +62,14 @@ public class PASSABLE_VEC2F implements PassableData<Vector2f> {
 	public <S extends PassableData<Vector2f>> S getNewType() {
 		return (S) new PASSABLE_VEC2F();
 	}
+
+
+
+
+	@Override
+	public String printValue(String indent) {
+		return ""+this.value;
+	}
 	
 
 

@@ -14,11 +14,17 @@ public class PASSABLE_HASH_MAP<K,V> implements PassableData<HashMap<K,V>> {
 	public static final UUID ID=UUID.randomUUID();
 	private String Ktype;
 	private String Vtype;
+	private DATA_HANDLE<K,? extends PassableData<K>> KeyHandle;
+	private DATA_HANDLE<V,? extends PassableData<V>> ValueHandle;
+	
+	
 	private HashMap<K,V> value;
 	
-	private PASSABLE_HASH_MAP(String Ktype,String Vtype){
-		this.Ktype=Ktype;
-		this.Vtype=Vtype;
+	private <VT extends PassableData<V>,KT extends PassableData<K>>PASSABLE_HASH_MAP(DATA_HANDLE<K,KT>Khandle, DATA_HANDLE<V,VT> Vhandle){
+		this.KeyHandle=Khandle;
+		this.ValueHandle=Vhandle;
+		this.Ktype=Khandle.getTypeName();
+		this.Vtype=Vhandle.getTypeName();
 		this.value=new HashMap<K,V>();
 	}
 	
@@ -33,7 +39,7 @@ public class PASSABLE_HASH_MAP<K,V> implements PassableData<HashMap<K,V>> {
 	
 	@Override
 	public <S extends PassableData<HashMap<K, V>>> S getNewType() {
-		return (S)new PASSABLE_HASH_MAP<K,V>(Ktype,Vtype);
+		return (S)new PASSABLE_HASH_MAP<K,V>(KeyHandle,ValueHandle);
 	}
 
 	@Override
@@ -95,8 +101,37 @@ public class PASSABLE_HASH_MAP<K,V> implements PassableData<HashMap<K,V>> {
 	
 	//HANDLE
 	public static <K,V,KT extends PassableData<K>,VT extends PassableData<V>> DATA_HANDLE<HashMap<K,V>,PASSABLE_HASH_MAP<K,V>> getHandle(DATA_HANDLE<K,KT> Khandle,DATA_HANDLE<V,VT> Vhandle) {
-		   return new DATA_HANDLE<HashMap<K,V>,PASSABLE_HASH_MAP<K,V>>(new PASSABLE_HASH_MAP<K,V>(Khandle.getTypeName(),Vhandle.getTypeName()));
+		   return new DATA_HANDLE<HashMap<K,V>,PASSABLE_HASH_MAP<K,V>>(new PASSABLE_HASH_MAP<K,V>(Khandle,Vhandle));
 		
+	}
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public String printValue(String indent) {
+		String S="HASHMAP:{\n";
+		Iterator<Entry<K,V>> I=this.value.entrySet().iterator();
+		while(I.hasNext()) {
+			Entry<K,V> e=I.next();
+			K key=e.getKey();
+			V vlaue=e.getValue();
+			KeyHandle.getType().setValue(key);
+			ValueHandle.getType().setValue(vlaue);
+			S=S.concat("\n			HashMapKey:"+KeyHandle.getType().printValue(indent+"	"));
+			S=S.concat("\n			HashMapValue:"+ValueHandle.getType().printValue(indent+"	"));
+			
+		}
+
+			S=S.concat("\n"+indent+"        }");
+		return S;
+
 	}
 	
 

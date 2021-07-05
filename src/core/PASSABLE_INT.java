@@ -64,6 +64,13 @@ public class PASSABLE_INT implements PassableData<Integer> {
 	public <S extends PassableData<Integer>> S getNewType() {
 		return (S)new PASSABLE_INT();
 	}
+
+
+
+	@Override
+	public String printValue(String indent) {
+		return ""+this.Value;
+	}
 	
 
 }

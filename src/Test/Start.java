@@ -23,6 +23,7 @@ import events.Condition;
 import events.Events;
 import events.Flag;
 import input.InputPoller;
+import physics.AABB;
 import physics.Collision;
 import physics.PhysicsEngine;
 import rendering.Model;
@@ -112,11 +113,14 @@ public class Start extends Game {
 	 
       
       
-     
+    player.HashMapPut(Entity.VAR_TESTHASH_AABBB,"player",player.getVar(Entity.VAR_AABB));
+    player.HashMapPut(Entity.VAR_TESTHASH_AABBB,"player2",player2.getVar(Entity.VAR_AABB));
+    player.HashMapPut(Entity.VAR_TESTHASH_AABBB,"player3",player3.getVar(Entity.VAR_AABB));
 	
-	
+  
+    player.ListSet(Entity.VAR_TESTLIST,new AABB[] {player.getVar(Entity.VAR_AABB),player2.getVar(Entity.VAR_AABB)});
 	   
-	
+	player.ListClear(Entity.VAR_TESTLIST);
 		
 	    player3.DEBUG=true;
 	    player2.DEBUG=true;
@@ -138,6 +142,7 @@ public class Start extends Game {
 	     PhysicsEngine.WatchForCollision(col, test);
 	     Events e=new Events(new Condition[] {new Condition(test,true)},new ActionDebugPrint("player colided with player2"));
 	     e.ActivateFlags();
+	     player.DebugPrintAllVars("player");
 	    } 
 	  
 	}

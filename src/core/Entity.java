@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import org.joml.Vector2f;
@@ -39,9 +40,11 @@ public class Entity {
 	public final static VAR<PASSABLE_VEC4F> VAR_COLOR=VAR.makeNewVar("COLOR",PASSABLE_VEC4F.getHandle());
 	
 	
-	public final static VAR<PASSABLE_LINKED_LIST<Boolean>> VAR_TESTLIST=VAR.makeNewVar("TESTLIST",PASSABLE_LINKED_LIST.getHandle(PASSABLE_BOOL.getHandle()));
+	public final static VAR<PASSABLE_LINKED_LIST<AABB>> VAR_TESTLIST=VAR.makeNewVar("TESTLIST",PASSABLE_LINKED_LIST.getHandle(PASSABLE_AABB.getHandle()));
+	
 	public final static VAR<PASSABLE_HASH_MAP<String,Integer>> VAR_TESTHASH=VAR.makeNewVar("TESTHASH",PASSABLE_HASH_MAP.getHandle(PASSABLE_STRING.getHandle(), PASSABLE_INT.getHandle()));
 	
+	public final static VAR<PASSABLE_HASH_MAP<String,AABB>> VAR_TESTHASH_AABBB=VAR.makeNewVar("TESTHASH",PASSABLE_HASH_MAP.getHandle(PASSABLE_STRING.getHandle(), PASSABLE_AABB.getHandle()));
 	
 	
 	
@@ -212,6 +215,7 @@ public class Entity {
 			         TakeInData(newVar,data); 
 					
 				}
+			   
 	}
 	public <K,V> V HashMapGet(VAR<PASSABLE_HASH_MAP<K,V>> var,K key) {
         PASSABLE_HASH_MAP<K,V> data=getData(var);
@@ -366,7 +370,26 @@ public class Entity {
    	public <ST,T extends PassableData<ST>> void removeVAR(VAR<T> var) {
    	         this.Entity_Data.remove(var.getMangledName());
    	}
-    
+    public void DebugPrintAllVars(String entityName) {
+    	
+    	CoreEngine.DebugPrint(entityName+":{");
+        Iterator<Entry<String,PassableData<?>>> I=this.Entity_Data.entrySet().iterator();
+    	while(I.hasNext()) {
+    		Entry<String,PassableData<?>> e=I.next();
+    		String key=e.getKey();
+    		PassableData<?> d=e.getValue();
+            String s[]=key.split("\\*");
+            String name=s[0];
+            String type=s[1];
+            
+    		CoreEngine.DebugPrint(name+":{\n"+"		Type:"+type+"\n"+"		Value:"+d.printValue("")); 		
+    		
+    	}
+    	
+    	
+    	
+    	CoreEngine.DebugPrint("}");
+    }
 	
 	public EntityComponent[] getComponents() {
 		return this.components.values().toArray(new EntityComponent[this.components.size()]);

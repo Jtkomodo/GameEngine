@@ -50,6 +50,13 @@ public class PASSABLE_BOOL implements PassableData<Boolean> {
 		return (S) new PASSABLE_BOOL();
 	}
 
+
+
+	@Override
+	public String printValue(String indent) {
+		return ""+value;
+	}
+
 	
 
 }
