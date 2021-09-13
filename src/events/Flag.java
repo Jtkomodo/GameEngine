@@ -11,7 +11,7 @@ public class Flag {
 	
 	private boolean state=false;
 	private LinkedList<Events> events=new LinkedList<Events>();
-	private boolean stateChanged=false;
+	private boolean stateChanged=true;
 	
 	
 	
@@ -20,6 +20,7 @@ public class Flag {
 	}
 	
 	public void addEvent(Events event) {
+		
 		if(!this.events.contains(event)) {
 			this.events.add(event);
 			CoreEngine.DebugPrint("Event added to FLAG");
@@ -68,6 +69,11 @@ public class Flag {
 	}
 	public void SetStateChanged(boolean state) {
 		this.stateChanged=state;
+	}
+
+	public void toggleState() {
+	     setState(!this.state);
+		
 	}
 	
 }

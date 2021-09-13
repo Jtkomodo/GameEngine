@@ -23,6 +23,7 @@ import core.PASSABLE_VEC2F;
 import core.VAR;
 import events.ActionDebugPrint;
 import events.Condition;
+import events.Operation;
 import events.Events;
 import events.Flag;
 import input.InputPoller;
@@ -35,6 +36,7 @@ import rendering.Texture;
 import test.map.MapFIle;
 import test.map.MapLoader;
 import textrendering.TextBuilder;
+import static events.Operation.*;
 
 public class Start extends Game {
 	public static final int width=640,height=480;
@@ -47,7 +49,7 @@ public class Start extends Game {
 	private Texture mapTextue;
 	private float Rendercamx;
 	private float Rendercamy;
-	private Flag test;
+	private Flag test,buttonPressed;
 	private TextBuilder text;
 	private Sound Heal;
 	private Sound Select;
@@ -95,12 +97,16 @@ public class Start extends Game {
 	public void start() {   
 		text=new TextBuilder("aakar",512);
 		test=new Flag(false);
+		buttonPressed=new Flag(false);
 		CoreEngine.Debugdraw=true;
 	    playerModel=new Model(32, 46, 0, 0, 138, 138);
 	    playerSheet=new SpriteSheet("playerSpriteSheet", 138);
 	    mapTextue=new Texture("newsprite");
 	    playerTex=playerSheet.getTexture();
 	    walkingAnimation=new Animation(playerSheet, 0, 7, 7);
+	    
+	    
+	    
 	    player=new Entity(new EntityComponent[]{
 	    	new ComponentRenderModel(playerModel,playerTex),
 	    	new ComponentAnimation(walkingAnimation),
@@ -136,6 +142,10 @@ public class Start extends Game {
 	    player2.setVar(Entity.VAR_POSITION,new Vector2f(-200,0));
 	   // player2.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(0.5f,0)));
 	    player3.setVar(Entity.VAR_POSITION,new Vector2f(200*2,0));
+	    
+	    
+	    
+	    
 	 //   player3.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(-0.5f,0)));
 	    MapFIle map=new MapFIle("Map1TEST");
 	    map.readMap();
@@ -146,7 +156,11 @@ public class Start extends Game {
 	    if(player.hasVAR(Entity.VAR_AABB) && player2.hasVAR(Entity.VAR_AABB)){
 	     Collision col=new Collision(player.getVar(Entity.VAR_AABB),player2.getVar(Entity.VAR_AABB));
 	     PhysicsEngine.WatchForCollision(col, test);
-	     Events e=new Events(new Condition[] {new Condition(test,true)},new ActionDebugPrint("player colided with player2"));
+	     Events e=new Events(new Condition(new Condition(test,EQUALS,true),AND,new Condition(buttonPressed,EQUALS,false)),new ActionDebugPrint("event fired"));
+	     
+	     
+	     e.ActivateFlags();
+	     e.deactivateFlags();
 	     e.ActivateFlags();
 	     player.DebugPrintAllVars("player");
 	    } 
@@ -188,6 +202,13 @@ public class Start extends Game {
 			}
 		
 		}
+		
+		if(InputPoller.JustPushed(GLFW.GLFW_KEY_F)) {
+			
+			buttonPressed.toggleState();
+			CoreEngine.DebugPrint("changed to "+buttonPressed.State());
+		}
+		
 		if(InputPoller.JustPushed(GLFW.GLFW_KEY_ESCAPE)) {
 			super.CloseWindow();
 		}

@@ -31,8 +31,6 @@ public class ComponentRenderModel extends EntityComponent {
 
 
 
-
-
 	@Override
 	protected void INIT(Entity entity) {
 		this.currentEntity=entity;
