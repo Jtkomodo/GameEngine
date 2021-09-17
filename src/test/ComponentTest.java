@@ -9,7 +9,7 @@ import core.Entity;
 import core.EntityComponent;
 import core.PASSABLE_BOOL;
 import core.PASSABLE_VEC4F;
-import core.VAR;
+import core.VAR_RW;
 
 public class ComponentTest extends EntityComponent {
 	public static final UUID ID=UUID.randomUUID();
@@ -18,7 +18,7 @@ public class ComponentTest extends EntityComponent {
 	
 	
 	
-	public static final VAR<PASSABLE_BOOL> VAR_TEST=createNewVAR("TEST",PASSABLE_BOOL.getHandle());
+	public static final VAR_RW<PASSABLE_BOOL> VAR_TEST=createNewVAR("TEST",PASSABLE_BOOL.getHandle());
 
 	
 	
@@ -36,9 +36,8 @@ public class ComponentTest extends EntityComponent {
 	}
 
 	@Override
-	protected void GAMELOOP_TICK() {
-		
-		
+	protected void GAMELOOP_TICK_BEFORE_PHYSICS() {
+				
 		if(this.currentEntity.hasVAR(VAR_TEST)) {
 			
 			if(this.currentEntity.getVar(VAR_TEST)) {

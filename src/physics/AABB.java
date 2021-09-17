@@ -10,7 +10,7 @@ import core.CoreEngine;
 import core.Entity;
 import core.Game;
 import core.PASSABLE_VEC2F;
-import core.VAR;
+import core.VAR_RW;
 import events.Flag;
 import rendering.MainRenderHandler;
 import rendering.Model;
@@ -28,7 +28,7 @@ public class AABB {
 	
 	public AABB(float width, float height,float resistance) {
 		
-	    CoreEngine.InitData(ID,Entity.VAR_BEFORE_POSITION,new Vector2f(0));
+	    CoreEngine.InitData(ID,ComponentColision.VAR_BEFORE_POSITION,new Vector2f(0));
 		this.width = width;
 		this.height = height;
 		this.resistance=resistance;
@@ -144,7 +144,7 @@ public class AABB {
 	
 			
 		//check to mare sure we have all the required VARS
-		if(e.hasAllVars(new VAR<?>[]{Entity.VAR_POSITION,Entity.VAR_BEFORE_POSITION}) && e2.hasAllVars(new VAR<?>[] {Entity.VAR_BEFORE_POSITION,Entity.VAR_POSITION})) {	
+		if(e.hasAllVars(new VAR_RW<?>[]{Entity.VAR_POSITION,ComponentColision.VAR_BEFORE_POSITION}) && e2.hasAllVars(new VAR_RW<?>[] {ComponentColision.VAR_BEFORE_POSITION,Entity.VAR_POSITION})) {	
 			
 			
 		
@@ -178,8 +178,8 @@ public class AABB {
 		}else if(amount==0) {
 			//get all of the varaibles we will need to get the resultant vector
 			
-			Vector2f before_position_a=e.getVar(Entity.VAR_BEFORE_POSITION);
-			Vector2f before_position_b=e2.getVar(Entity.VAR_BEFORE_POSITION);
+			Vector2f before_position_a=e.getVar(ComponentColision.VAR_BEFORE_POSITION);
+			Vector2f before_position_b=e2.getVar(ComponentColision.VAR_BEFORE_POSITION);
 			Vector2f position_b=e2.getVar(Entity.VAR_POSITION);
 			
 			Vector2f penetration=new Vector2f(0,0);//this is the vector representing how much into the box we are in

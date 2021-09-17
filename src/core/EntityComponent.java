@@ -20,10 +20,19 @@ public abstract class  EntityComponent  {
 	protected Entity currentEntity;
 	
 	
+	protected static  <ST,T extends PassableData<ST>> VAR_W<T> createNewVAR_W(VAR_RW<T> var){
+		  return new VAR_W<T>(var);	
+		 
+	 }
 	
 	
-	 protected static <ST,T extends PassableData<ST>> VAR<T> createNewVAR(String name,DATA_HANDLE<ST,T> handle){
-		  return VAR.makeNewVar(name,handle);
+	 protected static  <ST,T extends PassableData<ST>> VAR_R<T> createNewVAR_R(VAR_RW<T> var){
+		  return new VAR_R<T>(var);	
+		 
+	 }
+	
+	 protected static <ST,T extends PassableData<ST>> VAR_RW<T> createNewVAR(String name,DATA_HANDLE<ST,T> handle){
+		  return VAR_RW.makeNewVar(name,handle);
 	 }
 	
 	
@@ -36,16 +45,33 @@ public abstract class  EntityComponent  {
      */
 	protected abstract void INIT(Entity entity);
 	/**
-	 * GAMELOOP_TICK:
+	 * GAMELOOP_TICK_BEFORE_PHYSICS:
 	 * This is where we will put any code that happens before rendering
+	 * and before physics engine has done detection
 	 *
 	 */
-	protected abstract void GAMELOOP_TICK();//we put stuff here for things that need to happen before rendering
+	protected void GAMELOOP_TICK_BEFORE_PHYSICS(){
+		//we put stuff here for things that need to happen before rendering
+	}
+	/**
+	 * GAMELOOP_TICK_AFTER_PHYSICS:
+	 * This is where we will put any code that happens before rendering
+	 * and after physics engine has done detection and resolution 
+	 *
+	 */
+	protected void GAMELOOP_TICK_AFTER_PHYSICS() {
+		
+	}
+
+	
+	
 	/**
 	 * RENDER_TICK
 	 * This is where we will put any code that needs to happen during rendering
 	 */
-	protected abstract void RENDER_TICK();//we put stuff here for things that happen during rendering
+	protected  void RENDER_TICK(){
+		//we put stuff here for things that happen during rendering
+	}
 	/**
 	 * Put any component specific cleanup code here this will be called when we remove the component from the entity.
 	 * @return returns if disable succeeded 

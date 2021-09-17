@@ -2,6 +2,7 @@ package core;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import animation.AnimationEngine;
@@ -27,7 +28,9 @@ public class CoreEngine {
     	double time1=core.Timer.getTIme();
     	deltaT=time1-last_frame;
     	FlagHandler.updateFlags();
+    	UpdateGameLoop_BEFORE();
     	UpdatePhysicsEngine();
+    	UpdateGameLoop_AFTER();
     	UpdateAnimationEngine();
     	UpdateRenderEngine();
     	last_frame=Timer.getTIme();
@@ -50,15 +53,41 @@ public class CoreEngine {
     
 	private static void UpdatePhysicsEngine() {
 		
+		
 		PhysicsEngine.update();
 	}
 	private static void UpdateRenderEngine() {
+		
 	     RenderingEngine.update();    
 	      
 	      
 	
 	}
 	
+	private static void UpdateGameLoop_BEFORE() {
+	    Iterator<Entry<UUID,Entity>>	i=entities.entrySet().iterator();
+	    
+	    
+	    while(i.hasNext()) {
+	    	Entry<UUID,Entity> entry=i.next();
+	    	UUID ID=entry.getKey();
+	    	Entity E=entry.getValue();
+	    	
+	    	E.GAMELOOP_TICK_BEFORE_PHYSICS();
+	    }
+	}
+	private static void UpdateGameLoop_AFTER() {
+	    Iterator<Entry<UUID,Entity>>	i=entities.entrySet().iterator();
+	    
+	    
+	    while(i.hasNext()) {
+	    	Entry<UUID,Entity> entry=i.next();
+	    	UUID ID=entry.getKey();
+	    	Entity E=entry.getValue();
+	    	
+	    	E.GAMELOOP_TICK_AFTER_PHYSICS();
+	    }
+	}
     public static void AddEntity(Entity e) {
     	 entities.put(e.ID, e);
          e.Init();
@@ -95,7 +124,7 @@ public class CoreEngine {
     
     
     
-    public static<T extends PassableData<?>> boolean HasALLVars(UUID ENTITY_ID,VAR<T>[] vars) {
+    public static<T extends PassableData<?>> boolean HasALLVars(UUID ENTITY_ID,VAR_RW<T>[] vars) {
         Entity e=getEntity(ENTITY_ID);
         if(e!=null) {
         	return e.hasAllVars(vars);
@@ -108,7 +137,7 @@ public class CoreEngine {
     
     
     
-    public static<ST,T extends PassableData<ST>> boolean HasVar(UUID ENTITY_ID,VAR<T> var) {
+    public static<ST,T extends PassableData<ST>> boolean HasVar(UUID ENTITY_ID,VAR_RW<T> var) {
         Entity e=getEntity(ENTITY_ID);
         if(e!=null) {
         	return e.hasVAR(var);
@@ -120,7 +149,7 @@ public class CoreEngine {
     
     
     
-    public static<ST,T extends PassableData<ST>> ST RecieveData(UUID ENTITY_ID,VAR<T> var) {
+    public static<ST,T extends PassableData<ST>> ST RecieveData(UUID ENTITY_ID,VAR_RW<T> var) {
         Entity e=getEntity(ENTITY_ID);
         if(e!=null) {
         	return e.getVar(var);
@@ -134,14 +163,72 @@ public class CoreEngine {
     
     
     
-    public static<ST,T extends PassableData<ST>> void sendData(UUID ENTITY_ID,VAR<T> var,ST data) {
+    public static<ST,T extends PassableData<ST>> void sendData(UUID ENTITY_ID,VAR_RW<T> var,ST data) {
         Entity e=getEntity(ENTITY_ID);
         if(e!=null) {
         	e.setVar(var,data);
         }
     	
     }
-    public static<ST,T extends PassableData<ST>> void InitData(UUID ENTITY_ID,VAR<T> var,ST data) {
+    public static<ST,T extends PassableData<ST>> void InitData(UUID ENTITY_ID,VAR_RW<T> var,ST data) {
+        Entity e=getEntity(ENTITY_ID);
+        if(e!=null) {
+        	e.INITVar(var,data);
+        }
+    	
+    }
+    
+    
+    public static<T extends PassableData<?>> boolean HasALLVars(UUID ENTITY_ID,VAR_R<T>[] vars) {
+        Entity e=getEntity(ENTITY_ID);
+        if(e!=null) {
+        	return e.hasAllVars(vars);
+        }else {
+        	return false;
+        }
+    	
+    }
+    
+    
+    
+    
+    public static<ST,T extends PassableData<ST>> boolean HasVar(UUID ENTITY_ID,VAR_R<T> var) {
+        Entity e=getEntity(ENTITY_ID);
+        if(e!=null) {
+        	return e.hasVAR(var);
+        }else {
+        	return false;
+        }
+    	
+    }
+    
+    
+    
+    public static<ST,T extends PassableData<ST>> ST RecieveData(UUID ENTITY_ID,VAR_R<T> var) {
+        Entity e=getEntity(ENTITY_ID);
+        if(e!=null) {
+        	return e.getVar(var);
+        }else {
+        	return null;
+        }
+    	
+    }
+    
+    
+    
+    
+    
+    public static<ST,T extends PassableData<ST>> void sendData(UUID ENTITY_ID,VAR_W<T> var,ST data) {
+        Entity e=getEntity(ENTITY_ID);
+        if(e!=null) {
+        	e.setVar(var,data);
+        }
+    	
+    }
+    
+    
+    
+    public static<ST,T extends PassableData<ST>> void InitData(UUID ENTITY_ID,VAR_W<T> var,ST data) {
         Entity e=getEntity(ENTITY_ID);
         if(e!=null) {
         	e.INITVar(var,data);

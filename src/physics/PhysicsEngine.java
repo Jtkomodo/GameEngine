@@ -10,7 +10,7 @@ import core.CoreEngine;
 import core.Entity;
 import core.EntityComponent;
 import core.PASSABLE_VEC2F;
-import core.VAR;
+import core.VAR_RW;
 import events.Flag;
 
 public class PhysicsEngine {
@@ -62,13 +62,13 @@ public class PhysicsEngine {
 		    Entity A=CoreEngine.getEntity(A_ID);
 		    Entity B=CoreEngine.getEntity(B_ID);
 		    if(A!=null && B!=null) {
-		    	if(A.hasAllVars(new VAR<?>[] {Entity.VAR_AABB,Entity.VAR_POSITION,Entity.VAR_VELOCITY})) {
+		    	if(A.hasAllVars(new VAR_RW<?>[] {ComponentColision.VAR_AABB,Entity.VAR_POSITION,Entity.VAR_VELOCITY})) {
 		    	
 		    	
 		    	
 		    	
-		    	AABB a=A.getVar(Entity.VAR_AABB);
-			    AABB b=B.getVar(Entity.VAR_AABB);
+		    	AABB a=A.getVar(ComponentColision.VAR_AABB);
+			    AABB b=B.getVar(ComponentColision.VAR_AABB);
 			    Vector2f velocity=A.getVar(Entity.VAR_VELOCITY);
 		    	Vector2f position=A.getVar(Entity.VAR_POSITION);
 		    	
@@ -88,7 +88,7 @@ public class PhysicsEngine {
 		         if(newMovement!=null) {
 		        	 A.setVar(Entity.VAR_POSITION,newMovement);
 		         }
-		    
+		           
 		    	
 		    	}
 		    	
@@ -112,9 +112,9 @@ public class PhysicsEngine {
 					
 
 				
-						if(CoreEngine.HasVar(ID_1,Entity.VAR_AABB) && CoreEngine.HasVar(ID_2, Entity.VAR_AABB)) {
-							AABB A=CoreEngine.RecieveData(ID_1,Entity.VAR_AABB);
-							AABB B=CoreEngine.RecieveData(ID_2,Entity.VAR_AABB);
+						if(CoreEngine.HasVar(ID_1,ComponentColision.VAR_AABB) && CoreEngine.HasVar(ID_2, ComponentColision.VAR_AABB)) {
+							AABB A=CoreEngine.RecieveData(ID_1,ComponentColision.VAR_AABB);
+							AABB B=CoreEngine.RecieveData(ID_2,ComponentColision.VAR_AABB);
 							
 							//if there is a collision then add that collision to the list
 						
@@ -145,10 +145,10 @@ public class PhysicsEngine {
 			if(!collision) {
 				UUID ID=entities.get(i_1);
 			
-                if(CoreEngine.HasALLVars(ID,new VAR<?>[] {Entity.VAR_AABB,Entity.VAR_POSITION})) {
-                	CoreEngine.RecieveData(ID,Entity.VAR_AABB).setFlagState(false);
+                if(CoreEngine.HasALLVars(ID,new VAR_RW<?>[] {ComponentColision.VAR_AABB,Entity.VAR_POSITION})) {
+                	CoreEngine.RecieveData(ID,ComponentColision.VAR_AABB).setFlagState(false);
                     Vector2f position=CoreEngine.RecieveData(ID,Entity.VAR_POSITION);
-    				CoreEngine.sendData(ID,Entity.VAR_BEFORE_POSITION,position);
+    				CoreEngine.sendData(ID,ComponentColision.VAR_BEFORE_POSITION,position);
     				  
                 }
 			
@@ -161,8 +161,9 @@ public class PhysicsEngine {
 	        for(int i=0;i<entities.size();i++) {
 	        	UUID ID=entities.get(i);
 	        	Entity e=CoreEngine.getEntity(ID);
-	        	if(e!=null) {
-	        		e.GAMELOOP_TICK();
+	        	if(e!=null && e.hasVAR(ComponentColision.READ_VAR_NEXT_POS())) {
+	        		Vector2f new_position=e.getVar(ComponentColision.READ_VAR_NEXT_POS());
+	        		e.setVar(Entity.VAR_POSITION,new_position);
 	        		
 	        	}
 	        }

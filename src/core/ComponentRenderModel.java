@@ -17,7 +17,8 @@ public class ComponentRenderModel extends EntityComponent {
 
 
 	public static final UUID ID=UUID.randomUUID();
-
+	private final static VAR_RW<PASSABLE_MODEL> VAR_MODEL=VAR_RW.makeNewVar("MODEL",PASSABLE_MODEL.getHandle());
+	public final static VAR_RW<PASSABLE_TEXTURE> VAR_TEXTURE=VAR_RW.makeNewVar("TEXTURE",PASSABLE_TEXTURE.getHandle());
 
 	protected Model model;
 	protected Texture texture;
@@ -34,31 +35,27 @@ public class ComponentRenderModel extends EntityComponent {
 	@Override
 	protected void INIT(Entity entity) {
 		this.currentEntity=entity;
-		entity.setVar(Entity.VAR_TEXTURE,this.texture);
+		entity.setVar(VAR_TEXTURE,this.texture);
 		entity.INITVar(Entity.VAR_POSITION,new Vector2f());
 		entity.INITVar(Entity.VAR_MIRROR,false);
 		entity.INITVar(Entity.VAR_COLOR,Constants.DEFAULT_COLOR);
-		entity.setVar(Entity.VAR_MODEL,this.model);
+		entity.setVar(VAR_MODEL,this.model);
 		RenderingEngine.addEntity(entity);
 
 	}
 
-	@Override
-	protected void GAMELOOP_TICK() {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	@Override
 	protected void RENDER_TICK() {
 		
          
 		
-		if(this.currentEntity.hasAllVars(new VAR<?>[] {Entity.VAR_COLOR,Entity.VAR_POSITION,Entity.VAR_MIRROR,Entity.VAR_TEXTURE})) {
+		if(this.currentEntity.hasAllVars(new VAR_RW<?>[] {Entity.VAR_COLOR,Entity.VAR_POSITION,Entity.VAR_MIRROR,VAR_TEXTURE})) {
 			Vector4f color=this.currentEntity.getVar(Entity.VAR_COLOR);
 			Vector2f position=this.currentEntity.getVar(Entity.VAR_POSITION);
 			boolean mirror=this.currentEntity.getVar(Entity.VAR_MIRROR);
-			Texture  texture=this.currentEntity.getVar(Entity.VAR_TEXTURE);
+			Texture  texture=this.currentEntity.getVar(VAR_TEXTURE);
 			
 			MainRenderHandler.addEntity(new RenderEntity(model, new Vector3f(position,10),0,1,texture,color,mirror));
 		}
@@ -67,7 +64,7 @@ public class ComponentRenderModel extends EntityComponent {
 	@Override
 	protected boolean DISABLE() {
 		RenderingEngine.removeEntity(this.currentEntity);
-		currentEntity.removeVAR(Entity.VAR_MODEL);
+		currentEntity.removeVAR(VAR_MODEL);
 		return true;
 	}
 
@@ -82,7 +79,9 @@ public class ComponentRenderModel extends EntityComponent {
 		return ID;
 	}
 	
-	
+	public static  VAR_R<PASSABLE_MODEL> READ_VAR_MODEL() {
+		return   createNewVAR_R(VAR_MODEL);
+	}
 
 	
 

@@ -1,10 +1,6 @@
-/animation/
-/audio/
+/scripting.class
+/scripting/
 /core/
-/events/
-/input/
 /physics/
-/rendering/
 /test/
-/textrendering/
-/UI/
+/animation/

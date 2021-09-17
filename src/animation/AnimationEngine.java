@@ -7,7 +7,6 @@ import java.util.UUID;
 
 import org.joml.Vector2f;
 
-import core.ComponentAnimation;
 import core.CoreEngine;
 import core.Entity;
 import core.PASSABLE_BOOL;
@@ -16,7 +15,7 @@ import core.PASSABLE_SPRITESHEET;
 import core.PassableData;
 import core.Timer;
 
-public class AnimationEngine {
+public class AnimationEngine{
 
 	
 	
@@ -47,12 +46,12 @@ public class AnimationEngine {
 		  Entity e=CoreEngine.getEntity(ID);
 		  if(e!=null) {
 			  boolean paused=false;
-			  if(e.hasVAR(Entity.VAR_ANAIMATION_PAUSE)) {
-			   paused=e.getVar(Entity.VAR_ANAIMATION_PAUSE);
+			  if(e.hasVAR(ComponentAnimation.VAR_ANAIMATION_PAUSE)) {
+			   paused=e.getVar(ComponentAnimation.VAR_ANAIMATION_PAUSE);
 			  }
 			  boolean reset=false;
-			  if(e.hasVAR(Entity.VAR_ANAIMATION_RESET)) {
-			   reset=e.getVar(Entity.VAR_ANAIMATION_RESET);
+			  if(e.hasVAR(ComponentAnimation.VAR_ANAIMATION_RESET)) {
+			   reset=e.getVar(ComponentAnimation.VAR_ANAIMATION_RESET);
 			  }
 			
 			  
@@ -77,10 +76,11 @@ public class AnimationEngine {
 	  A.currentFrame=0;
 	   AnimationData d=A.data[A.currentFrame];
 	
-	   CoreEngine.sendData(ID,Entity.VAR_SPRITE_SHEET,d.sheet);
-	   CoreEngine.sendData(ID,Entity.VAR_FRAME,d.frame);
-	   CoreEngine.sendData(ID,Entity.VAR_ANIMATION_UPDATED,true);
-	   CoreEngine.sendData(ID,Entity.VAR_ANAIMATION_RESET,false);
+	
+	   CoreEngine.sendData(ID,ComponentAnimation.VAR_SPRITE_SHEET,d.sheet);
+	   CoreEngine.sendData(ID,ComponentAnimation.VAR_FRAME,d.frame);
+	   CoreEngine.sendData(ID,ComponentAnimation.VAR_ANIMATION_UPDATED,true);
+	   CoreEngine.sendData(ID,ComponentAnimation.VAR_ANAIMATION_RESET,false);
 	 }
 		if(frametime>=1.0) {
 
@@ -106,9 +106,9 @@ private static void updateAnimation(UUID ID,Entity e,Animation A) {
 	   }
 	   AnimationData d=A.data[A.currentFrame];
 	
-	   CoreEngine.sendData(ID,Entity.VAR_SPRITE_SHEET,d.sheet);
-	   CoreEngine.sendData(ID,Entity.VAR_FRAME,d.frame);
-	   CoreEngine.sendData(ID,Entity.VAR_ANIMATION_UPDATED,true);
+	   CoreEngine.sendData(ID,ComponentAnimation.VAR_SPRITE_SHEET,d.sheet);
+	   CoreEngine.sendData(ID,ComponentAnimation.VAR_FRAME,d.frame);
+	   CoreEngine.sendData(ID,ComponentAnimation.VAR_ANIMATION_UPDATED,true);
 	   
 	 }
 		if(frametime>=1.0) {

@@ -1,6 +1,6 @@
 package core;
 
- public class VAR<T extends PassableData<?>> {
+ public class VAR_RW<T extends PassableData<?>> {
 
 	
 	
@@ -8,7 +8,7 @@ package core;
 	private String name;
     private T handle;
 	
-	private VAR(String name,T handle){
+	private VAR_RW(String name,T handle){
 	    this.name=name;
 		this.MangledName=name+"*"+handle.getType();
 	    this.handle=handle;
@@ -33,8 +33,8 @@ package core;
 		return new DATA_HANDLE<ST,S>((S) handle);
 	}
    
-	 protected static <K,T extends PassableData<K>> VAR<T> makeNewVar(String name,DATA_HANDLE<K,T> handle){
-		 return new VAR<T>(name,handle.getType());
+	 protected static <K,T extends PassableData<K>> VAR_RW<T> makeNewVar(String name,DATA_HANDLE<K,T> handle){
+		 return new VAR_RW<T>(name,handle.getType());
 	 }
 
 

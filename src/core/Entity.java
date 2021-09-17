@@ -24,27 +24,22 @@ public class Entity {
 	
 	
 	
-	public final static VAR<PASSABLE_SPRITESHEET> VAR_SPRITE_SHEET=VAR.makeNewVar("SPRITESHEET",PASSABLE_SPRITESHEET.getHandle());
-	public final static VAR<PASSABLE_INT> VAR_FRAME=VAR.makeNewVar("FRAME",PASSABLE_INT.getHandle());
-	public final static VAR<PASSABLE_MODEL> VAR_MODEL=VAR.makeNewVar("MODEL",PASSABLE_MODEL.getHandle());
-	public final static VAR<PASSABLE_TEXTURE> VAR_TEXTURE=VAR.makeNewVar("TEXTURE",PASSABLE_TEXTURE.getHandle());
-    public final static VAR<PASSABLE_AABB> VAR_AABB=VAR.makeNewVar("AABB",PASSABLE_AABB.getHandle());
-    public final static VAR<PASSABLE_VEC2F> VAR_BEFORE_POSITION=VAR.makeNewVar("BEFORE_POSITION",PASSABLE_VEC2F.getHandle());
-	public final static VAR<PASSABLE_VEC2F> VAR_POSITION=VAR.makeNewVar("POSITION",PASSABLE_VEC2F.getHandle());
-	public final static VAR<PASSABLE_VEC2F> VAR_VELOCITY=VAR.makeNewVar("Velocity",PASSABLE_VEC2F.getHandle());
-	public final static VAR<PASSABLE_BOOL> VAR_MIRROR=VAR.makeNewVar("BEFORE_POSITION",PASSABLE_BOOL.getHandle());
-    public final static VAR<PASSABLE_BOOL> VAR_ANAIMATION_PAUSE=VAR.makeNewVar("ANIMATION_PAUSE",PASSABLE_BOOL.getHandle());
-    public final static VAR<PASSABLE_BOOL> VAR_ANAIMATION_RESET=VAR.makeNewVar("ANIMATION_RESET",PASSABLE_BOOL.getHandle());
-    public final static VAR<PASSABLE_BOOL> VAR_ANIMATION_UPDATED=VAR.makeNewVar("ANIMATION_UPDATED",PASSABLE_BOOL.getHandle());
-	public final static VAR<PASSABLE_BOOL> VAR_MODEL_UPDATED=VAR.makeNewVar("MODEL_UPDATED",PASSABLE_BOOL.getHandle());
-	public final static VAR<PASSABLE_VEC4F> VAR_COLOR=VAR.makeNewVar("COLOR",PASSABLE_VEC4F.getHandle());
+
 	
 	
-	public final static VAR<PASSABLE_LINKED_LIST<AABB>> VAR_TESTLIST=VAR.makeNewVar("TESTLIST",PASSABLE_LINKED_LIST.getHandle(PASSABLE_AABB.getHandle()));
+   
+  
+	public final static VAR_RW<PASSABLE_VEC2F> VAR_POSITION=VAR_RW.makeNewVar("POSITION",PASSABLE_VEC2F.getHandle());
+	public final static VAR_RW<PASSABLE_VEC2F> VAR_VELOCITY=VAR_RW.makeNewVar("Velocity",PASSABLE_VEC2F.getHandle());
+	public final static VAR_RW<PASSABLE_BOOL> VAR_MIRROR=VAR_RW.makeNewVar("BEFORE_POSITION",PASSABLE_BOOL.getHandle());
+	public final static VAR_RW<PASSABLE_VEC4F> VAR_COLOR=VAR_RW.makeNewVar("COLOR",PASSABLE_VEC4F.getHandle());
 	
-	public final static VAR<PASSABLE_HASH_MAP<String,Integer>> VAR_TESTHASH=VAR.makeNewVar("TESTHASH",PASSABLE_HASH_MAP.getHandle(PASSABLE_STRING.getHandle(), PASSABLE_INT.getHandle()));
 	
-	public final static VAR<PASSABLE_HASH_MAP<String,AABB>> VAR_TESTHASH_AABBB=VAR.makeNewVar("TESTHASH",PASSABLE_HASH_MAP.getHandle(PASSABLE_STRING.getHandle(), PASSABLE_AABB.getHandle()));
+	public final static VAR_RW<PASSABLE_LINKED_LIST<AABB>> VAR_TESTLIST=VAR_RW.makeNewVar("TESTLIST",PASSABLE_LINKED_LIST.getHandle(PASSABLE_AABB.getHandle()));
+	
+	public final static VAR_RW<PASSABLE_HASH_MAP<String,Integer>> VAR_TESTHASH=VAR_RW.makeNewVar("TESTHASH",PASSABLE_HASH_MAP.getHandle(PASSABLE_STRING.getHandle(), PASSABLE_INT.getHandle()));
+	
+	public final static VAR_RW<PASSABLE_HASH_MAP<String,AABB>> VAR_TESTHASH_AABBB=VAR_RW.makeNewVar("TESTHASH",PASSABLE_HASH_MAP.getHandle(PASSABLE_STRING.getHandle(), PASSABLE_AABB.getHandle()));
 	
 	
 	
@@ -66,11 +61,18 @@ public class Entity {
 	}
 	
 	
-	public void GAMELOOP_TICK() {
+	public void GAMELOOP_TICK_BEFORE_PHYSICS() {
 		Iterator<EntityComponent> i=components.values().iterator();
 		while(i.hasNext()) {
 			EntityComponent c=i.next();
-			c.GAMELOOP_TICK();
+			c.GAMELOOP_TICK_BEFORE_PHYSICS();
+		}
+	}
+	public void GAMELOOP_TICK_AFTER_PHYSICS() {
+		Iterator<EntityComponent> i=components.values().iterator();
+		while(i.hasNext()) {
+			EntityComponent c=i.next();
+			c.GAMELOOP_TICK_AFTER_PHYSICS();
 		}
 	}
 	public void RENDER_TICK() {
@@ -136,7 +138,7 @@ public class Entity {
 	}
 	
 	
-	public boolean hasAllVars(VAR<?>[] vars){
+	public boolean hasAllVars(VAR_RW<?>[] vars){
 		int i=0;
 		while(i<vars.length) {
 			String varName=vars[i].getMangledName();
@@ -152,14 +154,45 @@ public class Entity {
 				return true;
 			}	
 		
-		
+	public boolean hasAllVars(VAR_W<?>[] vars){
+		int i=0;
+		while(i<vars.length) {
+			
+			String varName=vars[i].getVar().getMangledName();
+			if(!Entity_Data.containsKey(varName) || (Entity_Data.get(varName)==null)) {
+				return false;
+			}else if(Entity_Data.get(varName).getValue()==null) {
+				return false;
+			}
+				 
+			i++;	 
+			 }
+				
+				return true;
+			}	
+				
+	public boolean hasAllVars(VAR_R<?>[] vars){
+		int i=0;
+		while(i<vars.length) {
+			String varName=vars[i].getVar().getMangledName();
+			if(!Entity_Data.containsKey(varName) || (Entity_Data.get(varName)==null)) {
+				return false;
+			}else if(Entity_Data.get(varName).getValue()==null) {
+				return false;
+			}
+				 
+			i++;	 
+			 }
+				
+				return true;
+			}	
 		
 	
 	
 	
 	
 
-	private <ST,T extends PassableData<ST>>  T getData(VAR<T> var){
+	public <ST,T extends PassableData<ST>>  T getData(VAR_RW<T> var){
 	
 		   if(Entity_Data.containsKey(var.getMangledName())) {
 	     	 return (T)Entity_Data.get(var.getMangledName());	
@@ -168,16 +201,26 @@ public class Entity {
 		   }
 		}
 	
-	
-   public  <ST,T extends PassableData<ST>> boolean hasVAR(VAR<T> var){
-	
+   public<ST,T extends PassableData<ST>> boolean hasVAR(VAR_RW<T> var){
+			
 		   return getVar(var)!=null;
 	 
+  }
+   public  <ST,T extends PassableData<ST>> boolean hasVAR(VAR_R<T> var){
+	
+		   return getVar(var.getVar())!=null;
+	 
    }
+   
+   public  <ST,T extends PassableData<ST>> boolean hasVAR(VAR_W<T> var){
+		
+	   return getVar(var.getVar())!=null;
+ 
+}
+
 	
 	
-	
-	public <ST,T extends PassableData<ST>> ST getVar(VAR<T> var) {
+	public <ST,T extends PassableData<ST>> ST getVar(VAR_RW<T> var) {
 		T data=getData(var);
 		
 		if(data!=null) {
@@ -186,12 +229,14 @@ public class Entity {
 			return null;
 		}
 	}
+	public <ST,T extends PassableData<ST>> ST getVar(VAR_R<T> var) {
+	     return getVar(var.getVar());
+	}
 	
 	
-	
-	public  <ST,T extends PassableData<ST>> void setVar(VAR<T> var,ST value) {
+	public  <ST,T extends PassableData<ST>> void setVar(VAR_RW<T> var,ST value) {
 		    
-		         VAR<T> newVar=VAR.makeNewVar(var.getRealName(),var.getHandle());
+		         VAR_RW<T> newVar=VAR_RW.makeNewVar(var.getRealName(),var.getHandle());
 		         
 		         T data=newVar.getType();
 		         
@@ -200,13 +245,28 @@ public class Entity {
 		         TakeInData(newVar,data); 
 	}
 	
-	public <K,V> void HashMapPut(VAR<PASSABLE_HASH_MAP<K,V>> var,K key,V value) {
+	public  <ST,T extends PassableData<ST>> void setVar(VAR_W<T> var_W,ST value) {
+	    
+		VAR_RW<T> var=var_W.getVar();
+        VAR_RW<T> newVar=VAR_RW.makeNewVar(var.getRealName(),var.getHandle());
+        
+        T data=newVar.getType();
+        
+   	
+   	 data.setValue(value);
+        TakeInData(newVar,data); 
+}
+	
+	
+	
+	
+	public <K,V> void HashMapPut(VAR_RW<PASSABLE_HASH_MAP<K,V>> var,K key,V value) {
 	         PASSABLE_HASH_MAP<K,V> data=getData(var);
 		
 				if(data!=null) {
 				   data.put(key, value);
 				}else {
-				    VAR<PASSABLE_HASH_MAP<K,V>> newVar=VAR.makeNewVar(var.getRealName(),var.getHandle());
+				    VAR_RW<PASSABLE_HASH_MAP<K,V>> newVar=VAR_RW.makeNewVar(var.getRealName(),var.getHandle());
 			         
 			          data=newVar.getType();
 			         
@@ -217,7 +277,11 @@ public class Entity {
 				}
 			   
 	}
-	public <K,V> V HashMapGet(VAR<PASSABLE_HASH_MAP<K,V>> var,K key) {
+	public <K,V> void HashMapPut(VAR_W<PASSABLE_HASH_MAP<K,V>> var,K key,V value) {
+		HashMapPut(var.getVar(), key, value);
+		
+	}
+	public <K,V> V HashMapGet(VAR_RW<PASSABLE_HASH_MAP<K,V>> var,K key) {
         PASSABLE_HASH_MAP<K,V> data=getData(var);
 	
 			if(data!=null) {
@@ -226,7 +290,11 @@ public class Entity {
 				return null;
 			}
 }
-	public <K,V> V HashMapGetOrDefault(VAR<PASSABLE_HASH_MAP<K,V>> var,K key,V defaultValue) {
+	public <K,V> V HashMapGet(VAR_R<PASSABLE_HASH_MAP<K,V>> var,K key) {
+		return HashMapGet(var.getVar(), key);
+		
+	}
+	public <K,V> V HashMapGetOrDefault(VAR_RW<PASSABLE_HASH_MAP<K,V>> var,K key,V defaultValue) {
         PASSABLE_HASH_MAP<K,V> data=getData(var);
 	
 			if(data!=null) {
@@ -235,7 +303,12 @@ public class Entity {
 				return defaultValue;
 			}
 }	
-	public <K,V> boolean HashMapIsEmpty(VAR<PASSABLE_HASH_MAP<K,V>> var) {
+	public <K,V> V HashMapGetOrDefault(VAR_R<PASSABLE_HASH_MAP<K,V>> var,K key,V defaultValue) {
+		return HashMapGetOrDefault(var.getVar(), key, defaultValue);
+	}
+	
+	
+	public <K,V> boolean HashMapIsEmpty(VAR_RW<PASSABLE_HASH_MAP<K,V>> var) {
 		   PASSABLE_HASH_MAP<K,V> data=getData(var);
 		
 		  if(data!=null) {
@@ -245,7 +318,10 @@ public class Entity {
 		  }
 		
 	}
-	public <K,V> boolean HashMapContainsKey(VAR<PASSABLE_HASH_MAP<K,V>> var,K key) {
+	public <K,V> boolean HashMapIsEmpty(VAR_R<PASSABLE_HASH_MAP<K,V>> var) {
+		return HashMapIsEmpty(var.getVar());
+	}
+	public <K,V> boolean HashMapContainsKey(VAR_RW<PASSABLE_HASH_MAP<K,V>> var,K key) {
 		   PASSABLE_HASH_MAP<K,V> data=getData(var);
 		
 		  if(data!=null) {
@@ -255,7 +331,11 @@ public class Entity {
 		  }
 		
 	}
-	public <K,V> boolean HashMapContainsValue(VAR<PASSABLE_HASH_MAP<K,V>> var,V value) {
+	public <K,V> boolean HashMapContainsKey(VAR_R<PASSABLE_HASH_MAP<K,V>> var,K key) {
+		return HashMapContainsKey(var.getVar(), key);
+		
+	}
+	public <K,V> boolean HashMapContainsValue(VAR_RW<PASSABLE_HASH_MAP<K,V>> var,V value) {
 		   PASSABLE_HASH_MAP<K,V> data=getData(var);
 		
 		  if(data!=null) {
@@ -265,8 +345,21 @@ public class Entity {
 		  }
 		
 	}
+	public <K,V> boolean HashMapContainsValue(VAR_R<PASSABLE_HASH_MAP<K,V>> var,V value) {
+		return HashMapContainsValue(var.getVar(), value);
+		
+	}
 	
-	public <K,V> void HashMapClear(VAR<PASSABLE_HASH_MAP<K,V>> var) {
+	
+	public  <K,V> void HashMapClear(VAR_W<PASSABLE_HASH_MAP<K,V>> var) {
+		
+		HashMapClear(var.getVar());
+		
+	}
+	
+	
+	
+	public  <K,V> void HashMapClear(VAR_RW<PASSABLE_HASH_MAP<K,V>> var) {
 		      PASSABLE_HASH_MAP<K,V> data=getData(var);
 			
 			  if(data!=null) {
@@ -276,9 +369,9 @@ public class Entity {
 	}
 	
 	
-	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void ListSet(VAR<T> var,ST[] values) {
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void ListSet(VAR_RW<T> var,ST[] values) {
 	      	 
-          VAR<T> newVar=VAR.makeNewVar(var.getRealName(),var.getHandle());
+          VAR_RW<T> newVar=VAR_RW.makeNewVar(var.getRealName(),var.getHandle());
         
           T data=newVar.getType();
           data.setListFromArray(values);
@@ -286,8 +379,11 @@ public class Entity {
            
 		
     }
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void ListSet(VAR_W<T> var,ST[] values) {
+		ListSet(var.getVar(), values);
+	}
 	
-	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> ST[]  ListGetAsArray(VAR<T> var,ST[] array) {
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> ST[]  ListGetAsArray(VAR_RW<T> var,ST[] array) {
 	      T data=getData(var);
 		
 		if(data!=null) {
@@ -298,8 +394,12 @@ public class Entity {
 		
 		
   }
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> ST[]  ListGetAsArray(VAR_R<T> var,ST[] array) {
+		 return ListGetAsArray(var.getVar(), array);
+		
+	}
 	
-	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> boolean  ListIsEmptyy(VAR<T> var) { 
+	public <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> boolean  ListIsEmptyy(VAR_RW<T> var) { 
 		   T data=getData(var);
 			
 			if(data!=null) {
@@ -309,8 +409,13 @@ public class Entity {
 			} 
 
 
-}
-	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void  ListClear(VAR<T> var) { 
+  }
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> boolean  ListIsEmptyy(VAR_R<T> var) { 
+		 return ListIsEmptyy(var.getVar());
+	}
+	
+	
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void  ListClear(VAR_RW<T> var) { 
 	        
 		  T data=getData(var);
 			
@@ -318,8 +423,12 @@ public class Entity {
 			  data.clearList();;
 			}
 	}
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void  ListClear(VAR_W<T> var) { 
+	     	ListClear(var.getVar());
+		
+	}
 	
-	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> int  ListSize(VAR<T> var) {
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> int  ListSize(VAR_RW<T> var) {
 		  T data=getData(var);
 			
 			if(data!=null) {
@@ -330,8 +439,13 @@ public class Entity {
 		
 		
 	}
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> int  ListSize(VAR_R<T> var) {
+		return ListSize(var.getVar());
+		
+		
+	}
 	
-	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void  ListSetAtIndex(VAR<T> var,int index,ST value) {
+	public <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void  ListSetAtIndex(VAR_RW<T> var,int index,ST value) {
 		    T data=getData(var);
 			
 			if(data!=null) {
@@ -339,7 +453,12 @@ public class Entity {
 			}
 		
 	}
-	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> ST  ListGetValueAtIndex(VAR<T> var,int index) {
+	public <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> void  ListSetAtIndex(VAR_W<T> var,int index,ST value) {
+	      ListSetAtIndex(var.getVar(), index, value); 
+    }
+	
+	
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> ST  ListGetValueAtIndex(VAR_RW<T> var,int index) {
 	    T data=getData(var);
 		
 		if(data!=null) {
@@ -349,27 +468,40 @@ public class Entity {
 		}
 	
 }
+	public  <L extends List<ST>,ST,T extends PassableData<L> & PassableList<ST>> ST  ListGetValueAtIndex(VAR_R<T> var,int index) {
+		
+		return ListGetValueAtIndex(var.getVar(), index);
+		
+	}
 	
 	
 	
-	
-	private  <ST,T extends PassableData<ST>>  void TakeInData(VAR<T> var,T data) {
+	private <ST,T extends PassableData<ST>>  void TakeInData(VAR_RW<T> var,T data) {
 	  
 			this.Entity_Data.put(var.getMangledName(),data);
 	 
 	}
 	
-	public <ST,T extends PassableData<ST>> void INITVar(VAR<T> var,ST defaultValue){
+	
+	
+	
+	
+	public <ST,T extends PassableData<ST>> void INITVar(VAR_RW<T> var,ST defaultValue){
 		if(!hasVAR(var)) {
 			setVar(var,defaultValue);
 		}
 	}
-	
+	public <ST,T extends PassableData<ST>> void INITVar(VAR_W<T> var,ST defaultValue){
+		INITVar(var.getVar(),defaultValue);
+	}
 	
 
-   	public <ST,T extends PassableData<ST>> void removeVAR(VAR<T> var) {
+   	public <ST,T extends PassableData<ST>> void removeVAR(VAR_RW<T> var) {
    	         this.Entity_Data.remove(var.getMangledName());
    	}
+   	public <ST,T extends PassableData<ST>> void removeVAR(VAR_W<T> var) {
+	         this.Entity_Data.remove(var.getVar().getMangledName());
+	}
     public void DebugPrintAllVars(String entityName) {
     	
     	CoreEngine.DebugPrint(entityName+":{");
@@ -394,6 +526,6 @@ public class Entity {
 	public EntityComponent[] getComponents() {
 		return this.components.values().toArray(new EntityComponent[this.components.size()]);
 	}
-
+   
 	
 }

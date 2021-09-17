@@ -7,12 +7,11 @@ import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
 import animation.Animation;
+import animation.ComponentAnimation;
 import animation.SpriteSheet;
 import audio.Music;
 import audio.Sound;
 import audio.Source;
-import core.ComponentAnimation;
-import core.ComponentColision;
 import core.ComponentRenderModel;
 import core.CoreEngine;
 import core.Entity;
@@ -20,7 +19,7 @@ import core.EntityComponent;
 import core.Game;
 import core.PASSABLE_BOOL;
 import core.PASSABLE_VEC2F;
-import core.VAR;
+import core.VAR_RW;
 import events.ActionDebugPrint;
 import events.Condition;
 import events.Operation;
@@ -29,6 +28,7 @@ import events.Flag;
 import input.InputPoller;
 import physics.AABB;
 import physics.Collision;
+import physics.ComponentColision;
 import physics.PhysicsEngine;
 import rendering.Model;
 import rendering.Render;
@@ -111,25 +111,26 @@ public class Start extends Game {
 	    	new ComponentRenderModel(playerModel,playerTex),
 	    	new ComponentAnimation(walkingAnimation),
 	    	new ComponentColision(16,42,0),
-	    	new ComponentTest(),
-	    	new ComponentTest2()
+	    
 	    	
 	    });
 	    
 	
 	    
 	   Entity player2=new Entity(new EntityComponent[]{
-		    	new ComponentColision(100,10,1)
+		    	new ComponentColision(100,10,0)
 		    });
 	   Entity player3=new Entity(new EntityComponent[]{
-		    	new ComponentColision(50,50,0)
+		    	//new ComponentColision(50,50,0)
+				new ComponentRenderModel(playerModel,playerTex),
+			   new ComponentTest() 
 		    });
 		    
 	   CoreEngine.AddEntity(player);
 	   CoreEngine.AddEntity(player2);
 	   CoreEngine.AddEntity(player3);
 	 
-	 
+	   player3.setVar(ComponentTest.VAR_TEST,true);
       
       
     
@@ -140,11 +141,14 @@ public class Start extends Game {
 	    //player.DEBUG=true;	    
 	    
 	    player2.setVar(Entity.VAR_POSITION,new Vector2f(-200,0));
+	    
+	    
+	    
 	   // player2.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(0.5f,0)));
 	    player3.setVar(Entity.VAR_POSITION,new Vector2f(200*2,0));
 	    
 	    
-	    
+	  
 	    
 	 //   player3.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(-0.5f,0)));
 	    MapFIle map=new MapFIle("Map1TEST");
@@ -153,8 +157,8 @@ public class Start extends Game {
 	  
 	  
 	    currentMap=new MapLoader(mapTextue,map,128);
-	    if(player.hasVAR(Entity.VAR_AABB) && player2.hasVAR(Entity.VAR_AABB)){
-	     Collision col=new Collision(player.getVar(Entity.VAR_AABB),player2.getVar(Entity.VAR_AABB));
+	    if(player.hasVAR(ComponentColision.READ_VAR_AABB()) && player2.hasVAR(ComponentColision.READ_VAR_AABB())){
+	     Collision col=new Collision(player.getVar(ComponentColision.READ_VAR_AABB()),player2.getVar(ComponentColision.READ_VAR_AABB()));
 	     PhysicsEngine.WatchForCollision(col, test);
 	     Events e=new Events(new Condition(new Condition(test,EQUALS,true),AND,new Condition(buttonPressed,EQUALS,false)),new ActionDebugPrint("event fired"));
 	     
@@ -183,7 +187,7 @@ public class Start extends Game {
 	
 	
 	private void input() {
-		if(player.hasAllVars(new VAR<?>[] {Entity.VAR_POSITION,Entity.VAR_MIRROR})){
+		if(player.hasAllVars(new VAR_RW<?>[] {Entity.VAR_POSITION,Entity.VAR_MIRROR})){
 	    boolean mirror=player.getVar(Entity.VAR_MIRROR);
 		Vector2f position=player.getVar(Entity.VAR_POSITION);
 	    Vector2f movement=new Vector2f();
@@ -256,14 +260,14 @@ public class Start extends Game {
 	   
 	}
 	private static void PlayAnimation(Entity e) {
-		 e.setVar(Entity.VAR_ANAIMATION_PAUSE,false);
+		 e.setVar(ComponentAnimation.VAR_ANAIMATION_PAUSE,false);
 	}
 	
 	
 	
 	private static void stopAnimation(Entity e) {
-		  e.setVar(Entity.VAR_ANAIMATION_RESET,true);
-	      e.setVar(Entity.VAR_ANAIMATION_PAUSE,true);
+		  e.setVar(ComponentAnimation.VAR_ANAIMATION_RESET,true);
+	      e.setVar(ComponentAnimation.VAR_ANAIMATION_PAUSE,true);
 	}
 
 	private void RenderMap(MapLoader loader,int gridx,int gridy) {
