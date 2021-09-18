@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
+import TestScprits.PlayerScript;
 import animation.Animation;
 import animation.ComponentAnimation;
 import animation.SpriteSheet;
@@ -13,6 +14,7 @@ import audio.Music;
 import audio.Sound;
 import audio.Source;
 import core.ComponentRenderModel;
+import core.ComponentScript;
 import core.CoreEngine;
 import core.Entity;
 import core.EntityComponent;
@@ -33,6 +35,7 @@ import physics.PhysicsEngine;
 import rendering.Model;
 import rendering.Render;
 import rendering.Texture;
+import scripting.EnemyScript;
 import test.map.MapFIle;
 import test.map.MapLoader;
 import textrendering.TextBuilder;
@@ -111,14 +114,15 @@ public class Start extends Game {
 	    	new ComponentRenderModel(playerModel,playerTex),
 	    	new ComponentAnimation(walkingAnimation),
 	    	new ComponentColision(16,42,0),
-	    
+	        new ComponentScript(new PlayerScript())
 	    	
 	    });
 	    
 	
 	    
 	   Entity player2=new Entity(new EntityComponent[]{
-		    	new ComponentColision(100,10,0)
+		    	new ComponentColision(100,10,0),
+		    	new ComponentScript(new EnemyScript(player))
 		    });
 	   Entity player3=new Entity(new EntityComponent[]{
 		    	//new ComponentColision(50,50,0)
@@ -131,7 +135,6 @@ public class Start extends Game {
 	   CoreEngine.AddEntity(player3);
 	 
 	   player3.setVar(ComponentTest.VAR_TEST,true);
-      
       
     
 		
@@ -187,89 +190,20 @@ public class Start extends Game {
 	
 	
 	private void input() {
-		if(player.hasAllVars(new VAR_RW<?>[] {Entity.VAR_POSITION,Entity.VAR_MIRROR})){
-	    boolean mirror=player.getVar(Entity.VAR_MIRROR);
-		Vector2f position=player.getVar(Entity.VAR_POSITION);
-	    Vector2f movement=new Vector2f();
-	    Vector2f direction=new Vector2f();
-	 
-	    
-	  
-	    
-	  		float speed=2;
-		
-		if(InputPoller.JustPushed(GLFW.GLFW_KEY_P)) {
-			if(player.hasVAR(ComponentTest.VAR_TEST)) {
-				player.setVar(ComponentTest.VAR_TEST,!player.getVar(ComponentTest.VAR_TEST));
-				musicSource.play(Select);	
-				
-			}
-		
-		}
-		
 		if(InputPoller.JustPushed(GLFW.GLFW_KEY_F)) {
 			
 			buttonPressed.toggleState();
 			CoreEngine.DebugPrint("changed to "+buttonPressed.State());
 		}
-		
 		if(InputPoller.JustPushed(GLFW.GLFW_KEY_ESCAPE)) {
 			super.CloseWindow();
 		}
 		if(InputPoller.NOT_REALESED(GLFW.GLFW_KEY_LEFT_CONTROL) && InputPoller.JustPushed(GLFW.GLFW_KEY_F)) {
 		    super.toggleFullscreen();
 		}
-		if(InputPoller.NOT_REALESED(GLFW.GLFW_KEY_LEFT)) {
-			movement.x=-1;
-			mirror=false;
-		}
-        if(InputPoller.NOT_REALESED(GLFW.GLFW_KEY_RIGHT)) {
-        	movement.x=1;
-        	mirror=true;
-        }
-        if(InputPoller.NOT_REALESED(GLFW.GLFW_KEY_UP)) {
-			movement.y=1;
-			
-		}
-        if(InputPoller.NOT_REALESED(GLFW.GLFW_KEY_DOWN)) {
-        	movement.y=-1;
-        }
-        if(InputPoller.NOT_REALESED(GLFW.GLFW_KEY_W)) {
-        	speed=5;
-        }
-        
-       if(movement.length()!=0) {
-    	   
-       movement.normalize(direction);
-       direction.mul((float)(100*speed*CoreEngine.deltaT),movement);
-       player.setVar(Entity.VAR_VELOCITY,movement);
-       PlayAnimation(player);
-       }else {
-         stopAnimation(player);
-         player.setVar(Entity.VAR_VELOCITY,new Vector2f());
-          
-         
-         
-       }
-       
-	   player.setVar(Entity.VAR_MIRROR,mirror);
-	   
-	   
-	   
-		}
 	   
 	}
-	private static void PlayAnimation(Entity e) {
-		 e.setVar(ComponentAnimation.VAR_ANAIMATION_PAUSE,false);
-	}
 	
-	
-	
-	private static void stopAnimation(Entity e) {
-		  e.setVar(ComponentAnimation.VAR_ANAIMATION_RESET,true);
-	      e.setVar(ComponentAnimation.VAR_ANAIMATION_PAUSE,true);
-	}
-
 	private void RenderMap(MapLoader loader,int gridx,int gridy) {
 		  for(int i=-amountHeight+2;i<amountHeight-1;i++) {
 				for(int j=-amountWidth+2;j<amountWidth-1;j++) {

@@ -2,50 +2,58 @@ package core;
 
 import java.util.UUID;
 
+import scripting.Script;
+
 public class ComponentScript extends EntityComponent {
 
 
-	public final UUID ID_INSTANCE=UUID.randomUUID();
+	private UUID ID_INSTANCE;
+	private Script script;
+	private Entity e;
 	
 	
-	
-	
+	public ComponentScript(Script script) {
+		this.script=script;
+		this.ID_INSTANCE=script.getSCRIPTID();
+	}
 	
 	
 	
 	@Override
 	protected void INIT(Entity entity) {
-		// TODO Auto-generated method stub
-
+		this.e=entity;
+		script.Start(e);
 	}
 
 	@Override
 	protected void GAMELOOP_TICK_BEFORE_PHYSICS() {
-		// TODO Auto-generated method stub
+	   script.GAMELOOP_TICK_BEFORE_PHYSICS();
 
 	}
 	
 	
 	@Override
 	protected void GAMELOOP_TICK_AFTER_PHYSICS() {
-
+	   script.GAMELOOP_TICK_AFTER_PHYSICS();
 	}
 	@Override
 	protected void RENDER_TICK() {
-		// TODO Auto-generated method stub
+		  script.RENDER_TICK();
 
 	}
 
 	@Override
 	protected boolean DISABLE() {
-		// TODO Auto-generated method stub
-		return false;
+	
+		return script.DISABLE();
 	}
 
 	@Override
 	public UUID getCOMPONENTID() {
-		// TODO Auto-generated method stub
 		return ID_INSTANCE;
+	}
+	public Script getScript() {
+		return this.script;
 	}
 
 }

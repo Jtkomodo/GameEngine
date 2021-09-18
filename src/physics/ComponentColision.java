@@ -102,7 +102,8 @@ public class ComponentColision extends EntityComponent {
 	@Override
 	protected void GAMELOOP_TICK_BEFORE_PHYSICS() {
 		if(this.currentEntity.hasAllVars(new VAR_RW<?>[]{Entity.VAR_POSITION,Entity.VAR_VELOCITY})) {
-		this.currentEntity.setVar(var_nextPosition,this.currentEntity.getVar(Entity.VAR_POSITION).add(this.currentEntity.getVar(Entity.VAR_VELOCITY),new Vector2f()));
+			
+		  this.currentEntity.setVar(var_nextPosition,this.currentEntity.getVar(Entity.VAR_POSITION).add(this.currentEntity.getVar(Entity.VAR_VELOCITY).mul((float) (100*CoreEngine.deltaT)),new Vector2f()));
 		}
 		}
 
@@ -110,7 +111,8 @@ public class ComponentColision extends EntityComponent {
 	protected void RENDER_TICK() {
 	   if(this.currentEntity.DEBUG && CoreEngine.Debugdraw) {
 			if(this.currentEntity.hasAllVars(new VAR_RW<?>[]{Entity.VAR_POSITION,Entity.VAR_VELOCITY})) {
-		  MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f(this.currentEntity.getVar(Entity.VAR_POSITION),100),0, 1,Game.DEFAULT_TEXTURE,Constants.COL_COLOR_BLUE));
+				
+		        MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f(this.currentEntity.getVar(Entity.VAR_POSITION),100),0, 1,Game.DEFAULT_TEXTURE,Constants.COL_COLOR_BLUE));
 			}
 			}
 
