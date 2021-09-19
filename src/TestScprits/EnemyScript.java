@@ -1,4 +1,4 @@
-package scripting;
+package TestScprits;
 
 import java.util.Random;
 import java.util.UUID;
@@ -7,6 +7,7 @@ import org.joml.Vector2f;
 
 import core.Entity;
 import core.Timer;
+import scripting.Script;
 
 public class EnemyScript extends Script {
 

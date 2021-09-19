@@ -14,6 +14,8 @@ public class Events {
 		this.condition=condition;
 		this.action=action;
 	}
+	
+	
 
 	public void ActivateFlags() {
 		

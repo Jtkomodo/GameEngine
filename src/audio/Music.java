@@ -20,7 +20,9 @@ public class Music {
 	
 	private static LinkedList<Music> buffersToFree=new LinkedList<Music>();
     private static int BUFFER_SIZE = 4096*8;
-
+    public static boolean moving=false;
+    
+    
     // The number of buffers used in the audio pipeline
     private static int NUM_BUFFERS = 2;
     private float bitDepth=16;
@@ -75,9 +77,18 @@ public class Music {
     	return((remaining/(numChanels*rate*(bitDepth/8))));
     }
 	public void play(Source source) {
+		
+		
+		int buffersProccesed=alGetSourcei(source.sourceID,AL_BUFFERS_PROCESSED);
+		while(buffersProccesed>0) {
+			int ALbuffer=alSourceUnqueueBuffers(source.sourceID);
+			buffersProccesed--;	
+			int amountLeft=loadBuffer(ALbuffer);
+			
+		}
 		 alSourceRewind(source.sourceID);
 		 alSourcef(source.sourceID,AL_BUFFER,0);
-	
+	     
 		   
 		   
 		for(int i=0;i<NUM_BUFFERS;i++) {
@@ -121,9 +132,10 @@ public class Music {
 	}
 	protected void update(Source source) {
 		
-		 int state=alGetSourcei(source.sourceID,AL_SOURCE_STATE);
+		int state=alGetSourcei(source.sourceID,AL_SOURCE_STATE);
 		int buffersProccesed=alGetSourcei(source.sourceID,AL_BUFFERS_PROCESSED);
 		while(buffersProccesed>0) {
+			//CoreEngine.DebugPrint("NOT MOVING");
 			int ALbuffer=alSourceUnqueueBuffers(source.sourceID);
 			buffersProccesed--;	
 			int amountLeft=loadBuffer(ALbuffer);
@@ -136,10 +148,13 @@ public class Music {
 		        alSourceQueueBuffers(source.sourceID,ALbuffer);
 		    }else {
 		     data.data.rewind();
+		     CoreEngine.DebugPrint("DONE");
+		     alSourceStop(source.sourceID);
 		     source.playMusic(this);
+		     }
+		     
 		    }
-		}
-		
+		    
 		   
 	}
 		

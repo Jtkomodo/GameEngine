@@ -1,7 +1,10 @@
 package core;
 
+import org.joml.Vector2f;
+
 import audio.AudioInit;
 import audio.Music;
+import audio.Source;
 import rendering.Camera;
 import rendering.MainBatchRender;
 import rendering.Render;
@@ -21,7 +24,8 @@ public abstract class Game {
 	private Window window;
 	private boolean windowClosed=false;
 	private ShaderProgram batchedShader;	
-	
+	public static  Source MusicSource;
+	public static Music music;
 	
 	/**
      * This is where the initialization before the game loop will be put
@@ -80,6 +84,7 @@ public abstract class Game {
 		DEFAULT_TEXTURE=new Texture("whitebox");
 		}
         AudioInit.InitAudio();
+        MusicSource=new Source(new Vector2f(0),1,1, 1,200, 0);
 	}
 	
 	

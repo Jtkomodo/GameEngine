@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
+import TestScprits.EnemyScript;
 import TestScprits.PlayerScript;
 import animation.Animation;
 import animation.ComponentAnimation;
@@ -23,6 +24,8 @@ import core.PASSABLE_BOOL;
 import core.PASSABLE_VEC2F;
 import core.VAR_RW;
 import events.ActionDebugPrint;
+import events.ActionDebugPrintVar;
+import events.ActionSetVar;
 import events.Condition;
 import events.Operation;
 import events.Events;
@@ -35,7 +38,6 @@ import physics.PhysicsEngine;
 import rendering.Model;
 import rendering.Render;
 import rendering.Texture;
-import scripting.EnemyScript;
 import test.map.MapFIle;
 import test.map.MapLoader;
 import textrendering.TextBuilder;
@@ -60,8 +62,6 @@ public class Start extends Game {
 	private Sound Back;
 	private Sound NO;
 	private Sound TimedBad;
-	private Music testMusic;
-	private Source musicSource;
 	private Source source;
 	
 	public static int amountWidth=Math.round((width/64)),amountHeight=Math.round((height/64));
@@ -75,7 +75,8 @@ public class Start extends Game {
 	
 	@Override
 	public void GameLoop() {
-		musicSource.updateMusic(testMusic);
+	
+		MusicSource.updateMusic(music);
 		input();
 	
 		if(player.hasVAR(Entity.VAR_POSITION)){
@@ -109,12 +110,12 @@ public class Start extends Game {
 	    walkingAnimation=new Animation(playerSheet, 0, 7, 7);
 	    
 	    
-	    
+	
 	    player=new Entity(new EntityComponent[]{
 	    	new ComponentRenderModel(playerModel,playerTex),
 	    	new ComponentAnimation(walkingAnimation),
 	    	new ComponentColision(16,42,0),
-	        new ComponentScript(new PlayerScript())
+	    	new ComponentScript(new PlayerScript())    
 	    	
 	    });
 	    
@@ -122,12 +123,13 @@ public class Start extends Game {
 	    
 	   Entity player2=new Entity(new EntityComponent[]{
 		    	new ComponentColision(100,10,0),
-		    	new ComponentScript(new EnemyScript(player))
+		    	//new ComponentScript(new EnemyScript(player))
 		    });
 	   Entity player3=new Entity(new EntityComponent[]{
-		    	//new ComponentColision(50,50,0)
+		    	new ComponentColision(50,50,0),
 				new ComponentRenderModel(playerModel,playerTex),
-			   new ComponentTest() 
+			//	new ComponentColision(100,10,1),
+				//new ComponentScript(new EnemyScript(player2))
 		    });
 		    
 	   CoreEngine.AddEntity(player);
@@ -160,30 +162,20 @@ public class Start extends Game {
 	  
 	  
 	    currentMap=new MapLoader(mapTextue,map,128);
-	    if(player.hasVAR(ComponentColision.READ_VAR_AABB()) && player2.hasVAR(ComponentColision.READ_VAR_AABB())){
-	     Collision col=new Collision(player.getVar(ComponentColision.READ_VAR_AABB()),player2.getVar(ComponentColision.READ_VAR_AABB()));
-	     PhysicsEngine.WatchForCollision(col, test);
-	     Events e=new Events(new Condition(new Condition(test,EQUALS,true),AND,new Condition(buttonPressed,EQUALS,false)),new ActionDebugPrint("event fired"));
-	     
-	     
-	     e.ActivateFlags();
-	     e.deactivateFlags();
-	     e.ActivateFlags();
-	     player.DebugPrintAllVars("player");
-	    } 
+	 
 		Heal=new Sound("healing sound");
 		Select=new Sound("select_GUI");
 		Move=new Sound("move_GUI");
 		Back=new Sound("Back_GUI");
 		NO=new Sound("NO_GUI");
 		TimedBad=new Sound("Timed_Button_BAD");
-		testMusic=new Music("TEST");
+	    music=new Music("TEST");
 		
 
-        musicSource=new Source(new Vector2f(0),1,1, 1,200, 0);
+        
         source=new Source(new Vector2f(0), 1, 1, 0, 0,0);
 		source.setSourceRelitive(true);	
-        musicSource.playMusic(testMusic);       
+        MusicSource.playMusic(music);       
 	  
 	}
 

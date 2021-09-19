@@ -102,9 +102,11 @@ public class Source {
 	  }
 	public void updateMusic(Music music) {
 		if(SOUNDON) {
-			
+			if (isPlaying()) {
 	            music.update(this);
-			
+			}else {
+				alSourcePlay(sourceID);
+			}
 			
 			
 		}else {
@@ -127,7 +129,13 @@ public class Source {
 	  public boolean isPlaying() {
 		  return alGetSourcei(sourceID,AL_SOURCE_STATE)==AL_PLAYING;
 	  }
-	  
+	  public void set_PAUSE(boolean pause) {
+		if(pause) {
+			alSourcei(sourceID, AL_SOURCE_STATE,AL_PAUSED );
+		}else {
+			alSourcei(sourceID, AL_SOURCE_STATE,AL_PLAYING );
+		}
+	  }
 	
 	  public void setGain(float gain) {
 		  this.gain=gain;

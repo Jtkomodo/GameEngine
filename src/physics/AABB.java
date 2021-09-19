@@ -236,6 +236,12 @@ public class AABB {
 			
 			//now we just make sure we move the box out just a bit more than the exact value so it is not in the box at all
 			
+			
+			//now subtract that from the posiition now to get the correct movement
+		
+		
+			
+			//now subtract that from the posiition now to get the correct movemet
 			Vector2f smallMovement=new Vector2f();
 			direction.mul(.001f,smallMovement);
 			
@@ -243,8 +249,6 @@ public class AABB {
 			//now subtract that from the posiition now to get the correct movement
 			positionNow.sub(penetration,newMOvement);
 			
-				
-		
 
 				}
 
@@ -265,7 +269,28 @@ public class AABB {
 		   
 		
 	   }
-
+	
+	protected Vector2f reject(Vector2f a,Vector2f b) {
+      	Vector2f vector=new Vector2f();
+    	
+    	a.sub(project(a,b),vector);
+    	
+    	return vector;
+		
+	}
+    protected Vector2f project(Vector2f a,Vector2f b) {
+    	Vector2f vector=new Vector2f();
+    	float dot=a.dot(b);
+    	float mag=b.lengthSquared();
+    	if(mag==0) {
+    		mag=1;
+    	}
+        float scaler=dot/mag;
+        b.mul(scaler,vector);
+    	
+    	
+    	return vector;
+    }
 
 	 protected  float clamp(float value,float min,float max) {
 		   

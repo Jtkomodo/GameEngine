@@ -17,6 +17,7 @@ import org.lwjgl.opengl.GLCapabilities;
 
 import input.CharCallback;
 import input.KeyCallback;
+import input.WindowCallback;
 
 public class Window {
 
@@ -77,6 +78,7 @@ public Window(int width, int height,String name) {
 	  
 		glfwSetKeyCallback(window,new KeyCallback());
 		glfwSetCharCallback(window,new CharCallback());
+		glfwSetWindowPosCallback(window,new WindowCallback());
 		}
 
 	public boolean isExited() {

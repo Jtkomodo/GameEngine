@@ -87,13 +87,14 @@ public class PlayerScript extends Script {
     	
     	
     }
-    private static void PlayAnimation(Entity e) {
+ 
+    private  void PlayAnimation(Entity e) {
 		 e.setVar(ComponentAnimation.VAR_ANAIMATION_PAUSE,false);
 	}
 	
 	
 	
-	private static void stopAnimation(Entity e) {
+	private  void stopAnimation(Entity e) {
 		  e.setVar(ComponentAnimation.VAR_ANAIMATION_RESET,true);
 	      e.setVar(ComponentAnimation.VAR_ANAIMATION_PAUSE,true);
 	}

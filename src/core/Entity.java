@@ -27,8 +27,9 @@ public class Entity {
 
 	
 	
-   
-  
+
+	public final static VAR_RW<PASSABLE_BOOL> VAR_PRINT_PROJECTION=VAR_RW.makeNewVar("Print_PROJECTION",PASSABLE_BOOL.getHandle());
+	public final static VAR_RW<PASSABLE_VEC2F> VAR_PROJECTION=VAR_RW.makeNewVar("PROJECTION",PASSABLE_VEC2F.getHandle());
 	public final static VAR_RW<PASSABLE_VEC2F> VAR_POSITION=VAR_RW.makeNewVar("POSITION",PASSABLE_VEC2F.getHandle());
 	public final static VAR_RW<PASSABLE_VEC2F> VAR_VELOCITY=VAR_RW.makeNewVar("Velocity",PASSABLE_VEC2F.getHandle());
 	public final static VAR_RW<PASSABLE_BOOL> VAR_MIRROR=VAR_RW.makeNewVar("BEFORE_POSITION",PASSABLE_BOOL.getHandle());
