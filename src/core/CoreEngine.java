@@ -3,6 +3,9 @@ package core;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+
+import UI.UIManager;
+
 import java.util.UUID;
 
 import animation.AnimationEngine;
@@ -28,11 +31,16 @@ public class CoreEngine {
     	double time1=core.Timer.getTIme();
     	deltaT=time1-last_frame;
     	FlagHandler.updateFlags();
-    	UpdateGameLoop_BEFORE();
+    	UIManager.CollisionUpdate();
+        UpdateGameLoop_BEFORE();
     	UpdatePhysicsEngine();
     	UpdateGameLoop_AFTER();
     	UpdateAnimationEngine();
+    	UIManager.RenderUpdate();
     	UpdateRenderEngine();
+    	
+    	
+    	
     	last_frame=Timer.getTIme();
     }
    
@@ -52,7 +60,7 @@ public class CoreEngine {
     }
     
 	private static void UpdatePhysicsEngine() {
-		
+		UIManager.CollisionUpdate();
 		
 		PhysicsEngine.update();
 	}
@@ -96,6 +104,12 @@ public class CoreEngine {
 		if(entities.containsKey(e.ID)) {
 		  boolean success=e.DISABLE();
 		  entities.remove(e.ID);
+		  PhysicsEngine.removeEntity(e);
+		  RenderingEngine.removeEntity(e);
+		  AnimationEngine.removeEntityAnimation(e.ID);
+		  
+		  
+		  
 	      return success;
 			
 			
@@ -105,6 +119,10 @@ public class CoreEngine {
 	    
 		
 	}
+	
+	
+	
+	
 	public static boolean hasEntity(Entity e) {
 		return entities.containsKey(e.ID);
 	}

@@ -7,7 +7,6 @@ import physics.AABB;
 public class PASSABLE_AABB implements PassableData<AABB> {
 
 	public static final UUID ID=UUID.randomUUID();
-
 	private AABB value;
 	
     protected  PASSABLE_AABB() {

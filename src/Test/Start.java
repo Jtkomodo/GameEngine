@@ -8,6 +8,9 @@ import org.lwjgl.glfw.GLFW;
 
 import TestScprits.EnemyScript;
 import TestScprits.PlayerScript;
+import UI.UIBox;
+import UI.UIButton;
+import UI.UIManager;
 import animation.Animation;
 import animation.ComponentAnimation;
 import animation.SpriteSheet;
@@ -21,6 +24,7 @@ import core.Entity;
 import core.EntityComponent;
 import core.Game;
 import core.PASSABLE_BOOL;
+import core.PASSABLE_INT;
 import core.PASSABLE_VEC2F;
 import core.VAR_RW;
 import events.ActionDebugPrint;
@@ -47,7 +51,7 @@ public class Start extends Game {
 	public static final int width=640,height=480;
 	private Texture playerTex;
 	private Model playerModel;
-	private Entity player;
+	private Entity player,player2;
     private SpriteSheet playerSheet;
 	private Animation walkingAnimation;
 	private MapLoader currentMap;
@@ -90,6 +94,11 @@ public class Start extends Game {
 	    int gridx= Math.round(newvec.x);
 	    int gridy=Math.round(newvec.y);
 		RenderMap(currentMap,gridx,gridy);
+		
+		
+		
+		
+		
 		}
 	}
 	
@@ -121,15 +130,13 @@ public class Start extends Game {
 	    
 	
 	    
-	   Entity player2=new Entity(new EntityComponent[]{
-		    	new ComponentColision(100,10,0),
+	   player2=new Entity(new EntityComponent[]{
+		    	new ComponentColision(16,16,0),
 		    	//new ComponentScript(new EnemyScript(player))
 		    });
 	   Entity player3=new Entity(new EntityComponent[]{
 		    	new ComponentColision(50,50,0),
 				new ComponentRenderModel(playerModel,playerTex),
-			//	new ComponentColision(100,10,1),
-				//new ComponentScript(new EnemyScript(player2))
 		    });
 		    
 	   CoreEngine.AddEntity(player);
@@ -139,7 +146,7 @@ public class Start extends Game {
 	   player3.setVar(ComponentTest.VAR_TEST,true);
       
     
-		
+		player.DEBUG=true;
 	    player3.DEBUG=true;
 	    player2.DEBUG=true;
 	    //player2.TakeInData(Entity.VAR_VELOCITY,new PASSABLE_VEC2F(new Vector2f(.1f,0)));
@@ -175,7 +182,19 @@ public class Start extends Game {
         
         source=new Source(new Vector2f(0), 1, 1, 0, 0,0);
 		source.setSourceRelitive(true);	
-        MusicSource.playMusic(music);       
+        MusicSource.playMusic(music);
+        UIBox box=new UIBox(new Vector2f(0,0),300,200,new Vector2f(10,10));
+        UIManager.addBox(box);
+        UIButton button=new UIButton(10,20);
+        UIButton button2=new UIButton(100,20);
+        box.addElement(button);
+        box.addElement(button2);
+        Events on=new Events(new Condition(button.getONFlag(),EQUALS,true),new ActionSetVar<Integer,PASSABLE_INT>(player,ComponentRenderModel.VAR_LAYER,1000));
+        Events off=new Events(new Condition(button.getONFlag(),EQUALS,false),new ActionSetVar<Integer,PASSABLE_INT>(player,ComponentRenderModel.VAR_LAYER,10));
+       
+        on.ActivateFlags();
+        off.ActivateFlags();
+     
 	  
 	}
 
@@ -183,10 +202,15 @@ public class Start extends Game {
 	
 	private void input() {
 		if(InputPoller.JustPushed(GLFW.GLFW_KEY_F)) {
-			
-			buttonPressed.toggleState();
-			CoreEngine.DebugPrint("changed to "+buttonPressed.State());
+			if(player2.isHIDDDEN()) {
+		        player2.show();
+		      
+			}else {
+				player2.hide();
+			}
 		}
+		
+		
 		if(InputPoller.JustPushed(GLFW.GLFW_KEY_ESCAPE)) {
 			super.CloseWindow();
 		}

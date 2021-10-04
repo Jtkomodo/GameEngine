@@ -11,13 +11,17 @@ import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glViewport;
 
 import static org.lwjgl.glfw.GLFW.*;
+
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GLCapabilities;
 
 import input.CharCallback;
 import input.KeyCallback;
-import input.WindowCallback;
+import input.MouseButtonCallback;
+import input.MousePositionCallback;
+import input.WindowSizeCallback;
 
 public class Window {
 
@@ -71,14 +75,16 @@ public Window(int width, int height,String name) {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		//allow gfwKeycallbacks for Callback
 		
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+		//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 	
 		glfwSetWindowSizeLimits(window,width,height,GLFW_DONT_CARE,GLFW_DONT_CARE);
 		glfwSetWindowAspectRatio(window, width, height);
 	  
 		glfwSetKeyCallback(window,new KeyCallback());
 		glfwSetCharCallback(window,new CharCallback());
-		glfwSetWindowPosCallback(window,new WindowCallback());
+	    glfwSetWindowSizeCallback(window,new WindowSizeCallback(width,height));
+		glfwSetCursorPosCallback(window,new MousePositionCallback());
+		glfwSetMouseButtonCallback(window,new MouseButtonCallback());
 		}
 
 	public boolean isExited() {

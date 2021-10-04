@@ -31,9 +31,7 @@ public class PhysicsEngine {
 		collisionsWatched.put(colision, flagEffected);
 	
 	}
-	
-	
-	
+
 	public static void addEntity(Entity e) {
 		if(!entities.contains(e.ID)) {
 			entities.add(e.ID);

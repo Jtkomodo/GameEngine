@@ -33,8 +33,6 @@ public abstract class Script {
 		
 	}
 
-	
-	
 	/**
 	 * RENDER_TICK
 	 * This is where we will put any code that needs to happen during rendering

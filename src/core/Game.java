@@ -20,12 +20,14 @@ public abstract class Game {
 	
 	
 	public static Texture DEFAULT_TEXTURE;
+	public static  Source MusicSource;
+	public static Music music;
+	
 	
 	private Window window;
 	private boolean windowClosed=false;
 	private ShaderProgram batchedShader;	
-	public static  Source MusicSource;
-	public static Music music;
+
 	
 	/**
      * This is where the initialization before the game loop will be put
@@ -79,7 +81,7 @@ public abstract class Game {
 			e.printStackTrace();
 			System.exit(20);
 		}
-		Render.cam=new Camera(width,height);
+		Render.cam=new Camera(width,height,1);
 		if(DEFAULT_TEXTURE==null) {
 		DEFAULT_TEXTURE=new Texture("whitebox");
 		}
@@ -109,7 +111,13 @@ public abstract class Game {
 		System.exit(0);
 		
 	}
+	public float getWindowWidth() {
+		return this.window.getWidth();
+	}
 	
+	public float getWindowHeight() {
+		return this.window.getHeight();
+	}
 	
 	
 }

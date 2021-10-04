@@ -11,7 +11,7 @@ public class Flag {
 	
 	private boolean state=false;
 	private LinkedList<Events> events=new LinkedList<Events>();
-	private boolean stateChanged=true;
+	private boolean stateChanged=false;
 	
 	
 	
@@ -39,6 +39,7 @@ public class Flag {
 			Events event=events.get(i);
 			if(event.Condition()) {
 				event.Invoke();
+				this.stateChanged=false;
 			}
 		}
 	}

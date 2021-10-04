@@ -120,7 +120,27 @@ public class AABB {
 
 	}
 	
-   
+   public boolean vsPoint(Vector2f point,Vector2f position) {
+
+		
+		Vector2f lcA=new Vector2f(0,0);
+		Vector2f rcA=new Vector2f(0,0);
+		
+		
+		position.sub(width,height,lcA);
+		position.add(width,height,rcA);
+	
+		if((point.x>=lcA.x) && (point.x<=rcA.x) && (point.y<=rcA.y) && (point.y>=lcA.y)) {
+			return true;
+			
+		}else {
+			return false;
+		}
+		
+		
+	   	   
+	   
+   }
 	
 	public Vector2f findVector(Vector2f positionNow,Vector2f velocity,Vector2f direction,AABB box) {
 		//oldposition is the current position before movement
@@ -306,6 +326,29 @@ public class AABB {
 			   return value;
 		   }
 		   }
+	 public Vector2f getOffsetinBox(Vector2f position) {
+			Vector2f Offsetpostion=new Vector2f();
+			
+			
+			Vector2f lc=new Vector2f(0,0);
+			Vector2f rc=new Vector2f(0,0);
+			
+			
+			position.sub(width,height,lc);
+			position.add(width,height,rc);
+		
+		    Offsetpostion.x=position.x-lc.x;
+		   
+		   
+		   
+		   Offsetpostion.y=(height*2)-(position.y-lc.y);	
+			
+			return Offsetpostion;
+		}
+		
+	public void debugDraw(Vector2f position) {
+		   MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f(position,900),0,new Vector2f(width*2,height*2),Game.DEFAULT_TEXTURE,Constants.COL_COLOR_BLUE));
+	}
 
 
 	public void setFlagState(boolean state) {
@@ -336,7 +379,7 @@ public class AABB {
 	public UUID getID() {
 		return ID;
 	}
-
+	
 	
 	
       

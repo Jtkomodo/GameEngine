@@ -27,31 +27,14 @@ public class ComponentColision extends EntityComponent {
 	private static final VAR_RW<PASSABLE_VEC2F> var_nextPosition=createNewVAR("NEXT_POSITION",PASSABLE_VEC2F.getHandle());
 	public static final UUID ID=UUID.randomUUID();
 	private float width,height,r;
-    private Model m;
     private AABB aabb;
-	public boolean debug=false;
+	
 	
 	public ComponentColision(AABB aabb) {
 		this.width=aabb.getwidth();
 		this.height=aabb.getHeight();
 		this.r=aabb.getResistance();
-		float widthR=width;
-		float heightR=height;
-		float[] Vert= {
-				 -widthR,+heightR,
-					widthR,heightR,
-					widthR,-heightR,
-					-widthR,-heightR
-				 };
-			float[] uvBg={
-					0,0,
-					1,0,
-					1,1,
-					0,1
-					
-					};
-			m=new Model(Vert,uvBg);
-			this.aabb=aabb;
+		this.aabb=aabb;
 		
 	}
 	
@@ -62,22 +45,7 @@ public class ComponentColision extends EntityComponent {
 		this.width=width;
 		this.height=height;
 		this.r=r;
-		float widthR=width;
-		float heightR=height;
-		float[] Vert= {
-				 -widthR,+heightR,
-					widthR,heightR,
-					widthR,-heightR,
-					-widthR,-heightR
-				 };
-			float[] uvBg={
-					0,0,
-					1,0,
-					1,1,
-					0,1
-					
-					};
-			m=new Model(Vert,uvBg);
+	
 			this.aabb=new AABB( width, height, r);
 	}
 	
@@ -109,10 +77,10 @@ public class ComponentColision extends EntityComponent {
 
 	@Override
 	protected void RENDER_TICK() {
-	   if(this.currentEntity.DEBUG && CoreEngine.Debugdraw) {
+	   if(this.currentEntity.DEBUG && CoreEngine.Debugdraw ) {
 			if(this.currentEntity.hasAllVars(new VAR_RW<?>[]{Entity.VAR_POSITION,Entity.VAR_VELOCITY})) {
 				
-		        MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f(this.currentEntity.getVar(Entity.VAR_POSITION),100),0, 1,Game.DEFAULT_TEXTURE,Constants.COL_COLOR_BLUE));
+		       this.aabb.debugDraw(this.currentEntity.getVar(Entity.VAR_POSITION));
 			}
 			}
 
@@ -122,7 +90,7 @@ public class ComponentColision extends EntityComponent {
 	protected boolean DISABLE() {
 		this.currentEntity.removeVAR(VAR_AABB);
 	    PhysicsEngine.removeEntity(currentEntity);
-		return false;
+		return true;
 	}
 
    

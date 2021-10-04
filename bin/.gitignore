@@ -1,8 +1,9 @@
-/test/
-/TestScprits/
-/core/
+/rendering/
 /scripting/
+/test/
+/textrendering/
+/UI/
 /physics/
-/events/
+/core/
 /input/
-/audio/
+/events/

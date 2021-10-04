@@ -7,12 +7,16 @@ package core;
 	private String MangledName;
 	private String name;
     private T handle;
+    private VAR_R<T> readOnly;
+    private VAR_W<T> writeOnly;
+    
 	
 	private VAR_RW(String name,T handle){
 	    this.name=name;
 		this.MangledName=name+"*"+handle.getType();
 	    this.handle=handle;
-		
+		this.readOnly=new VAR_R<T>(this);
+		this.writeOnly=new VAR_W<T>(this);
 	}
 	
 	
@@ -21,8 +25,13 @@ package core;
 	public String getMangledName() {
 		return this.MangledName;
 	}
-
-
+    public VAR_R<T> getAsReadOnly(){
+        return this.readOnly;
+    }
+    public VAR_W<T> getAsWriteOnly(){
+        return this.writeOnly;
+    }
+    
     protected String getRealName() {
     	return this.name;
     }

@@ -19,6 +19,8 @@ public class ComponentRenderModel extends EntityComponent {
 	public static final UUID ID=UUID.randomUUID();
 	private final static VAR_RW<PASSABLE_MODEL> VAR_MODEL=VAR_RW.makeNewVar("MODEL",PASSABLE_MODEL.getHandle());
 	public final static VAR_RW<PASSABLE_TEXTURE> VAR_TEXTURE=VAR_RW.makeNewVar("TEXTURE",PASSABLE_TEXTURE.getHandle());
+	public final static VAR_RW<PASSABLE_INT> VAR_LAYER=VAR_RW.makeNewVar("TEXTURE",PASSABLE_INT.getHandle());
+
 
 	protected Model model;
 	protected Texture texture;
@@ -39,6 +41,7 @@ public class ComponentRenderModel extends EntityComponent {
 		entity.INITVar(Entity.VAR_POSITION,new Vector2f());
 		entity.INITVar(Entity.VAR_MIRROR,false);
 		entity.INITVar(Entity.VAR_COLOR,Constants.DEFAULT_COLOR);
+		entity.INITVar(VAR_LAYER,10);
 		entity.setVar(VAR_MODEL,this.model);
 		RenderingEngine.addEntity(entity);
 
@@ -51,20 +54,19 @@ public class ComponentRenderModel extends EntityComponent {
 		
          
 		
-		if(this.currentEntity.hasAllVars(new VAR_RW<?>[] {Entity.VAR_COLOR,Entity.VAR_POSITION,Entity.VAR_MIRROR,VAR_TEXTURE})) {
+		if(this.currentEntity.hasAllVars(new VAR_RW<?>[] {Entity.VAR_COLOR,Entity.VAR_POSITION,Entity.VAR_MIRROR,VAR_TEXTURE,VAR_LAYER})) {
 			Vector4f color=this.currentEntity.getVar(Entity.VAR_COLOR);
 			Vector2f position=this.currentEntity.getVar(Entity.VAR_POSITION);
 			boolean mirror=this.currentEntity.getVar(Entity.VAR_MIRROR);
 			Texture  texture=this.currentEntity.getVar(VAR_TEXTURE);
 			
-			MainRenderHandler.addEntity(new RenderEntity(model, new Vector3f(position,10),0,1,texture,color,mirror));
+			MainRenderHandler.addEntity(new RenderEntity(model, new Vector3f(position,this.currentEntity.getVar(VAR_LAYER)),0,1,texture,color,mirror));
 		}
 	}
 
 	@Override
 	protected boolean DISABLE() {
 		RenderingEngine.removeEntity(this.currentEntity);
-		currentEntity.removeVAR(VAR_MODEL);
 		return true;
 	}
 

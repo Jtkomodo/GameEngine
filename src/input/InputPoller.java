@@ -3,7 +3,16 @@ package input;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import org.joml.Matrix4f;
+import org.joml.Vector2f;
+import org.joml.Vector4f;
+import org.lwjgl.glfw.GLFW;
+
 import core.CoreEngine;
+import core.Game;
+import core.Window;
+import rendering.Camera;
+import rendering.Render;
 
 public class InputPoller {
 
@@ -12,12 +21,13 @@ public class InputPoller {
 	public static final byte JUST_REALEASED=0b10;
 	public static final byte STILL_REALEASED=0b00;
 	public static final byte STILL_PUSHED=0b11;
-	
+	protected static int windowWidth,windowhHeight;
 	
 	private static HashMap<Integer,Byte> States=new HashMap<Integer,Byte>();
 	private static LinkedList<Integer> keyUpdated=new LinkedList<Integer>();
 	private static LinkedList<Integer> keysReset=new LinkedList<Integer>();
 	private static LinkedList<Integer> justPushed=new LinkedList<Integer>();
+	
 	
 	
 	protected static void updateKey(int key,boolean oldValue) {
@@ -45,9 +55,15 @@ public class InputPoller {
 		}
 	
 		while(!keyUpdated.isEmpty()) {
+			
 			int key=keyUpdated.pop();
-			boolean now=KeyCallback.keys[key];
-		
+			
+			boolean now;
+			if(key!=GLFW.GLFW_MOUSE_BUTTON_1 && key!=GLFW.GLFW_MOUSE_BUTTON_2 && key!=GLFW.GLFW_MOUSE_BUTTON_3) {
+			now=KeyCallback.keys[key];
+			}else {
+		    now=MouseButtonCallback.Buttons[key];
+			}
 			byte state=States.getOrDefault(key, STILL_REALEASED);
 		  	
 			   
@@ -94,6 +110,67 @@ public class InputPoller {
 	     return States.getOrDefault(key, STILL_REALEASED);
 	}
 	
-	
+	public static Vector2f getScreenMousePosition() {
+	    float x=(2f*MousePositionCallback.X)/windowWidth-1;
+	    float y=(2f*MousePositionCallback.Y)/windowhHeight-1;
+	    Matrix4f invert=new Matrix4f();
+	    Render.cam.getUIprojectionMatrix().invert(invert);
+	    Vector4f eyeCords=new Vector4f(x,-y,0,1).mul(invert,new Vector4f());
+		Vector2f returnVec=new Vector2f(eyeCords.x,eyeCords.y);    
+	    
+	    
+		return returnVec;
+		
+	     
+		
+	}
+
+	public static Vector2f getWorldMousePosition() {
+		float x=(2f*MousePositionCallback.X)/windowWidth-1;
+		float y=(2f*MousePositionCallback.Y)/windowhHeight-1;
+	    Matrix4f invert=new Matrix4f();
+	    Render.cam.getprojectionMatrix().invert(invert);
+	    Vector4f eyeCords=new Vector4f(x,-y,0,1).mul(invert);
+	    eyeCords.mul(Render.cam.getVeiwMatrix().invert(new Matrix4f()));
+		Vector2f returnVec=new Vector2f(eyeCords.x,eyeCords.y);    
+	    
+	    
+		return returnVec;
+		
+	     
+		
+	}
+
+
+	public static Vector2f NO_FOV_getScreenMousePosition() {
+		float x=(2f*MousePositionCallback.X)/windowWidth-1;
+		float y=(2f*MousePositionCallback.Y)/windowhHeight-1;
+	    Matrix4f invert=new Matrix4f();
+	    Render.cam.getNON_FOV_UIprojection().invert(invert);
+	    Vector4f eyeCords=new Vector4f(x,-y,0,1).mul(invert,new Vector4f());
+		Vector2f returnVec=new Vector2f(eyeCords.x,eyeCords.y);    
+	    
+	    
+		return returnVec;
+		
+	     
+		
+	}
+
+	public static Vector2f NO_FOV_getWorldMousePosition() {
+		float x=(2f*MousePositionCallback.X)/windowWidth-1;
+		float y=(2f*MousePositionCallback.Y)/windowhHeight-1;
+	    Matrix4f invert=new Matrix4f();
+	    Render.cam.getNON_FOV_projection().invert(invert);
+	    Vector4f eyeCords=new Vector4f(x,-y,0,1).mul(invert);
+	    eyeCords.mul(Render.cam.getVeiwMatrix().invert(new Matrix4f()));
+		Vector2f returnVec=new Vector2f(eyeCords.x,eyeCords.y);    
+	    
+	    
+		return returnVec;
+		
+	     
+		
+	}
 	
 }

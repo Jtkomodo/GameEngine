@@ -28,7 +28,7 @@ public class Entity {
 	
 	
 
-	public final static VAR_RW<PASSABLE_BOOL> VAR_PRINT_PROJECTION=VAR_RW.makeNewVar("Print_PROJECTION",PASSABLE_BOOL.getHandle());
+	
 	public final static VAR_RW<PASSABLE_VEC2F> VAR_PROJECTION=VAR_RW.makeNewVar("PROJECTION",PASSABLE_VEC2F.getHandle());
 	public final static VAR_RW<PASSABLE_VEC2F> VAR_POSITION=VAR_RW.makeNewVar("POSITION",PASSABLE_VEC2F.getHandle());
 	public final static VAR_RW<PASSABLE_VEC2F> VAR_VELOCITY=VAR_RW.makeNewVar("Velocity",PASSABLE_VEC2F.getHandle());
@@ -52,6 +52,7 @@ public class Entity {
 	
 	
 	public boolean DEBUG=false;
+	private boolean HIDDDEN=false;
 	private HashMap<String, PassableData<?>> Entity_Data=new HashMap<String, PassableData<?>>();
 	private HashMap<UUID,EntityComponent> components=new HashMap<UUID,EntityComponent>(); 
 
@@ -103,6 +104,7 @@ public class Entity {
 		  }
 		  
 		}
+		
 		return true;
 		
 	}
@@ -524,8 +526,25 @@ public class Entity {
     	CoreEngine.DebugPrint("}");
     }
 	
+    public void hide() {
+
+		CoreEngine.removeEntity(this);
+		
+    	this.HIDDDEN=true;
+    	
+    }
+    public void show() {
+    	CoreEngine.AddEntity(this);
+    	this.HIDDDEN=false;
+    }
+    
 	public EntityComponent[] getComponents() {
 		return this.components.values().toArray(new EntityComponent[this.components.size()]);
+	}
+
+
+	public boolean isHIDDDEN() {
+		return HIDDDEN;
 	}
    
 	
