@@ -46,7 +46,7 @@ public class UIButton extends UIElement {
 	
 	
 	protected void setPositonInBox(Vector2f position) {
-		this.position_in_box=position;
+		position.add(this.getWidth(),0,this.position_in_box);
 		
 	}
 	
@@ -61,37 +61,37 @@ public class UIButton extends UIElement {
 	
 	
 	@Override
-	public void leftButtonJustPressed() {
+	public void leftButtonJustPressed(Vector2f cursorPosition) {
          this.on.setState(!this.on.State());
 
 	}
 
 	@Override
-	public void lefttButtonJustRealesed() {
+	public void lefttButtonJustRealesed(Vector2f cursorPosition) {
 		
 		
 	}
 
 	@Override
-	public void LeftButtonHeld() {
+	public void LeftButtonHeld(Vector2f cursorPosition) {
 	  
 
 	}
 
 	@Override
-	public void rightButtonJustPressed() {
+	public void rightButtonJustPressed(Vector2f cursorPosition) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void rightButtonJustRealesed() {
+	public void rightButtonJustRealesed(Vector2f cursorPosition) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void rightButtonHeld() {
+	public void rightButtonHeld(Vector2f cursorPosition) {
 	
 	}
 
@@ -116,6 +116,8 @@ public class UIButton extends UIElement {
 		
 		Vector2f position_in_box=new Vector2f();
 		this.position_in_box.add(Box_position,position_in_box);
+	    this.collision_box.debugDraw(position_in_box);
+	
 	 if(this.on.State()) {
 		     RenderEntity e=new RenderEntity(m,new Vector3f(position_in_box,200),0, 1,Game.DEFAULT_TEXTURE,Constants.BAR_COLOR_GREEN);
 		     e.setUIPojeection(true);

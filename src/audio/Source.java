@@ -7,7 +7,7 @@ import core.CoreEngine;
 import static org.lwjgl.openal.AL10.*;
 public class Source {
    
-	private static boolean SOUNDON=true;//just so I can have my sound on for other stuff but mute my game
+	private static boolean SOUNDON=false;//just so I can have my sound on for other stuff but mute my game
 	private Vector2f position;
 	protected int sourceID;
 	protected float gainOriginal;
@@ -34,7 +34,9 @@ public class Source {
 		   alSourcef(sourceID,AL_ROLLOFF_FACTOR,rollOff);
 		   alSourcef(sourceID,AL_REFERENCE_DISTANCE,referenceDistance);
 		   alSourcef(sourceID,AL_MAX_DISTANCE,MaxDistance);
-			  
+		   if(!SOUNDON) {
+			   CoreEngine.DebugPrint("SOUND IS OFF____________________________________________");
+		   }
 		   
 	}
 	
@@ -85,7 +87,7 @@ public class Source {
 		  alSourcei(sourceID, AL_BUFFER, sound.getSoundId());
 		  alSourcePlay(sourceID);
 		}else {
-			CoreEngine.DebugPrint("SOUND IS OFF------------------------------\nChange SOUNDON=true in Source.java for sound------------------------------");
+			//CoreEngine.DebugPrint("SOUND IS OFF------------------------------\nChange SOUNDON=true in Source.java for sound------------------------------");
 		}
 	  }
 	public void playMusic(Music music){
@@ -97,7 +99,7 @@ public class Source {
 			
 			
 		}else {
-			CoreEngine.DebugPrint("SOUND IS OFF------------------------------\nChange SOUNDON=true in Source.java for sound------------------------------");
+			//CoreEngine.DebugPrint("SOUND IS OFF------------------------------\nChange SOUNDON=true in Source.java for sound------------------------------");
 		}
 	  }
 	public void updateMusic(Music music) {
@@ -110,7 +112,7 @@ public class Source {
 			
 			
 		}else {
-			CoreEngine.DebugPrint("SOUND IS OFF------------------------------\nChange SOUNDON=true in Source.java for sound------------------------------");
+			//CoreEngine.DebugPrint("SOUND IS OFF------------------------------\nChange SOUNDON=true in Source.java for sound------------------------------");
 		}
 	  }
 	

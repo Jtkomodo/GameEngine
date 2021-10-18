@@ -11,6 +11,7 @@ import TestScprits.PlayerScript;
 import UI.UIBox;
 import UI.UIButton;
 import UI.UIManager;
+import UI.UITextField;
 import animation.Animation;
 import animation.ComponentAnimation;
 import animation.SpriteSheet;
@@ -111,6 +112,7 @@ public class Start extends Game {
 		text=new TextBuilder("aakar",512);
 		test=new Flag(false);
 		buttonPressed=new Flag(false);
+		
 		CoreEngine.Debugdraw=true;
 	    playerModel=new Model(32, 46, 0, 0, 138, 138);
 	    playerSheet=new SpriteSheet("playerSpriteSheet", 138);
@@ -185,10 +187,10 @@ public class Start extends Game {
         MusicSource.playMusic(music);
         UIBox box=new UIBox(new Vector2f(0,0),300,200,new Vector2f(10,10));
         UIManager.addBox(box);
-        UIButton button=new UIButton(10,20);
+        UIButton button=new UIButton(100,20);
         UIButton button2=new UIButton(100,20);
         box.addElement(button);
-        box.addElement(button2);
+        box.addElement(new UITextField("test",100,0.25f));
         Events on=new Events(new Condition(button.getONFlag(),EQUALS,true),new ActionSetVar<Integer,PASSABLE_INT>(player,ComponentRenderModel.VAR_LAYER,1000));
         Events off=new Events(new Condition(button.getONFlag(),EQUALS,false),new ActionSetVar<Integer,PASSABLE_INT>(player,ComponentRenderModel.VAR_LAYER,10));
        

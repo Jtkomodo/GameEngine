@@ -93,14 +93,14 @@ public class UIBox {
 	public void addElement(UIElement element) {
 	      Vector2f nextPosition=new Vector2f();
 	      
-	      this.next_element_position.sub(0,element.height*2+padding.y,nextPosition);
+	      this.next_element_position.sub(0,element.getHeight()*2+padding.y,nextPosition);
 	  
 	      this.allElements.add(element);
 		  if(nextPosition.y<width) {
 			  
 			  Vector2f elementPosition=new Vector2f();
-			  this.next_element_position.sub(-element.width,element.height,elementPosition);
-			 element.position_in_box.set(elementPosition);
+			  this.next_element_position.sub(0,element.getHeight(),elementPosition);
+			 element.setPositonInBox(elementPosition);
 			 this.ShownElements.add(element);
 			 this.next_element_position=nextPosition;
 		  }

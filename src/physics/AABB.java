@@ -33,13 +33,12 @@ public class AABB {
 		this.height = height;
 		this.resistance=resistance;
 		
-		float widthR=0.5f;
-		float heightR=0.5f;
+		
 		float[] Vert= {
-				 -widthR,+heightR,
-					widthR,heightR,
-					widthR,-heightR,
-					-widthR,-heightR
+				 -0.5f,+0.5f,
+					0.5f,0.5f,
+					0.5f,-0.5f,
+					-0.5f,-0.5f
 				 };
 			float[] uvBg={
 					0,0,
@@ -326,22 +325,19 @@ public class AABB {
 			   return value;
 		   }
 		   }
-	 public Vector2f getOffsetinBox(Vector2f position) {
+	 public Vector2f getOffsetinBox(Vector2f position,Vector2f point) {
 			Vector2f Offsetpostion=new Vector2f();
 			
 			
 			Vector2f lc=new Vector2f(0,0);
 			Vector2f rc=new Vector2f(0,0);
 			
-			
 			position.sub(width,height,lc);
+			
 			position.add(width,height,rc);
-		
-		    Offsetpostion.x=position.x-lc.x;
-		   
-		   
-		   
-		   Offsetpostion.y=(height*2)-(position.y-lc.y);	
+			
+		    Offsetpostion.x=point.x-lc.x;
+		    Offsetpostion.y=(height*2)-(point.y-lc.y);	
 			
 			return Offsetpostion;
 		}
@@ -378,6 +374,15 @@ public class AABB {
 	
 	public UUID getID() {
 		return ID;
+	}
+	protected float getWidth() {
+		return width;
+	}
+	public void setWidth(float width) {
+		this.width = width;
+	}
+	public void setHeight(float height) {
+		this.height = height;
 	}
 	
 	

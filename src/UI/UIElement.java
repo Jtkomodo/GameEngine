@@ -16,7 +16,7 @@ import physics.AABB;
 
 public abstract class UIElement {
 
-	protected float width,height;
+	private float width,height;
 	protected AABB collision_box;
 	
 	
@@ -46,9 +46,14 @@ public abstract class UIElement {
 
         int leftState=InputPoller.checkState(GLFW.GLFW_MOUSE_BUTTON_1);
         int rightState=InputPoller.checkState(GLFW.GLFW_MOUSE_BUTTON_2);
+   
         
     	if(this.collision_box.vsPoint(mouse_position,position_in_box) && (this.leftState!=leftState || this.rightState!=rightState)) {
-    		this.action.setMouseState(mouse_position,leftState,rightState);
+    		
+    		 Vector2f offsetInBox=this.collision_box.getOffsetinBox(position_in_box, mouse_position);
+    		 
+    		
+    		this.action.setMouseState(offsetInBox,leftState,rightState);
 			this.leftState=leftState;
 			this.rightState=rightState;
     		this.MOUSE_STATE_CHANGED.setState(true);
@@ -60,18 +65,51 @@ public abstract class UIElement {
     	}
         
     }
-	public abstract void leftButtonJustPressed();
-	public abstract void lefttButtonJustRealesed();
-	public abstract void LeftButtonHeld();
+    
+    
+    protected void setPositonInBox(Vector2f position) {
+		this.position_in_box=position;
+		
+	}
+	public abstract void leftButtonJustPressed(Vector2f cursorPosition);
+	public abstract void lefttButtonJustRealesed(Vector2f cursorPosition);
+	public abstract void LeftButtonHeld(Vector2f cursorPosition);
 	
 	
-	public abstract void rightButtonJustPressed();
-	public abstract void rightButtonJustRealesed();
-	public abstract void rightButtonHeld();
+	public abstract void rightButtonJustPressed(Vector2f cursorPosition);
+	public abstract void rightButtonJustRealesed(Vector2f cursorPosition);
+	public abstract void rightButtonHeld(Vector2f cursorPosition);
 	
 	protected abstract void renderUpdate(Vector2f box_Position);
 	public void setMouseStateChanged(Boolean state) {
 		this.MOUSE_STATE_CHANGED.setState(state);
+	}
+
+
+
+	protected float getWidth() {
+		return width;
+	}
+
+
+
+	protected void setWidth(float width) {
+		this.width = width;
+		this.collision_box.setWidth(width);
+	}
+
+
+
+	protected float getHeight() {
+		return height;
+	}
+
+
+
+	protected void setHeight(float height) {
+		this.height = height;
+		this.collision_box.setHeight(height);
+	
 	}
 	
 	

@@ -33,7 +33,7 @@ public class RenderEntity {
 	}
 	public RenderEntity(ModelFramwork model, Vector3f position,float angle, Vector2f nonSquareSize,Texture texture,Vector4f color) {
 		construct(model,position,angle,texture,color);
-	     setSize(nonSquareSize);
+	    setSize(nonSquareSize);
 	}
 	
 	  public RenderEntity(ModelFramwork model,Vector3f position,float angle, float size,Texture texture,boolean Mirror) {

@@ -1,9 +1,4 @@
-/rendering/
-/scripting/
-/test/
-/textrendering/
 /UI/
+/test/
 /physics/
-/core/
-/input/
-/events/
+/audio/
