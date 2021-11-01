@@ -4,11 +4,13 @@ import javax.swing.Renderer;
 
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import org.lwjgl.glfw.GLFW;
 
 import core.Constants;
 import core.CoreEngine;
 import core.Game;
 import input.CharCallback;
+import input.InputPoller;
 import rendering.MainRenderHandler;
 import rendering.Model;
 import rendering.RenderEntity;
@@ -25,8 +27,10 @@ public class UITextField extends UIElement {
 	private Model m;
 	private float sizeOfStirng;
 	private TextBuilder text=new TextBuilder("aakar",512);
-	private Vector2f cursorOffset=new Vector2f();
 	private boolean takingInpput=true;
+	private float textOffset=20;
+	private float offset=0;
+	private int index=0; 
 	
 	
 	public UITextField(String string,float width,float sizeOfString) {
@@ -46,16 +50,11 @@ public class UITextField extends UIElement {
 					1,0,
 					1,1,
 					0,1
-					
-					};
-			int[] ind= {
-					0,1,2,
-					2,3,0	
-						
-				};
+			};
+		
 			m=new Model(Vert,uvBg);
 		
-			
+		    offset=this.text.getClosestCurosorOffset(new Vector2f(((textOffset*this.sizeOfStirng))-this.getWidth(),0),0-this.getWidth(),this.sizeOfStirng);
 		
 	}
 	protected void setPositonInBox(Vector2f position) {
@@ -63,16 +62,15 @@ public class UITextField extends UIElement {
 		
 	}
 	
-	private void setString(String string) {
-		
-	}
-	
+
 	
 	@Override
 	public void leftButtonJustPressed(Vector2f cursorPosition) {
-	       
-          
-             this.cursorOffset=cursorPosition;
+	    
+		   if(this.string!="") {
+           offset=this.text.getClosestCurosorOffset(new Vector2f(((textOffset*this.sizeOfStirng))-this.getWidth(),0),cursorPosition.x-this.getWidth(),this.sizeOfStirng);
+           index=this.text.getClosestCursorIndex(new Vector2f(((textOffset*this.sizeOfStirng))-this.getWidth(),0),cursorPosition.x-this.getWidth(),this.sizeOfStirng);
+	       }
 	}
 
 	@Override
@@ -83,8 +81,10 @@ public class UITextField extends UIElement {
 
 	@Override
 	public void LeftButtonHeld(Vector2f cursorPosition) {
-		    this.cursorOffset=cursorPosition;
-
+		  if(this.string!="") {
+		  offset=this.text.getClosestCurosorOffset(new Vector2f(((textOffset*this.sizeOfStirng))-this.getWidth(),0),cursorPosition.x-this.getWidth(),this.sizeOfStirng);
+		  index=this.text.getClosestCursorIndex(new Vector2f(((textOffset*this.sizeOfStirng))-this.getWidth(),0),cursorPosition.x-this.getWidth(),this.sizeOfStirng);
+		  }
 	}
 
 	@Override
@@ -105,9 +105,37 @@ public class UITextField extends UIElement {
       
 
 	}
+	
+	
 
 	@Override
 	protected void renderUpdate(Vector2f box_Position) {
+		
+		if(this.takingInpput) {
+	        CharCallback.takeInput=true;
+	       String string=CharCallback.string;
+	       if(this.string!="") {
+	       
+	       String s1=this.string.substring(0,index);
+	       String s2=this.string.substring(index);
+	     //  CoreEngine.DebugPrint(s2);
+	       this.string=s1+string+s2;
+	       
+	       this.offset=this.text.getCursorOffsetFromIndex(new Vector2f(((textOffset*this.sizeOfStirng))-this.getWidth(),0),this.index+string.length(), sizeOfStirng);
+	       this.index=this.index+string.length();
+	       
+	       }else {
+	        this.string=string;
+	       }
+	       CharCallback.clearString();
+	      
+	    }else {
+	    	CharCallback.clearString();
+	    	CharCallback.takeInput=false;
+	    }
+		
+		
+		
 	
 		
 		Vector2f position=new Vector2f();
@@ -119,27 +147,20 @@ public class UITextField extends UIElement {
 		float length=text.getStringLength()*this.sizeOfStirng;
 		
 		
-		
-		Vector2f offsetInBox=new Vector2f();
-	//	position.add(100,this.cursorOffset.y,offsetInBox);
-	    this.cursorOffset.add(position,offsetInBox);
+		   
+	   
 	
 		
-	  
 		
-		CoreEngine.DebugPrint("V="+this.cursorOffset);
-		
-		
-        if(this.takingInpput && this.cursorOffset!=null) {
+	     if(this.takingInpput) {
 			
-			MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f(offsetInBox.x-this.getWidth(),position.y,1000),0,new Vector2f(1,text.getStringHieght()/2),Game.DEFAULT_TEXTURE,Constants.RED));
+			MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f(position.x+offset,position.y,1000),0,new Vector2f(1,text.getStringHieght()/2),Game.DEFAULT_TEXTURE,Constants.RED));
 			
 		}
 		
-	    text.UIdrawString(position.x-this.getWidth()+10,position.y,this.sizeOfStirng,Constants.BLACK);
+	    text.UIdrawString((position.x+(textOffset*this.sizeOfStirng))-this.getWidth(),position.y,this.sizeOfStirng,Constants.BLACK);
 	    
 	    
-	
 	
 		
 		

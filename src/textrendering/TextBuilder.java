@@ -5,11 +5,15 @@ import java.util.LinkedList;
 
 import org.joml.*;
 
+import core.Constants;
 import core.CoreEngine;
+import core.Game;
 import rendering.MainRenderHandler;
+import rendering.Model;
 import rendering.OneTextureBatchedModel;
 import rendering.Render;
 import rendering.RenderEntity;
+import  java.lang.Math;
 /**This is a class that will allow us to draw a string to the screen.
  * Once the the class is initiated by loading a new {@link Fontloader} or using a existing one
  * ,use {@link #setString(String)} to set the string then use the various draw() methods to draw 
@@ -20,6 +24,8 @@ import rendering.RenderEntity;
  */
 public class TextBuilder{
 
+
+    private LinkedList<Float> cursorPositions=new LinkedList<Float>();
 	private String text;
 	private float z=200000;
 	
@@ -28,6 +34,7 @@ public class TextBuilder{
 	private Fontloader loader;
     private float stringLength,stringHieght;
 	private RenderEntity e;
+	private Vector2fc cursotPositionX;
 	/**
 	 * *Creates a new TextBuilder  that has the specified font
 	 * @param Font The name of the font texture file to load
@@ -77,7 +84,8 @@ public class TextBuilder{
 	    Vector2f cursor=new Vector2f(0,0);// the curent cursor position 
 	   
 	//actually make the model from values in font file	
-	    
+	    this.cursorPositions.clear();
+	 
 		for(int i=0;i<text.length();i++) {//simple for loop
 		
 			int a=text.charAt(i);//this gets each char in order and uses it as the key to the hexmap that has all the info we need to draw in the correct place  
@@ -100,10 +108,12 @@ public class TextBuilder{
 			float Yz=y/loader.Texheight;
 			float Xo=(x+width)/loader.Texwidth;
 			float Yo=(y+height)/loader.Texheight;
-			 float height2=(height/2);
-			 float width2=(width/2);
-			 cursor.add(offset);//adds the offset to the cursor
-				if((char)a!='\n'){
+			float height2=(height/2);
+			float width2=(width/2);
+			
+			cursor.add(offset);//adds the offset to the cursor
+			
+			if((char)a!='\n'){
 			 l=new float[]{// loads in the correct uv coords
 					Xz,Yz,
 					Xo,Yz,
@@ -132,12 +142,17 @@ public class TextBuilder{
 				 if((cursor.x+width2)>lengthOfString) {
 						lengthOfString=cursor.x+width2;
 					}
-				
-								
+			if(i==0) {	
+			 this.cursorPositions.add(cursor.x-width2);						
+			}
 			 cursor.add(xadv,yoff);//moves the cursor for the next char		 
+			
+
 			 if((cursor.y+height2+yoff)>heightOfString) {
 					heightOfString=cursor.y+height2+yoff;
 				}
+				
+			 this.cursorPositions.add(cursor.x-width2);					
 		}
 	
 	   this.stringLength=lengthOfString;
@@ -349,8 +364,64 @@ public class TextBuilder{
 	public void setZ(float z) {
 		this.z = z;
 	}
+    public float getClosestCurosorOffset(Vector2f position,float cursorPositionX,float sizeOfString) {
+    	   
+       
+		 
+    	float offset=(cursorPositionX-position.x)/sizeOfString;
+    	int closestIndex=0;
+    	float smallest=0;
+    	 for(int i=0;i<this.cursorPositions.size();i++) {
+    		    float cursorPosition=this.cursorPositions.get(i);
+    		    float dif=Math.abs(cursorPosition-offset);
+    		  //  CoreEngine.DebugPrint("dif="+dif);    		    
+    		    if(dif<=smallest || i==0) {
+    		    	smallest=dif;
+    		    	closestIndex=i;
+    		    }else {
+    		    	break;
+    		    }
+    		 
+    	 }
+    	
+    	 
+    	 return position.x+(this.cursorPositions.get(closestIndex)*sizeOfString);
+    	
+    }
 
-
+	public int getClosestCursorIndex(Vector2f position,float cursorPositionX,float sizeOfString) {
+		float offset=(cursorPositionX-position.x)/sizeOfString;
+    	
+    	int closestIndex=0;
+    	float smallest=0;
+    	 for(int i=0;i<this.cursorPositions.size();i++) {
+    		    float cursorPosition=this.cursorPositions.get(i);
+    		    float dif=Math.abs(cursorPosition-offset);
+    		  //  CoreEngine.DebugPrint("dif="+dif);    		    
+    		    if(dif<=smallest || i==0) {
+    		    	smallest=dif;
+    		    	closestIndex=i;
+    		    }else {
+    		    	return closestIndex;
+    		    }
+    		 
+    	 }
+    	// CoreEngine.DebugPrint("CloseestOffset="+this.cursorPositions.get(closestIndex));
+    	
+    	 return closestIndex;
+    	 
+    	
+	}
+	public float getCursorOffsetFromIndex(Vector2f position,int index,float sizeOfString) {
+		float offset=0;
+		if(index<this.cursorPositions.size()) {
+			offset= position.x+(this.cursorPositions.get(index)*sizeOfString);
+		}
+		
+		return offset;
+	}
+	
+	
 	public float getStringLength() {
 		return stringLength;
 	}

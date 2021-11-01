@@ -80,6 +80,10 @@ public abstract class UIElement {
 	public abstract void rightButtonJustRealesed(Vector2f cursorPosition);
 	public abstract void rightButtonHeld(Vector2f cursorPosition);
 	
+	
+	public void inputUpdate(Vector2f box_Position) {
+		
+	};
 	protected abstract void renderUpdate(Vector2f box_Position);
 	public void setMouseStateChanged(Boolean state) {
 		this.MOUSE_STATE_CHANGED.setState(state);

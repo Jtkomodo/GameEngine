@@ -43,11 +43,12 @@ public class UIManager {
 
 		  for(int i=0;i<box_list.size();i++) {
 			  box_list.get(i).updateFlags(UIPosition);
+			  
 		  }
 
 
 	  }
-
+    
 	
 	
 	

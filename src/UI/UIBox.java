@@ -67,7 +67,10 @@ public class UIBox {
 			this.ShownElements.get(i).checkIfInBounds(Cursor_position,newPosition);
 		}
 		
+		
 	}
+	
+	
 	protected void Render_update() {
 		
 	
@@ -80,7 +83,7 @@ public class UIBox {
 		RenderEntity e2=new RenderEntity(m,new Vector3f(this.next_element_position.sub(camPosition,new Vector2f()),200),0,5,Game.DEFAULT_TEXTURE,Constants.BLUE);
 		e.setUIPojeection(true);
 		e2.setUIPojeection(true);
-		MainRenderHandler.addEntity(e);
+		//MainRenderHandler.addEntity(e);
 		MainRenderHandler.addEntity(e2);
 		for(int i=0;i<this.ShownElements.size();i++) {
 			this.ShownElements.get(i).renderUpdate(newPosition);

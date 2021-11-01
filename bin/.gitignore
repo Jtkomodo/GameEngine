@@ -1,4 +1,12 @@
+/TestScprits/
 /UI/
-/test/
-/physics/
+/animation/
 /audio/
+/core/
+/events/
+/input/
+/physics/
+/rendering/
+/scripting/
+/test/
+/textrendering/
