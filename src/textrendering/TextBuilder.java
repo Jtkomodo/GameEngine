@@ -421,6 +421,51 @@ public class TextBuilder{
 		return offset;
 	}
 	
+	public float getAmountOutsideBound(Vector2f position,float bound,float sizeOfString) {
+		
+		float amount=0;
+		float length=position.x+(this.cursorPositions.getLast()*sizeOfString);
+		if(length>=bound) {
+		    amount=length-bound;
+		}
+		
+		return amount;
+	}
+	
+	
+	public int getAmountOfCharsOutsideMAxBound(Vector2f position,float bound,float sizeOfString) {
+	
+		int amount=0;
+		for(int i=this.cursorPositions.size()-1;i>=0;i--) {
+			float cursorPosition=position.x+(this.cursorPositions.get(i)*sizeOfString);
+		    if(cursorPosition>=bound) {
+		    	amount++;
+		    }else {
+		    	break;
+		    }
+			
+		}
+		
+		return amount;
+	}
+	public int getAmountOfCharsOutsideMinBound(Vector2f position,float bound,float sizeOfString) {
+		
+		int amount=0;
+		for(int i=0;i<this.cursorPositions.size();i++) {
+			float cursorPosition=position.x+(this.cursorPositions.get(i)*sizeOfString);
+		    
+			if(cursorPosition<bound) {
+		    	amount++;
+		    }else {
+		    	break;
+		    }
+		}
+		
+		return amount;
+	}
+	
+	
+	
 	
 	public float getStringLength() {
 		return stringLength;

@@ -111,8 +111,11 @@ public class UITextField extends UIElement {
 	@Override
 	protected void renderUpdate(Vector2f box_Position) {
 		
+		
+		
+		
 		if(this.takingInpput) {
-	        CharCallback.takeInput=true;
+	       CharCallback.takeInput=true;
 	       String string=CharCallback.string;
 	       if(this.string!="") {
 	       
@@ -127,6 +130,8 @@ public class UITextField extends UIElement {
 	       }else {
 	        this.string=string;
 	       }
+	       
+	       
 	       CharCallback.clearString();
 	      
 	    }else {
@@ -135,6 +140,24 @@ public class UITextField extends UIElement {
 	    }
 		
 		
+			
+		if(this.takingInpput && InputPoller.JustPushed(GLFW.GLFW_KEY_BACKSPACE)) {
+		     if(this.index>0) {
+		    	 String s1=this.string.substring(0,index-1);
+			     String s2=this.string.substring(index);
+			     this.string=s1+s2;
+			     this.index--;
+		     }
+			
+		}
+		
+		
+		
+		text.setString(this.string);
+		float textOffset=this.textOffset;
+		String string=this.string;
+		
+	   
 		
 	
 		
@@ -144,7 +167,28 @@ public class UITextField extends UIElement {
 		text.setString(string);
 	    this.collision_box.debugDraw(position);
 		
-		float length=text.getStringLength()*this.sizeOfStirng;
+    if(this.string.length()!=0) {
+	    
+  	  
+    	float length=text.getStringLength()*this.sizeOfStirng;
+    	float boxBoundery=this.getWidth();
+    	float stringBoundery=(textOffset*this.sizeOfStirng)-(this.getWidth())+length;
+    	if(stringBoundery>boxBoundery) {
+    		float newOffset=textOffset-((stringBoundery-boxBoundery)/this.sizeOfStirng);
+            
+    		int amount=text.getAmountOfCharsOutsideMinBound(new Vector2f(position.x+(newOffset*this.sizeOfStirng)-this.getWidth(),position.y),(position.x+(textOffset*this.sizeOfStirng)-this.getWidth()),this.sizeOfStirng);
+    		 //textOffset=newOffset;
+    		text.setString(string.substring(amount));
+    		CoreEngine.DebugPrint("amount="+amount);
+    	}
+    	
+    	//MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f(position.x+boxBoundery,position.y,1000),0,new Vector2f(1,text.getStringHieght()/2),Game.DEFAULT_TEXTURE,Constants.BLUE));
+    	
+    	
+    	//MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f((position.x+stringBoundery),position.y,1000),0,new Vector2f(1,text.getStringHieght()/2),Game.DEFAULT_TEXTURE,Constants.RED));
+    	
+    	
+    }
 		
 		
 		   
@@ -153,7 +197,7 @@ public class UITextField extends UIElement {
 		
 		
 	     if(this.takingInpput) {
-			
+	    		
 			MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f(position.x+offset,position.y,1000),0,new Vector2f(1,text.getStringHieght()/2),Game.DEFAULT_TEXTURE,Constants.RED));
 			
 		}
