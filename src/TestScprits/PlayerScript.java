@@ -28,6 +28,12 @@ public class PlayerScript extends Script {
            this.player=entity;
 	}
 	
+	
+	
+	
+	
+	
+	
     @Override
     public void GAMELOOP_TICK_BEFORE_PHYSICS() {
     	if(player.hasAllVars(new VAR_RW<?>[] {Entity.VAR_POSITION,Entity.VAR_MIRROR})){

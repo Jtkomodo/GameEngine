@@ -33,8 +33,7 @@ public class Condition {
 		  this.a=conditionA.result;
 		  this.b=conditionB.result;
 		  this.op=op;
-		  this.flags.add(a);
-		  this.flags.add(b);
+		
 		  this.flags.addAll(conditionA.flags);
 		  this.flags.addAll(conditionB.flags);
 		

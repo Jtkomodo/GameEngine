@@ -9,18 +9,21 @@ import org.lwjgl.glfw.GLFW;
 import core.Constants;
 import core.CoreEngine;
 import core.Game;
+import core.Timer;
+import events.Events;
 import input.CharCallback;
 import input.InputPoller;
 import rendering.MainRenderHandler;
 import rendering.Model;
 import rendering.RenderEntity;
-import textrendering.TextBuilder;;
+import textrendering.TextBuilder;
+import events.Condition;
+import events.EventAction;
+
+import static events.Operation.*;
 
 
-public class UITextField extends UIElement {
-
-	
-	
+public class UITextField extends UIElement {	
 	
 	
 	private String string;
@@ -29,8 +32,12 @@ public class UITextField extends UIElement {
 	private TextBuilder text=new TextBuilder("aakar",512);
 	private boolean takingInpput=true;
 	private float textOffset=20;
-	private float offset=0;
 	private int index=0; 
+	private Timer BackSpaceTimer=new Timer();
+//	private Vector2f CursorPosition=new Vector2f();
+	private String shownString;
+	private int amountOfCharsOutSideBounds=0;
+	
 	
 	
 	public UITextField(String string,float width,float sizeOfString) {
@@ -38,6 +45,7 @@ public class UITextField extends UIElement {
 		text.setString(string);
 		this.setHeight(sizeOfString*text.getStringHieght());
 		this.string=string;
+		this.shownString=string;
 		this.sizeOfStirng=sizeOfString;
 		float[] Vert= {
 				 -0.5f,+0.5f,
@@ -53,50 +61,55 @@ public class UITextField extends UIElement {
 			};
 		
 			m=new Model(Vert,uvBg);
-		
-		    offset=this.text.getClosestCurosorOffset(new Vector2f(((textOffset*this.sizeOfStirng))-this.getWidth(),0),0-this.getWidth(),this.sizeOfStirng);
-		
+		    Events textChangedEvent=new Events(new Condition(InputPoller.charsChanged,EQUALS,true),()->TextChanged());//this has what is called lambda expression which just calls the function textChanged
+		    Events BackSpaceChangedEvent=InputPoller.makeEventOnKeyUpdated(GLFW.GLFW_KEY_BACKSPACE,()->BackSpace());
+		   
+		    BackSpaceChangedEvent.ActivateFlags();
+		    textChangedEvent.ActivateFlags();
+		 
 	}
+	
 	protected void setPositonInBox(Vector2f position) {
 		position.add(this.getWidth(),0,this.position_in_box);
 		
 	}
 	
 
-	
 	@Override
-	public void leftButtonJustPressed(Vector2f cursorPosition) {
+	public void leftButtonJustPressed(Vector2f mousePosition) {
 	    
-		   if(this.string!="") {
-           offset=this.text.getClosestCurosorOffset(new Vector2f(((textOffset*this.sizeOfStirng))-this.getWidth(),0),cursorPosition.x-this.getWidth(),this.sizeOfStirng);
-           index=this.text.getClosestCursorIndex(new Vector2f(((textOffset*this.sizeOfStirng))-this.getWidth(),0),cursorPosition.x-this.getWidth(),this.sizeOfStirng);
+	       if(!string.equals("")) {
+	    	this.text.setString(shownString);   
+	        int index=this.text.getClosestCursorIndex(new Vector2f(((textOffset*this.sizeOfStirng))-this.getWidth(),0),mousePosition.x-this.getWidth(),this.sizeOfStirng);
+	        this.index=index+this.amountOfCharsOutSideBounds;
 	       }
 	}
 
 	@Override
 	public void lefttButtonJustRealesed(Vector2f cursorPosition) {
-		// TODO Auto-generated method stub
+	
 
 	}
 
 	@Override
-	public void LeftButtonHeld(Vector2f cursorPosition) {
-		  if(this.string!="") {
-		  offset=this.text.getClosestCurosorOffset(new Vector2f(((textOffset*this.sizeOfStirng))-this.getWidth(),0),cursorPosition.x-this.getWidth(),this.sizeOfStirng);
-		  index=this.text.getClosestCursorIndex(new Vector2f(((textOffset*this.sizeOfStirng))-this.getWidth(),0),cursorPosition.x-this.getWidth(),this.sizeOfStirng);
-		  }
+	public void LeftButtonHeld(Vector2f mousePosition) {
+		 if(!string.equals("")) {
+		    	this.text.setString(shownString);   
+		        int index=this.text.getClosestCursorIndex(new Vector2f(((textOffset*this.sizeOfStirng))-this.getWidth(),0),mousePosition.x-this.getWidth(),this.sizeOfStirng);
+		        this.index=index+this.amountOfCharsOutSideBounds;
+		       }
+		
 	}
 
 	@Override
 	public void rightButtonJustPressed(Vector2f cursorPosition) {
-		// TODO Auto-generated method stub
+	
 
 	}
 
 	@Override
 	public void rightButtonJustRealesed(Vector2f cursorPosition) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -107,55 +120,128 @@ public class UITextField extends UIElement {
 	}
 	
 	
+	
+	
+	
+	
+	
+	private void BackSpace() {
+		if(!this.string.equals("")) {
+			String string=this.string;
+		 if(this.takingInpput && InputPoller.JustPushed(GLFW.GLFW_KEY_BACKSPACE)) {
+			CoreEngine.DebugPrint("just pushed");
+			 if(this.index>0) {
+		    	 String s1=string.substring(0,index-1);
+			     String s2=string.substring(index);
+			     string=s1+s2;
+			     this.index--;
+		     }
+			this.BackSpaceTimer.setTimer(2); 
+		}  
+		
+
+		 else if(this.takingInpput && InputPoller.Held(GLFW.GLFW_KEY_BACKSPACE)) {
+			 if(this.index>=2) {
+		    	 String s1=string.substring(0,index-2);
+			     String s2=string.substring(index);
+			     string=s1+s2;
+			     this.index-=2;
+		     }else if(this.index>0){
+		    	
+		    	 string=string.substring(index);
+		    	 this.index=0;
+		    	
+		     }
+			 this.BackSpaceTimer.resetTimer();
+			 
+		}
+	 this.string=string;
+	}
+		
+	}
+	
+	public void TextChanged() {
+		if(index>string.length()) {
+			index=string.length();
+		}
+	 	String charsGotten=InputPoller.string;
+	 	//make the actual string from the keys just pressed
+		if(!string.equals("")) {
+           
+			String s1=string.substring(0,index);
+			String s2=string.substring(index);
+			//  CoreEnginDebugPrint(s2);
+			string=s1+charsGotten+s2;
+			index=s1.length()+charsGotten.length();
+		}else {
+			string=charsGotten;
+			index=charsGotten.length();
+		}
+		
+	
+	
+	}
+
+	
+	private void makeShownString() {
+		
+		this.shownString=string;
+		this.text.setString(string);
+		
+		 if(this.string.length()!=0) {
+			    
+			
+		    	float length=text.getStringLength()*this.sizeOfStirng;
+		    	float boxBoundery=this.getWidth();
+		    	float stringBoundery=(textOffset*this.sizeOfStirng)-(this.getWidth())+length;
+		    	if(stringBoundery>boxBoundery) {
+		    		
+		    		float newOffset=textOffset-((stringBoundery-boxBoundery)/this.sizeOfStirng);
+		            
+		    		this.amountOfCharsOutSideBounds=text.getAmountOfCharsOutsideMinBound(new Vector2f((newOffset*this.sizeOfStirng)-this.getWidth(),0),((textOffset*this.sizeOfStirng)-this.getWidth()),this.sizeOfStirng);
+		    		
+		    	   this.shownString=string.substring(this.amountOfCharsOutSideBounds);
+		    		text.setString(shownString);
+		    	
+		    	}else {
+		    		this.shownString=string;
+		    		this.amountOfCharsOutSideBounds=0;
+		    	}
+	    	    
+	    
+	    	
+	    }else {
+	    	this.amountOfCharsOutSideBounds=0;
+	    	this.shownString=string;
+	    }
+		 
+	}
+	
+	
 
 	@Override
 	protected void renderUpdate(Vector2f box_Position) {
 		
 		
+		 makeShownString();
+		
+		CoreEngine.DebugPrint("INDEX="+index);
 		
 		
 		if(this.takingInpput) {
-	       CharCallback.takeInput=true;
-	       String string=CharCallback.string;
-	       if(this.string!="") {
-	       
-	       String s1=this.string.substring(0,index);
-	       String s2=this.string.substring(index);
-	     //  CoreEngine.DebugPrint(s2);
-	       this.string=s1+string+s2;
-	       
-	       this.offset=this.text.getCursorOffsetFromIndex(new Vector2f(((textOffset*this.sizeOfStirng))-this.getWidth(),0),this.index+string.length(), sizeOfStirng);
-	       this.index=this.index+string.length();
-	       
-	       }else {
-	        this.string=string;
-	       }
-	       
-	       
-	       CharCallback.clearString();
-	      
-	    }else {
-	    	CharCallback.clearString();
-	    	CharCallback.takeInput=false;
-	    }
-		
-		
-			
-		if(this.takingInpput && InputPoller.JustPushed(GLFW.GLFW_KEY_BACKSPACE)) {
-		     if(this.index>0) {
-		    	 String s1=this.string.substring(0,index-1);
-			     String s2=this.string.substring(index);
-			     this.string=s1+s2;
-			     this.index--;
-		     }
-			
+		       CharCallback.takeInput=true;
+		}else {
+			CharCallback.takeInput=false;
 		}
 		
+		text.setString(shownString);
 		
 		
-		text.setString(this.string);
+			
+	
+	
 		float textOffset=this.textOffset;
-		String string=this.string;
+	
 		
 	   
 		
@@ -164,41 +250,18 @@ public class UITextField extends UIElement {
 		Vector2f position=new Vector2f();
 		
 		this.position_in_box.add(box_Position,position);
-		text.setString(string);
 	    this.collision_box.debugDraw(position);
-		
-    if(this.string.length()!=0) {
-	    
-  	  
-    	float length=text.getStringLength()*this.sizeOfStirng;
-    	float boxBoundery=this.getWidth();
-    	float stringBoundery=(textOffset*this.sizeOfStirng)-(this.getWidth())+length;
-    	if(stringBoundery>boxBoundery) {
-    		float newOffset=textOffset-((stringBoundery-boxBoundery)/this.sizeOfStirng);
-            
-    		int amount=text.getAmountOfCharsOutsideMinBound(new Vector2f(position.x+(newOffset*this.sizeOfStirng)-this.getWidth(),position.y),(position.x+(textOffset*this.sizeOfStirng)-this.getWidth()),this.sizeOfStirng);
-    		 //textOffset=newOffset;
-    		text.setString(string.substring(amount));
-    		CoreEngine.DebugPrint("amount="+amount);
-    	}
-    	
-    	//MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f(position.x+boxBoundery,position.y,1000),0,new Vector2f(1,text.getStringHieght()/2),Game.DEFAULT_TEXTURE,Constants.BLUE));
-    	
-    	
-    	//MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f((position.x+stringBoundery),position.y,1000),0,new Vector2f(1,text.getStringHieght()/2),Game.DEFAULT_TEXTURE,Constants.RED));
-    	
-    	
-    }
-		
-		
-		   
+	    float offset=-this.getWidth();
+	    if(index>0) {
+	      offset=this.text.getCursorOffsetFromIndex(new Vector2f((textOffset*this.sizeOfStirng)-this.getWidth(),0),index-this.amountOfCharsOutSideBounds,this.sizeOfStirng);
+		}
 	   
 	
 		
 		
 	     if(this.takingInpput) {
 	    		
-			MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f(position.x+offset,position.y,1000),0,new Vector2f(1,text.getStringHieght()/2),Game.DEFAULT_TEXTURE,Constants.RED));
+			MainRenderHandler.addEntity(new RenderEntity(m,new Vector3f(position.x+offset,position.y,1000),0,new Vector2f(1,this.sizeOfStirng*75),Game.DEFAULT_TEXTURE,Constants.BLACK));
 			
 		}
 		
@@ -209,5 +272,5 @@ public class UITextField extends UIElement {
 		
 		
 	}
-
+	
 }

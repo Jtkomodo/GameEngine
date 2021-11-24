@@ -62,7 +62,7 @@ public class Music {
 	        frameSize=BUFFER_SIZE*numChanels;
 	        this.Fadeout=(findTimeLeft(data.data.remaining()/this.amountOfTimeBeforeFadeOut));
 	      
-	        CoreEngine.DebugPrint("SECONDS:"+findTimeLeft(data.data.remaining()));
+	      //  CoreEngine.DebugPrint("SECONDS:"+findTimeLeft(data.data.remaining()));
 	    //    buffer= MemoryUtil.memAlloc(frameSize);
 	     //   buffersToFree.add(buffer);
 			
@@ -121,7 +121,7 @@ public class Music {
 			buffer.flip();
 		}else {
 			
-			CoreEngine.DebugPrint("NO MORE MUSIC TO PLAY");
+			//CoreEngine.DebugPrint("NO MORE MUSIC TO PLAY");
 			return 0;
 		}
 		

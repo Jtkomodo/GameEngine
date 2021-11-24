@@ -25,6 +25,7 @@ public abstract class UIElement {
 	protected Vector2f position_in_box=new Vector2f();
 	protected int leftState=0,rightState=0;
 	
+	
     protected UIElement(float width,float height) {
     	this.width=width;
     	this.height=height;
@@ -44,28 +45,27 @@ public abstract class UIElement {
     	this.position_in_box.add(boxPosition,position_in_box);
 
 
-        int leftState=InputPoller.checkState(GLFW.GLFW_MOUSE_BUTTON_1);
-        int rightState=InputPoller.checkState(GLFW.GLFW_MOUSE_BUTTON_2);
-   
+    	int leftState=InputPoller.checkState(GLFW.GLFW_MOUSE_BUTTON_1);
+    	int rightState=InputPoller.checkState(GLFW.GLFW_MOUSE_BUTTON_2);
+
+
+    	if(this.collision_box.vsPoint(mouse_position,position_in_box)) {
+    		if (this.leftState!=leftState || this.rightState!=rightState) {
+    			Vector2f offsetInBox=this.collision_box.getOffsetinBox(position_in_box, mouse_position);
+                
+
+    			this.action.setMouseState(offsetInBox,leftState,rightState);
+    			this.leftState=leftState;
+    			this.rightState=rightState;
+    			this.MOUSE_STATE_CHANGED.setState(true);
+    		}
+
+
         
-    	if(this.collision_box.vsPoint(mouse_position,position_in_box) && (this.leftState!=leftState || this.rightState!=rightState)) {
-    		
-    		 Vector2f offsetInBox=this.collision_box.getOffsetinBox(position_in_box, mouse_position);
-    		 
-    		
-    		this.action.setMouseState(offsetInBox,leftState,rightState);
-			this.leftState=leftState;
-			this.rightState=rightState;
-    		this.MOUSE_STATE_CHANGED.setState(true);
-    	
-
-    		
-
 
     	}
-        
     }
-    
+
     
     protected void setPositonInBox(Vector2f position) {
 		this.position_in_box=position;
@@ -81,9 +81,7 @@ public abstract class UIElement {
 	public abstract void rightButtonHeld(Vector2f cursorPosition);
 	
 	
-	public void inputUpdate(Vector2f box_Position) {
-		
-	};
+	
 	protected abstract void renderUpdate(Vector2f box_Position);
 	public void setMouseStateChanged(Boolean state) {
 		this.MOUSE_STATE_CHANGED.setState(state);

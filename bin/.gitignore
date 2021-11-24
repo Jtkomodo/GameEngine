@@ -1,7 +1,3 @@
-/TestScprits/
-/UI/
-/animation/
-/audio/
 /core/
 /events/
 /input/
@@ -10,3 +6,7 @@
 /scripting/
 /test/
 /textrendering/
+/UI/
+/TestScprits/
+/audio/
+/res/

@@ -190,7 +190,8 @@ public class Start extends Game {
         UIButton button=new UIButton(100,20);
         UIButton button2=new UIButton(100,20);
         box.addElement(button);
-        box.addElement(new UITextField("test",100,0.25f));
+        box.addElement(new UITextField("test",100,0.5f));
+        
         Events on=new Events(new Condition(button.getONFlag(),EQUALS,true),new ActionSetVar<Integer,PASSABLE_INT>(player,ComponentRenderModel.VAR_LAYER,1000));
         Events off=new Events(new Condition(button.getONFlag(),EQUALS,false),new ActionSetVar<Integer,PASSABLE_INT>(player,ComponentRenderModel.VAR_LAYER,10));
        

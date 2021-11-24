@@ -13,7 +13,6 @@ public class EnemyScript extends Script {
 
 	public static final UUID ID=UUID.randomUUID();
 	private int state;
-	private Timer time=new Timer(2);
 	private boolean timeToSwitch=true;
 	private float speed=0.5f;
 	private Entity e,player;

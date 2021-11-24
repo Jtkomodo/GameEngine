@@ -11,8 +11,13 @@ import org.lwjgl.glfw.GLFW;
 import core.CoreEngine;
 import core.Game;
 import core.Window;
+import events.Condition;
+import events.EventAction;
+import events.Events;
+import events.Flag;
 import rendering.Camera;
 import rendering.Render;
+import static events.Operation.*;
 
 public class InputPoller {
 
@@ -22,7 +27,11 @@ public class InputPoller {
 	public static final byte STILL_REALEASED=0b00;
 	public static final byte STILL_PUSHED=0b11;
 	protected static int windowWidth,windowhHeight;
+	public static String string="";
 	
+	
+	public  static Flag charsChanged=new Flag(false);
+	private static HashMap<Integer,Flag> keysToWatchFlags=new HashMap<Integer,Flag>();
 	private static HashMap<Integer,Byte> States=new HashMap<Integer,Byte>();
 	private static LinkedList<Integer> keyUpdated=new LinkedList<Integer>();
 	private static LinkedList<Integer> keysReset=new LinkedList<Integer>();
@@ -32,12 +41,14 @@ public class InputPoller {
 	
 	protected static void updateKey(int key,boolean oldValue) {
 		keyUpdated.add(key);
+		
 		byte state=States.getOrDefault(key, STILL_REALEASED);
 		if(oldValue) {
 			States.put(key,(byte) (state | 0b10));
 		}else {
 			States.put(key,(byte) (state & 0b01));
 		}
+		
 	}
 	
 	
@@ -45,6 +56,19 @@ public class InputPoller {
 	
 	
 	public static void POll() {
+		if(CharCallback.takeInput && CharCallback.changed) {
+			string=CharCallback.string;
+			charsChanged.setState(true);
+			CharCallback.changed=false;
+		}else {
+			charsChanged.setState(false);
+			CharCallback.string="";
+		}
+		
+		
+		
+		
+		
 		while(!justPushed.isEmpty()) {
 		    int key=justPushed.pop();
 		    States.put(key,STILL_PUSHED);
@@ -57,7 +81,9 @@ public class InputPoller {
 		while(!keyUpdated.isEmpty()) {
 			
 			int key=keyUpdated.pop();
-			
+			if(keysToWatchFlags.containsKey(key)) {
+			     keysToWatchFlags.get(key).toggleState();
+			}
 			boolean now;
 			if(key!=GLFW.GLFW_MOUSE_BUTTON_1 && key!=GLFW.GLFW_MOUSE_BUTTON_2 && key!=GLFW.GLFW_MOUSE_BUTTON_3) {
 			now=KeyCallback.keys[key];
@@ -81,10 +107,19 @@ public class InputPoller {
 			if(state==JUST_PUSHED) {
 				justPushed.add(key);
 			}
+			
 		}
 		
 		
 	}
+	public static Events makeEventOnKeyUpdated(int key,EventAction action) {
+		if(!keysToWatchFlags.containsKey(key)) {
+			keysToWatchFlags.put(key,new Flag(false));
+		}
+		Flag f=keysToWatchFlags.get(key);
+		return new Events(new Condition(new Condition(f,EQUALS,false),OR,new Condition(f,EQUALS,true)),action);
+	}
+	
 	public static boolean JustPushed(int key) {
 		return checkState(key)==JUST_PUSHED;
 		
@@ -109,6 +144,7 @@ public class InputPoller {
 	public static byte checkState(int key) {
 	     return States.getOrDefault(key, STILL_REALEASED);
 	}
+	
 	
 	public static Vector2f getScreenMousePosition() {
 	    float x=(2f*MousePositionCallback.X)/windowWidth-1;
@@ -140,7 +176,7 @@ public class InputPoller {
 	     
 		
 	}
-
+   
 
 	public static Vector2f NO_FOV_getScreenMousePosition() {
 		float x=(2f*MousePositionCallback.X)/windowWidth-1;

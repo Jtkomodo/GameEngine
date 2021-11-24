@@ -15,10 +15,7 @@ public class Timer {
 	private boolean paused=false;
 	private boolean hasFinishd=false;
 	
-	public Timer(double timeToWaitFor) {
-		this.timeToWaitFor=timeToWaitFor;
-		this.time1=getTIme();
-	}
+	
 	
 	
 	public void pause() {
@@ -32,7 +29,7 @@ public class Timer {
 		return this.paused;
 	}
 	
-	public boolean update() {
+	public boolean HasFinighed() {
 		boolean finished=false;
 		if(!this.hasFinishd) {
 			double time2=getTIme();
