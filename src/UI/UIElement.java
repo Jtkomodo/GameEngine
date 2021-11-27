@@ -19,7 +19,7 @@ public abstract class UIElement {
 	private float width,height;
 	protected AABB collision_box;
 	
-	
+	protected Flag OutsideBounds=new Flag();
 	protected Flag MOUSE_STATE_CHANGED=new Flag(false);
 	protected ActionSystemUIElementCheckInput action;
 	protected Vector2f position_in_box=new Vector2f();
@@ -50,9 +50,10 @@ public abstract class UIElement {
 
 
     	if(this.collision_box.vsPoint(mouse_position,position_in_box)) {
+    		this.OutsideBounds.setState(false);
     		if (this.leftState!=leftState || this.rightState!=rightState) {
     			Vector2f offsetInBox=this.collision_box.getOffsetinBox(position_in_box, mouse_position);
-                
+             
 
     			this.action.setMouseState(offsetInBox,leftState,rightState);
     			this.leftState=leftState;
@@ -63,7 +64,10 @@ public abstract class UIElement {
 
         
 
+    	}else{
+    		this.OutsideBounds.setState(true);
     	}
+    	CoreEngine.DebugPrint("outiside="+this.OutsideBounds.State());
     }
 
     

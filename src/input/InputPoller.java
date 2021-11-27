@@ -8,6 +8,7 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
+import UI.UIManager;
 import core.CoreEngine;
 import core.Game;
 import core.Window;
@@ -109,6 +110,7 @@ public class InputPoller {
 			}
 			
 		}
+	
 		
 		
 	}
@@ -117,7 +119,35 @@ public class InputPoller {
 			keysToWatchFlags.put(key,new Flag(false));
 		}
 		Flag f=keysToWatchFlags.get(key);
-		return new Events(new Condition(new Condition(f,EQUALS,false),OR,new Condition(f,EQUALS,true)),action);
+		Condition keyTriggered=new Condition(f,CHANGED,true);
+		return new Events(new Condition(keyTriggered,AND,new Condition(UIManager.takingInput,EQUALS,false)),action);
+	}
+	public static Events makeEventOnUIKeyUpdated(int key,EventAction action) {
+		if(!keysToWatchFlags.containsKey(key)) {
+			keysToWatchFlags.put(key,new Flag(false));
+		}
+		Flag f=keysToWatchFlags.get(key);
+		Condition keyTriggered=new Condition(f,CHANGED,true);
+		return new Events(keyTriggered,action);
+	}
+	
+	public static Condition keyTriggered(int key) {
+		if(!keysToWatchFlags.containsKey(key)) {
+			keysToWatchFlags.put(key,new Flag(false));
+		}
+		Flag f=keysToWatchFlags.get(key);
+		Condition keyTriggered=new Condition(f,CHANGED,true);
+		return new Condition(keyTriggered,AND,new Condition(UIManager.takingInput,EQUALS,false));
+	}
+	
+	public static Condition UIkeyTriggered(int key) {
+		if(!keysToWatchFlags.containsKey(key)) {
+			keysToWatchFlags.put(key,new Flag(false));
+		}
+		Flag f=keysToWatchFlags.get(key);
+		Condition keyTriggered=new Condition(f,CHANGED,true);
+		return keyTriggered;
+	
 	}
 	
 	public static boolean JustPushed(int key) {

@@ -12,6 +12,7 @@ public class ActionSystemUpdateCondition implements EventAction {
 	
 	@Override
 	public void invoke() {
+		
 	    this.condition.check();
 
 	}

@@ -3,8 +3,19 @@ package events;
 public enum Operation implements Operationable {
 
 	
-	AND{
+	
+	CHANGED{
 
+		@Override
+		public boolean check(Flag a, Flag b) {
+			return a.StateChanged()==b.State();
+		}
+	
+	
+	
+	},
+	AND{
+		
 		@Override
 		public boolean check(Flag a, Flag b) {
 			return a.State()&&b.State();

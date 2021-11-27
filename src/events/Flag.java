@@ -13,7 +13,9 @@ public class Flag {
 	private LinkedList<Events> events=new LinkedList<Events>();
 	private boolean stateChanged=false;
 	
-	
+	public Flag() {
+		this.state=false;
+	}
 	
 	public Flag(boolean state) {
 		this.state=state;
@@ -34,14 +36,15 @@ public class Flag {
 	}
 
 	public void TriggerEvents() {
-		this.stateChanged=false;
+	
 		for(int i=0;i<this.events.size();i++) {
 			Events event=events.get(i);
 			if(event.Condition()) {
 				event.Invoke();
-				this.stateChanged=false;
+				
 			}
 		}
+		this.stateChanged=false;
 	}
 	
 	
