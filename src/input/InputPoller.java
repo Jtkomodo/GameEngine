@@ -150,6 +150,9 @@ public class InputPoller {
 	
 	}
 	
+	
+	
+	
 	public static boolean JustPushed(int key) {
 		return checkState(key)==JUST_PUSHED;
 		

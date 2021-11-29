@@ -15,7 +15,6 @@ public class Events {
 		this.action=action;
 	}
 	
-	
 
 	public void ActivateFlags() {
 		

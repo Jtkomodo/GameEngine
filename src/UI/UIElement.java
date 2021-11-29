@@ -67,8 +67,7 @@ public abstract class UIElement {
     	}else{
     		this.OutsideBounds.setState(true);
     	}
-    	CoreEngine.DebugPrint("outiside="+this.OutsideBounds.State());
-    }
+    	}
 
     
     protected void setPositonInBox(Vector2f position) {

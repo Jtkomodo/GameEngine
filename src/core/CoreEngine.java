@@ -96,10 +96,39 @@ public class CoreEngine {
 	    	E.GAMELOOP_TICK_AFTER_PHYSICS();
 	    }
 	}
-    public static void AddEntity(Entity e) {
-    	 entities.put(e.ID, e);
-         e.Init();
-    }
+	
+	public static void RemoveAllEntites() {
+		  Iterator<Entry<UUID,Entity>>  I=entities.entrySet().iterator();
+		   while(I.hasNext()) {
+                Entry<UUID,Entity> e=I.next();
+			    removeEntity(e.getValue());
+		   }
+	}
+	
+	public static void RemoveEntities(Entity[] es) {
+		for(int i=0;i<es.length;i++) {
+			removeEntity(es[i]);
+		}
+	}
+	
+	
+	public static void AddEntities(Entity[] es) {
+	   Iterator<Entry<UUID,Entity>>  I=entities.entrySet().iterator();
+	   while(I.hasNext()) {
+		   Entry<UUID,Entity> e=I.next();
+		   AddEntity(e.getValue());
+	   }
+	   
+	}
+
+	
+	
+	public static void AddEntity(Entity e) {
+		if(!entities.containsKey(e.ID)) {
+			entities.put(e.ID, e);
+			e.Init();
+		}
+	}
 	public static boolean removeEntity(Entity e) {
 		if(entities.containsKey(e.ID)) {
 		  boolean success=e.DISABLE();

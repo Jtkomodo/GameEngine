@@ -18,7 +18,7 @@ public class FlagHandler {
 		}
 	}
 	
-	public static void removeFlag(Flag flag) {
+	protected static void removeFlag(Flag flag) {
 		if(flags.remove(flag)) {
 			CoreEngine.DebugPrint("flag removed");
 		}

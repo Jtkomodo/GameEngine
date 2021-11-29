@@ -109,7 +109,7 @@ public class Start extends Game {
 
 	@Override
 	public void start() { 
-		
+	//	CoreEngine.DebugPrint("start");
 		text=new TextBuilder("aakar",512);
 		test=new Flag(false);
 		buttonPressed=new Flag(false);
@@ -148,7 +148,10 @@ public class Start extends Game {
 
 		player3.setVar(ComponentTest.VAR_TEST,true);
 
-
+        player.setVar(Entity.VAR_FLAG, new Flag());
+        
+        
+        
 		player.DEBUG=true;
 		player3.DEBUG=true;
 		player2.DEBUG=true;
@@ -199,17 +202,34 @@ public class Start extends Game {
 		off.ActivateFlags();
 
 		Events escape=InputPoller.makeEventOnUIKeyUpdated(GLFW.GLFW_KEY_ESCAPE,()->esacpe());
-		;
+		
 
 		Events toggleFullscreen=new Events(new Condition(InputPoller.UIkeyTriggered(GLFW.GLFW_KEY_LEFT_CONTROL),AND,InputPoller.UIkeyTriggered(GLFW.GLFW_KEY_F)),()->fullscreen());
 
-
+        Events enter=InputPoller.makeEventOnKeyUpdated(GLFW.GLFW_KEY_ENTER,()->enter());
+        Events flagTest=new Events(new Condition(player.getVar(Entity.VAR_FLAG),EQUALS,true),()->flagEvent());
+        flagTest.ActivateFlags();
+        enter.ActivateFlags();
 		toggleFullscreen.ActivateFlags();
 		escape.ActivateFlags();
 
 
 
 	}
+
+	private void flagEvent() {
+	     CoreEngine.DebugPrint("flag activated");
+	}
+
+
+	private void enter() {
+		if(InputPoller.JustPushed(GLFW.GLFW_KEY_ENTER)) {
+			player.getVar(Entity.VAR_FLAG).toggleState();
+		}
+		
+		
+	}
+
 
 	private void esacpe() {
 

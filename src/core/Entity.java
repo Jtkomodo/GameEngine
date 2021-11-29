@@ -28,7 +28,7 @@ public class Entity {
 	
 	
 
-	
+	public final static VAR_RW<PASSABLE_FLAG> VAR_FLAG=VAR_RW.makeNewVar("testFlag",PASSABLE_FLAG.getHandle());
 	public final static VAR_RW<PASSABLE_VEC2F> VAR_PROJECTION=VAR_RW.makeNewVar("PROJECTION",PASSABLE_VEC2F.getHandle());
 	public final static VAR_RW<PASSABLE_VEC2F> VAR_POSITION=VAR_RW.makeNewVar("POSITION",PASSABLE_VEC2F.getHandle());
 	public final static VAR_RW<PASSABLE_VEC2F> VAR_VELOCITY=VAR_RW.makeNewVar("Velocity",PASSABLE_VEC2F.getHandle());

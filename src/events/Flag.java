@@ -33,6 +33,10 @@ public class Flag {
 		if(this.events.remove(event)) {
 			CoreEngine.DebugPrint("Event removed from FLAG");
 		}
+		if(this.events.isEmpty()) {
+		    FlagHandler.removeFlag(this);
+		}
+		
 	}
 
 	public void TriggerEvents() {

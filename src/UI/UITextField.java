@@ -129,7 +129,7 @@ public class UITextField extends UIElement {
 	       if(!string.equals("")) {
 	    	this.text.setString(shownString);   
 	        int index=this.text.getClosestCursorIndex(new Vector2f(((textOffset*this.sizeOfStirng))-this.getWidth(),0),(mousePosition.x)-this.getWidth(),this.sizeOfStirng);
-	        CoreEngine.DebugPrint("index="+index);
+	        //CoreEngine.DebugPrint("index="+index);
 	        this.index=index+this.amountOfCharsoutsideMinBounds;
 	        this.makeShownString();
 	       }
@@ -273,7 +273,7 @@ public class UITextField extends UIElement {
 		    		    this.amountOfCharsoutsideMinBounds=0;
 		    			this.shownString=string.substring(0,(this.string.length()-this.amountOfCharsoutsideMaxBounds));
 		    		}
-		    		CoreEngine.DebugPrint("minbounds="+this.amountOfCharsoutsideMinBounds+"maxbounds="+this.amountOfCharsoutsideMaxBounds);
+		    	//	CoreEngine.DebugPrint("minbounds="+this.amountOfCharsoutsideMinBounds+"maxbounds="+this.amountOfCharsoutsideMaxBounds);
 		    		
 		    		
 		    	}else {
@@ -298,7 +298,7 @@ public class UITextField extends UIElement {
 		
 		 makeShownString();
 		
-		CoreEngine.DebugPrint("INDEX="+index);
+		//CoreEngine.DebugPrint("INDEX="+index);
 		
 		
 		if(this.takingInpput) {

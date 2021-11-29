@@ -69,7 +69,6 @@ public class Condition {
 	 public void deactivate(Events e) {
 		 for(int i=0;i<flags.size();i++) {
 			 Flag flag=flags.get(i);
-			 FlagHandler.removeFlag(flag);
 			 flag.removeEvent(e);
 	
 		 }
