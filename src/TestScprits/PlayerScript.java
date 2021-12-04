@@ -5,13 +5,13 @@ import java.util.UUID;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
-import UI.UIManager;
+import UIMouse.UIManager;
 import animation.ComponentAnimation;
 import core.CoreEngine;
 import core.Entity;
+import core.Script;
 import core.VAR_RW;
 import input.InputPoller;
-import scripting.Script;
 import test.ComponentTest;
 
 public class PlayerScript extends Script {

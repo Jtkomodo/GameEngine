@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import UI.UIManager;
+import UIMouse.UIManager;
 
 import java.util.UUID;
 

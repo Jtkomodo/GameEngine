@@ -8,7 +8,7 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
-import UI.UIManager;
+import UIMouse.UIManager;
 import core.CoreEngine;
 import core.Game;
 import core.Window;

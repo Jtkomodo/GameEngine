@@ -1,4 +1,4 @@
-package UI;
+package UIMouse;
 
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -12,7 +12,7 @@ import rendering.MainRenderHandler;
 import rendering.Model;
 import rendering.RenderEntity;
 
-public class UIButton extends UIElement {
+public class UISwitchButton extends UIElement {
 
 	
 
@@ -21,7 +21,7 @@ public class UIButton extends UIElement {
 	private Flag on=new Flag(false);
 	private Model m;
 	
-	public UIButton(float width, float height) {
+	public UISwitchButton(float width, float height) {
 		super(width, height);
 		float widthR=width;
 		float heightR=height;

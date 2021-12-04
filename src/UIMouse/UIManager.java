@@ -1,4 +1,4 @@
-package UI;
+package UIMouse;
 
 import java.util.LinkedList;
 

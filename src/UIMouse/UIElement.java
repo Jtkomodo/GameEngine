@@ -1,4 +1,4 @@
-package UI;
+package UIMouse;
 
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
@@ -18,7 +18,7 @@ public abstract class UIElement {
 
 	private float width,height;
 	protected AABB collision_box;
-	
+	protected UIElement left,right,up,down;
 	protected Flag OutsideBounds=new Flag();
 	protected Flag MOUSE_STATE_CHANGED=new Flag(false);
 	protected ActionSystemUIElementCheckInput action;
@@ -37,7 +37,6 @@ public abstract class UIElement {
     	
     	
     }
-    
     
     
     protected void checkIfInBounds(Vector2f mouse_position,Vector2f boxPosition) {
@@ -115,6 +114,26 @@ public abstract class UIElement {
 		this.height = height;
 		this.collision_box.setHeight(height);
 	
+	}
+
+
+	protected void setLeft(UIElement left) {
+		this.left = left;
+	}
+
+
+	protected void setRight(UIElement right) {
+		this.right = right;
+	}
+
+
+	protected void setUp(UIElement up) {
+		this.up = up;
+	}
+
+
+	protected void setDown(UIElement down) {
+		this.down = down;
 	}
 	
 	

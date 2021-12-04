@@ -1,4 +1,4 @@
-package UI;
+package UIMouse;
 
 import java.util.LinkedList;
 
@@ -18,7 +18,11 @@ public class UIBox {
 	
 	private LinkedList<UIElement> allElements=new LinkedList<UIElement>();
 	private LinkedList<UIElement> ShownElements=new LinkedList<UIElement>();
+	
+	
+	
 	private float width,height;
+	private UIElement currentElement;
 	private Vector2f next_element_position=new Vector2f();
 	private Vector2f position,padding;
 	private Model m;
@@ -83,7 +87,7 @@ public class UIBox {
 		RenderEntity e2=new RenderEntity(m,new Vector3f(this.next_element_position.sub(camPosition,new Vector2f()),200),0,5,Game.DEFAULT_TEXTURE,Constants.BLUE);
 		e.setUIPojeection(true);
 		e2.setUIPojeection(true);
-		//MainRenderHandler.addEntity(e);
+	    MainRenderHandler.addEntity(e);
 		MainRenderHandler.addEntity(e2);
 		for(int i=0;i<this.ShownElements.size();i++) {
 			this.ShownElements.get(i).renderUpdate(newPosition);

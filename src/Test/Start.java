@@ -2,16 +2,17 @@ package test;
 
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.UUID;
 
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
 import TestScprits.EnemyScript;
 import TestScprits.PlayerScript;
-import UI.UIBox;
-import UI.UIButton;
-import UI.UIManager;
-import UI.UITextField;
+import UIMouse.UIBox;
+import UIMouse.UISwitchButton;
+import UIMouse.UIManager;
+import UIMouse.UITextField;
 import animation.Animation;
 import animation.ComponentAnimation;
 import animation.SpriteSheet;
@@ -110,6 +111,7 @@ public class Start extends Game {
 	@Override
 	public void start() { 
 	//	CoreEngine.DebugPrint("start");
+		Source.SOUNDON=false;
 		text=new TextBuilder("aakar",512);
 		test=new Flag(false);
 		buttonPressed=new Flag(false);
@@ -135,17 +137,25 @@ public class Start extends Game {
 
 		player2=new Entity(new EntityComponent[]{
 				new ComponentColision(16,16,0),
-				//new ComponentScript(new EnemyScript(player))
+			    new ComponentScript(new EnemyScript(player))
 		});
 		Entity player3=new Entity(new EntityComponent[]{
 				new ComponentColision(50,50,0),
 				new ComponentRenderModel(playerModel,playerTex),
+			  //  new ComponentScript(new EnemyScript(player))
+			
 		});
 
+
+	
 		CoreEngine.AddEntity(player);
+		
+	
+	  
 		CoreEngine.AddEntity(player2);
 		CoreEngine.AddEntity(player3);
-
+	
+		  
 		player3.setVar(ComponentTest.VAR_TEST,true);
 
         player.setVar(Entity.VAR_FLAG, new Flag());
@@ -190,9 +200,9 @@ public class Start extends Game {
 		source.setSourceRelitive(true);	
 		MusicSource.playMusic(music);
 		UIBox box=new UIBox(new Vector2f(0,0),300,200,new Vector2f(10,10));
-		UIManager.addBox(box);
-		UIButton button=new UIButton(100,20);
-		UIButton button2=new UIButton(100,20);
+		//UIManager.addBox(box);
+		UISwitchButton button=new UISwitchButton(100,20);
+		UISwitchButton button2=new UISwitchButton(100,20);
 		box.addElement(button);
 		box.addElement(new UITextField("test",100,0.5f));
 
@@ -206,13 +216,22 @@ public class Start extends Game {
 
 		Events toggleFullscreen=new Events(new Condition(InputPoller.UIkeyTriggered(GLFW.GLFW_KEY_LEFT_CONTROL),AND,InputPoller.UIkeyTriggered(GLFW.GLFW_KEY_F)),()->fullscreen());
 
+	    AABB a=player.getVar(ComponentColision.READ_VAR_AABB());
+	    AABB b=player2.getVar(ComponentColision.READ_VAR_AABB());
+		
+		
+		
+		PhysicsEngine.WatchForCollision(new Collision(a,b),player.getVar(Entity.VAR_FLAG));
+	
+		
+		
         Events enter=InputPoller.makeEventOnKeyUpdated(GLFW.GLFW_KEY_ENTER,()->enter());
         Events flagTest=new Events(new Condition(player.getVar(Entity.VAR_FLAG),EQUALS,true),()->flagEvent());
         flagTest.ActivateFlags();
         enter.ActivateFlags();
 		toggleFullscreen.ActivateFlags();
 		escape.ActivateFlags();
-
+		
 
 
 	}

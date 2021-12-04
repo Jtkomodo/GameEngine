@@ -10,6 +10,7 @@ import core.CoreEngine;
 import core.Entity;
 import core.EntityComponent;
 import core.PASSABLE_VEC2F;
+import core.VAR_R;
 import core.VAR_RW;
 import events.Flag;
 
@@ -17,7 +18,7 @@ public class PhysicsEngine {
 
 	private static LinkedList<Collision> collisionsColided=new LinkedList<Collision>();
 	private static LinkedList<UUID> entities=new LinkedList<UUID>();
-	
+	private static LinkedList<UUID> entitiesMoved=new LinkedList<UUID>();
 	private static HashMap<Collision,Flag> collisionsWatched=new HashMap<Collision,Flag>();  
 	
 	
@@ -46,6 +47,7 @@ public class PhysicsEngine {
 		updateSim();
 		//now detect all collisions
 		DetectionUpdate();
+		
 		//now do the responses for each collision
 		ResponseUpdate();
 		
@@ -53,6 +55,7 @@ public class PhysicsEngine {
 	
 	
 	private static void ResponseUpdate() {
+	//	CoreEngine.DebugPrint("collisions"+collisionsColided.size());
 		while(!collisionsColided.isEmpty()) {
 			Collision c=collisionsColided.pop();
 		    UUID A_ID=c.aabb1.getID();
@@ -99,26 +102,28 @@ public class PhysicsEngine {
 
 	private static void DetectionUpdate() {
 
-		for(int i_1=0;i_1<entities.size();i_1++) {
+		for(int i_1=0;i_1<entitiesMoved.size();i_1++) {
 			boolean collision=false;
 			for(int i_2=0;i_2<entities.size();i_2++) {
-				if(i_1 !=i_2) {
+			
+//TODO fix the physics engine not doing multiple moving collisions right.
 
 
-					UUID ID_1=entities.get(i_1);
-				    UUID ID_2=entities.get(i_2);
-					
+					Entity e=CoreEngine.getEntity(entitiesMoved.get(i_1));
+				    Entity e2=CoreEngine.getEntity(entities.get(i_2));
+
+				   
+				    
 
 				
-						if(CoreEngine.HasVar(ID_1,ComponentColision.VAR_AABB) && CoreEngine.HasVar(ID_2, ComponentColision.VAR_AABB)) {
-							AABB A=CoreEngine.RecieveData(ID_1,ComponentColision.VAR_AABB);
-							AABB B=CoreEngine.RecieveData(ID_2,ComponentColision.VAR_AABB);
-							
+						if(e.hasVAR(ComponentColision.VAR_AABB) && e2.hasVAR(ComponentColision.VAR_AABB) && !e.equals(e2)) {
+							AABB A=e.getVar(ComponentColision.VAR_AABB);
+							AABB B=e2.getVar(ComponentColision.VAR_AABB);
 							//if there is a collision then add that collision to the list
 						
 							
 							Collision col=new Collision(A,B);
-							
+							Collision col2=new Collision(B,A);
 							if(A.vsAABB(B)) {
 								collision=true;
 							
@@ -128,20 +133,27 @@ public class PhysicsEngine {
 								if(!collisionsColided.contains(col)) {
 									collisionsColided.add(col);
 								}
+								
+								if(collisionsWatched.containsKey(col2)) {
+									collisionsWatched.get(col2).setState(true);
+								}
+								
+								
                                A.setFlagState(true);
 							}else {
 								if(collisionsWatched.containsKey(col)) {
 									collisionsWatched.get(col).setState(false);
 								}
 							}
-
-						}
+ 
+						
 					
 				}
 			}
+			
 			//if there was no collision at all with that box then set the before collision position to the position now and set the state of the flag to false
 			if(!collision) {
-				UUID ID=entities.get(i_1);
+				UUID ID=entitiesMoved.get(i_1);
 			
                 if(CoreEngine.HasALLVars(ID,new VAR_RW<?>[] {ComponentColision.VAR_AABB,Entity.VAR_POSITION})) {
                 	CoreEngine.RecieveData(ID,ComponentColision.VAR_AABB).setFlagState(false);
@@ -152,20 +164,35 @@ public class PhysicsEngine {
 			
 			}
 		}
+	
 	}
 
 
 	public static void updateSim() {
-	        for(int i=0;i<entities.size();i++) {
-	        	UUID ID=entities.get(i);
-	        	Entity e=CoreEngine.getEntity(ID);
-	        	if(e!=null && e.hasVAR(ComponentColision.READ_VAR_NEXT_POS())) {
-	        		Vector2f new_position=e.getVar(ComponentColision.READ_VAR_NEXT_POS());
-	        		e.setVar(Entity.VAR_POSITION,new_position);
-	        		
-	        	}
-	        }
-		
+		entitiesMoved.clear();
+		for(int i=0;i<entities.size();i++) {
+			UUID ID=entities.get(i);
+			Entity e=CoreEngine.getEntity(ID);
+			if(e!=null && e.hasAllVars(new VAR_R[] {ComponentColision.READ_VAR_NEXT_POS(),ComponentColision.VAR_MOVED.getAsReadOnly()})) {
+				if(e.getVar(ComponentColision.VAR_MOVED)) {
+					Vector2f new_position=e.getVar(ComponentColision.READ_VAR_NEXT_POS());
+					e.setVar(Entity.VAR_POSITION,new_position);
+					entitiesMoved.add(e.ID);
+
+			       //    CoreEngine.DebugPrint("why isn't it working");
+
+				}else {
+					 if(CoreEngine.HasALLVars(ID,new VAR_RW<?>[] {ComponentColision.VAR_AABB,Entity.VAR_POSITION})) {
+		                	CoreEngine.RecieveData(ID,ComponentColision.VAR_AABB).setFlagState(false);
+		                    Vector2f position=CoreEngine.RecieveData(ID,Entity.VAR_POSITION);
+		    				CoreEngine.sendData(ID,ComponentColision.VAR_BEFORE_POSITION,position);
+		    				  
+		                }
+					
+				}
+			}
+		}
+
 	}
 
 

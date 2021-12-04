@@ -123,6 +123,9 @@ public class Entity {
 	
 	public void addComponent(EntityComponent c) {
 		this.components.put(c.getCOMPONENTID(), c);
+		if(CoreEngine.hasEntity(this)) {
+		    c.INIT(this);
+		}
 	}
 	
 	public boolean hasComponent(UUID type) {

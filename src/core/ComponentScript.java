@@ -2,8 +2,6 @@ package core;
 
 import java.util.UUID;
 
-import scripting.Script;
-
 public class ComponentScript extends EntityComponent {
 
 

@@ -5,9 +5,10 @@ import java.util.UUID;
 
 import org.joml.Vector2f;
 
+import core.CoreEngine;
 import core.Entity;
+import core.Script;
 import core.Timer;
-import scripting.Script;
 
 public class EnemyScript extends Script {
 
@@ -34,8 +35,6 @@ public class EnemyScript extends Script {
 	@Override
 	public void GAMELOOP_TICK_BEFORE_PHYSICS() {
 
-
-		
 			
 			ChasePlayer();
 
@@ -57,7 +56,7 @@ public class EnemyScript extends Script {
 	        	Direction.mul(speed,velocity);
 	        	
 	        	this.e.setVar(Entity.VAR_VELOCITY,velocity);
-	        	
+
 	        	
 	        }
 		

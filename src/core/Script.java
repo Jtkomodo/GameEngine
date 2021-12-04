@@ -1,11 +1,30 @@
-package scripting;
+package core;
 
 import java.util.UUID;
 
-import core.Entity;
-
 public abstract class Script {
 
+	
+	
+	
+	protected static  <ST,T extends PassableData<ST>> VAR_W<T> createNewVAR_W(VAR_RW<T> var){
+		  return new VAR_W<T>(var);	
+		 
+	 }
+	
+	
+	 protected static  <ST,T extends PassableData<ST>> VAR_R<T> createNewVAR_R(VAR_RW<T> var){
+		  return new VAR_R<T>(var);	
+		 
+	 }
+	
+	 protected static <ST,T extends PassableData<ST>> VAR_RW<T> createNewVAR(String name,DATA_HANDLE<ST,T> handle){
+		  return VAR_RW.makeNewVar(name,handle);
+	 }
+	
+	
+	
+	
 	
 	
 	/**

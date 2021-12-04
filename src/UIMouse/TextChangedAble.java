@@ -1,4 +1,4 @@
-package UI;
+package UIMouse;
 public interface TextChangedAble{
 
 	
