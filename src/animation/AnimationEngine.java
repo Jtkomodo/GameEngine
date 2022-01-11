@@ -23,7 +23,6 @@ public class AnimationEngine{
 	protected static HashMap<UUID,Animation> animations=new HashMap<UUID,Animation>();
 	
 	private static double  timepassed=0;
-	private static double time1=Timer.getTIme();
 	private static double frametime=0;
 	
 	
@@ -34,10 +33,9 @@ public class AnimationEngine{
 	
    public static void update() {
 	   
-	    double time2=Timer.getTIme();
+	  
 	    
-	 timepassed=time2-time1;//this is the just the difference form the last time through the game loop to now
-	
+	  timepassed=CoreEngine.deltaT;
 	  frametime+=timepassed;//same thing but this is to actually tell when a second has passed only for debugging purposes 
     
 	  Iterator<UUID> i=animations.keySet().iterator();
@@ -63,8 +61,7 @@ public class AnimationEngine{
 			  }
 		  }
 	  }
-	  time1=time2;
-	 
+	   
    }
 	
 	

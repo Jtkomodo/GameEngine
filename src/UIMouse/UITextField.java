@@ -12,7 +12,7 @@ import core.Constants;
 import core.CoreEngine;
 import core.Game;
 import core.Timer;
-import events.Events;
+import events.Event;
 import input.CharCallback;
 import input.InputPoller;
 import rendering.MainRenderHandler;
@@ -69,12 +69,12 @@ public class UITextField extends UIElement {
 		
 			m=new Model(Vert,uvBg);
 		
-		    Events textChangedEvent=new Events(new Condition(InputPoller.charsChanged,EQUALS,true),()->TextChanged());//this has what is called lambda expression which just calls the function textChanged
-		    Events BackSpaceChangedEvent=InputPoller.makeEventOnUIKeyUpdated(GLFW.GLFW_KEY_BACKSPACE,()->BackSpace());
-		    Events RightKey=InputPoller.makeEventOnUIKeyUpdated(GLFW.GLFW_KEY_RIGHT,()->Right());
-		    Events LeftKey=InputPoller.makeEventOnUIKeyUpdated(GLFW.GLFW_KEY_LEFT,()->Left());
-		    Events outsideBoundsEvent=new Events(new Condition(InputPoller.UIkeyTriggered(GLFW.GLFW_MOUSE_BUTTON_1),AND,new Condition(this.OutsideBounds,EQUALS,true)),()->outSideBounds());
-		    Events insideBoundsEvent=new Events(new Condition(InputPoller.UIkeyTriggered(GLFW.GLFW_MOUSE_BUTTON_1),AND,new Condition(this.OutsideBounds,EQUALS,false)),()->inSideBounds());
+		    Event textChangedEvent=new Event(new Condition(InputPoller.charsChanged,EQUALS,true),()->TextChanged());//this has what is called lambda expression which just calls the function textChanged
+		    Event BackSpaceChangedEvent=InputPoller.makeEventOnUIKeyUpdated(GLFW.GLFW_KEY_BACKSPACE,()->BackSpace());
+		    Event RightKey=InputPoller.makeEventOnUIKeyUpdated(GLFW.GLFW_KEY_RIGHT,()->Right());
+		    Event LeftKey=InputPoller.makeEventOnUIKeyUpdated(GLFW.GLFW_KEY_LEFT,()->Left());
+		    Event outsideBoundsEvent=new Event(new Condition(InputPoller.UIkeyTriggered(GLFW.GLFW_MOUSE_BUTTON_1),AND,new Condition(this.OutsideBounds,EQUALS,true)),()->outSideBounds());
+		    Event insideBoundsEvent=new Event(new Condition(InputPoller.UIkeyTriggered(GLFW.GLFW_MOUSE_BUTTON_1),AND,new Condition(this.OutsideBounds,EQUALS,false)),()->inSideBounds());
 		    //Events leftkeyUpdated=new Events
 		    
 		    insideBoundsEvent.ActivateFlags();

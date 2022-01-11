@@ -8,7 +8,7 @@ import core.CoreEngine;
 import static events.Operation.*;
 
 import events.Condition;
-import events.Events;
+import events.Event;
 import events.Flag;
 import input.InputPoller;
 import physics.AABB;
@@ -31,7 +31,7 @@ public abstract class UIElement {
     	this.height=height;
     	this.collision_box=new AABB(width,height,0);
     	action=new ActionSystemUIElementCheckInput(this);
-    	Events event=new Events(new Condition(this.MOUSE_STATE_CHANGED,EQUALS,true),action);
+    	Event event=new Event(new Condition(this.MOUSE_STATE_CHANGED,EQUALS,true),action);
     	
     	event.ActivateFlags();
     	

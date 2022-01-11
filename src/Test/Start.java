@@ -34,7 +34,7 @@ import events.ActionDebugPrintVar;
 import events.ActionSetVar;
 import events.Condition;
 import events.Operation;
-import events.Events;
+import events.Event;
 import events.Flag;
 import events.FlagHandler;
 import input.InputPoller;
@@ -142,11 +142,18 @@ public class Start extends Game {
 		Entity player3=new Entity(new EntityComponent[]{
 				new ComponentColision(50,50,0),
 				new ComponentRenderModel(playerModel,playerTex),
+				new ComponentAnimation(walkingAnimation),
 			  //  new ComponentScript(new EnemyScript(player))
 			
 		});
-
-
+		
+		
+		
+	
+		
+		
+		
+		
 	
 		CoreEngine.AddEntity(player);
 		
@@ -199,22 +206,22 @@ public class Start extends Game {
 		source=new Source(new Vector2f(0), 1, 1, 0, 0,0);
 		source.setSourceRelitive(true);	
 		MusicSource.playMusic(music);
-		UIBox box=new UIBox(new Vector2f(0,0),300,200,new Vector2f(10,10));
-		//UIManager.addBox(box);
+		UIBox box=new UIBox(new Vector2f(0,0),300,200,new Vector2f(10,10),false);
+		UIManager.addBox(box);
 		UISwitchButton button=new UISwitchButton(100,20);
 		UISwitchButton button2=new UISwitchButton(100,20);
 		box.addElement(button);
 		box.addElement(new UITextField("test",100,0.5f));
 
-		Events on=new Events(new Condition(button.getONFlag(),EQUALS,true),new ActionSetVar<Integer,PASSABLE_INT>(player,ComponentRenderModel.VAR_LAYER,1000));
-		Events off=new Events(new Condition(button.getONFlag(),EQUALS,false),new ActionSetVar<Integer,PASSABLE_INT>(player,ComponentRenderModel.VAR_LAYER,10));
+		Event on=new Event(new Condition(button.getONFlag(),EQUALS,true),new ActionSetVar<Integer,PASSABLE_INT>(player,ComponentRenderModel.VAR_LAYER,1000));
+		Event off=new Event(new Condition(button.getONFlag(),EQUALS,false),new ActionSetVar<Integer,PASSABLE_INT>(player,ComponentRenderModel.VAR_LAYER,10));
 		on.ActivateFlags();
 		off.ActivateFlags();
 
-		Events escape=InputPoller.makeEventOnUIKeyUpdated(GLFW.GLFW_KEY_ESCAPE,()->esacpe());
+		Event escape=InputPoller.makeEventOnUIKeyUpdated(GLFW.GLFW_KEY_ESCAPE,()->esacpe());
 		
 
-		Events toggleFullscreen=new Events(new Condition(InputPoller.UIkeyTriggered(GLFW.GLFW_KEY_LEFT_CONTROL),AND,InputPoller.UIkeyTriggered(GLFW.GLFW_KEY_F)),()->fullscreen());
+		Event toggleFullscreen=new Event(new Condition(InputPoller.UIkeyTriggered(GLFW.GLFW_KEY_LEFT_CONTROL),AND,InputPoller.UIkeyTriggered(GLFW.GLFW_KEY_F)),()->fullscreen());
 
 	    AABB a=player.getVar(ComponentColision.READ_VAR_AABB());
 	    AABB b=player2.getVar(ComponentColision.READ_VAR_AABB());
@@ -225,8 +232,9 @@ public class Start extends Game {
 	
 		
 		
-        Events enter=InputPoller.makeEventOnKeyUpdated(GLFW.GLFW_KEY_ENTER,()->enter());
-        Events flagTest=new Events(new Condition(player.getVar(Entity.VAR_FLAG),EQUALS,true),()->flagEvent());
+        Event enter=InputPoller.makeEventOnKeyUpdated(GLFW.GLFW_KEY_ENTER,()->enter());
+        Event flagTest=new Event(new Condition(player.getVar(Entity.VAR_FLAG),EQUALS,true),()->flagEvent());
+       
         flagTest.ActivateFlags();
         enter.ActivateFlags();
 		toggleFullscreen.ActivateFlags();

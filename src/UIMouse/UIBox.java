@@ -23,6 +23,7 @@ public class UIBox {
 	
 	private float width,height;
 	private UIElement currentElement;
+	protected boolean stopsClockWhenShown;
 	private Vector2f next_element_position=new Vector2f();
 	private Vector2f position,padding;
 	private Model m;
@@ -31,7 +32,8 @@ public class UIBox {
 	
 	
 	
-	public UIBox (Vector2f position,float width,float height,Vector2f padding) {
+	public UIBox (Vector2f position,float width,float height,Vector2f padding,boolean stopsClockWhenShown) {
+		this.stopsClockWhenShown=stopsClockWhenShown;
 		this.position=position;
 		this.padding=padding;
 		this.width=width;

@@ -10,8 +10,8 @@ public class Condition {
 	 private Flag a,b;
 	 protected Flag result=new Flag(false);
 	 private Operation op;
-	 public Events eventB;
-	 public Events eventA;
+	 public Event eventB;
+	 public Event eventA;
 	
 	 public Condition(Flag a,Operation op,Flag b) {
 		 this.a=a;
@@ -38,8 +38,8 @@ public class Condition {
 		  this.flags.addAll(conditionA.flags);
 		  this.flags.addAll(conditionB.flags);
 		  
-		  eventA = new Events(conditionA,new ActionSystemUpdateCondition(conditionA));
-		  eventB=new Events(conditionB,new ActionSystemUpdateCondition(conditionB));
+		  eventA = new Event(conditionA,new ActionSystemUpdateCondition(conditionA));
+		  eventB=new Event(conditionB,new ActionSystemUpdateCondition(conditionB));
 		 
 		  CoreEngine.DebugPrint("Flags for conditon{");
 		  eventA.ActivateFlags();
@@ -56,7 +56,7 @@ public class Condition {
 		  return result.State();
 	 }
 	
-	 public void activate(Events e) {
+	 public void activate(Event e) {
          CoreEngine.DebugPrint("amount of flags="+this.flags.size());
 		 for(int i=0;i<flags.size();i++) {
 			 Flag flag=flags.get(i);
@@ -66,7 +66,7 @@ public class Condition {
 		 }
 		
 	 }
-	 public void deactivate(Events e) {
+	 public void deactivate(Event e) {
 		 for(int i=0;i<flags.size();i++) {
 			 Flag flag=flags.get(i);
 			 flag.removeEvent(e);

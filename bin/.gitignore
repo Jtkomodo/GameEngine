@@ -1,13 +1,4 @@
-/core/
-/events/
-/TestScprits/
 /UIMouse/
-/animation/
-/physics/
-/rendering/
-/res/
-/shaders/
 /test/
-/textrendering/
-/audio/
-/input/
+/core/
+/animation/

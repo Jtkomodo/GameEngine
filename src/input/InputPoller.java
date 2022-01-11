@@ -14,7 +14,7 @@ import core.Game;
 import core.Window;
 import events.Condition;
 import events.EventAction;
-import events.Events;
+import events.Event;
 import events.Flag;
 import rendering.Camera;
 import rendering.Render;
@@ -114,21 +114,21 @@ public class InputPoller {
 		
 		
 	}
-	public static Events makeEventOnKeyUpdated(int key,EventAction action) {
+	public static Event makeEventOnKeyUpdated(int key,EventAction action) {
 		if(!keysToWatchFlags.containsKey(key)) {
 			keysToWatchFlags.put(key,new Flag(false));
 		}
 		Flag f=keysToWatchFlags.get(key);
 		Condition keyTriggered=new Condition(f,CHANGED,true);
-		return new Events(new Condition(keyTriggered,AND,new Condition(UIManager.takingInput,EQUALS,false)),action);
+		return new Event(new Condition(keyTriggered,AND,new Condition(UIManager.takingInput,EQUALS,false)),action);
 	}
-	public static Events makeEventOnUIKeyUpdated(int key,EventAction action) {
+	public static Event makeEventOnUIKeyUpdated(int key,EventAction action) {
 		if(!keysToWatchFlags.containsKey(key)) {
 			keysToWatchFlags.put(key,new Flag(false));
 		}
 		Flag f=keysToWatchFlags.get(key);
 		Condition keyTriggered=new Condition(f,CHANGED,true);
-		return new Events(keyTriggered,action);
+		return new Event(keyTriggered,action);
 	}
 	
 	public static Condition keyTriggered(int key) {

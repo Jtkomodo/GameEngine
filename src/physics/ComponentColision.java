@@ -76,7 +76,7 @@ public class ComponentColision extends EntityComponent {
 		if(this.currentEntity.hasAllVars(new VAR_RW<?>[]{Entity.VAR_POSITION,Entity.VAR_VELOCITY})) {
 			Vector2f oldPosition=this.currentEntity.getVar(var_nextPosition);
 			Vector2f newPosition=new Vector2f();
-	         this.currentEntity.getVar(Entity.VAR_POSITION).add(this.currentEntity.getVar(Entity.VAR_VELOCITY).mul((float) (100*CoreEngine.deltaT)),newPosition);
+	         this.currentEntity.getVar(Entity.VAR_POSITION).add(this.currentEntity.getVar(Entity.VAR_VELOCITY).mul((float) (100.0*CoreEngine.deltaT)),newPosition);
 
 			if(!newPosition.equals(oldPosition)) {
 				this.currentEntity.setVar(var_nextPosition,newPosition);

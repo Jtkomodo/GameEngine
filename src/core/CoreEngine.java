@@ -9,6 +9,7 @@ import UIMouse.UIManager;
 import java.util.UUID;
 
 import animation.AnimationEngine;
+import events.Flag;
 import events.FlagHandler;
 import input.InputPoller;
 import physics.PhysicsEngine;
@@ -20,7 +21,9 @@ public class CoreEngine {
     public static boolean DebugPrint=true;
     
     private static HashMap<UUID,Entity> entities=new HashMap<UUID,Entity>();
-    private static double last_frame=Timer.getTIme();
+   
+    private static Clock gameClock=new Clock();
+    public static Flag clockStopped=new Flag(false);
     public static double deltaT;
 
 	public static boolean Debugdraw=false;
@@ -28,8 +31,9 @@ public class CoreEngine {
      * main game loop this updates everything in the game
      */
     protected static void updateEngine() {
-    	double time1=core.Timer.getTIme();
-    	deltaT=time1-last_frame;
+    	deltaT=gameClock.getDeltaTime();
+    
+
     	FlagHandler.updateFlags();
     	UIManager.CollisionUpdate();
         UpdateGameLoop_BEFORE();
@@ -41,10 +45,14 @@ public class CoreEngine {
     	
     	
     	
-    	last_frame=Timer.getTIme();
-    }
+        }
    
-    
+    public static void pauseGameClock() {
+    	gameClock.Pause();
+    }
+    public static void playGameClock() {
+    	gameClock.Play();;
+    }
     
     private static void UpdateAnimationEngine() {
 		

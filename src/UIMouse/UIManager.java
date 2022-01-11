@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import org.joml.Vector2f;
 
+import core.CoreEngine;
 import core.Game;
 import events.Flag;
 import input.InputPoller;
@@ -15,7 +16,7 @@ public class UIManager {
       public static Flag takingInput=new Flag(false);	
 	
 	
-	
+     
 
 	  public static void addBox(UIBox box) {
 
@@ -27,10 +28,20 @@ public class UIManager {
 		  box_list.remove(box);
 
 	  }
+	 
+	  
+	  
 	  public static void RenderUpdate() {
+	      boolean clockIsStopped=false;
 		  for(int i=0;i<box_list.size();i++) {
 			  box_list.get(i).Render_update();
+			  if(box_list.get(i).stopsClockWhenShown) {
+				 clockIsStopped=true;
+			  }
 		  }
+		
+		  CoreEngine.clockStopped.setState(clockIsStopped || takingInput.State());
+		 
 	  }
 	  
 	  

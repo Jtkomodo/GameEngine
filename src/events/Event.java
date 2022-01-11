@@ -3,14 +3,14 @@ package events;
 import core.CoreEngine;
 
 
-public class Events {
+public class Event {
 
 
 	private Condition condition;
 	private EventAction action;
 	private boolean Activated=false;
 
-	public Events(Condition condition,EventAction action) {
+	public Event(Condition condition,EventAction action) {
 		this.condition=condition;
 		this.action=action;
 	}

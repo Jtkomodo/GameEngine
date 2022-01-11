@@ -2,14 +2,19 @@ package core;
 
 import org.joml.Vector2f;
 
+import UIMouse.UIManager;
 import audio.AudioInit;
 import audio.Music;
 import audio.Source;
+import events.Condition;
+import events.Event;
+import events.EventAction;
 import rendering.Camera;
 import rendering.MainBatchRender;
 import rendering.Render;
 import rendering.ShaderProgram;
 import rendering.Texture;
+import static events.Operation.*;
 
 /**
  * 
@@ -87,6 +92,11 @@ public abstract class Game {
 		}
         AudioInit.InitAudio();
         MusicSource=new Source(new Vector2f(0),1,1, 1,200, 0);
+        Event clockStop=new Event(new Condition(CoreEngine.clockStopped,EQUALS,true),()->CoreEngine.pauseGameClock());
+        Event clockPlay=new Event(new Condition(CoreEngine.clockStopped,EQUALS,false),()->CoreEngine.playGameClock());
+        clockStop.ActivateFlags();
+        clockPlay.ActivateFlags();
+        
 	}
 	
 	
