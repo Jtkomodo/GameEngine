@@ -5,7 +5,6 @@ import java.util.UUID;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
-import UIMouse.UIManager;
 import animation.ComponentAnimation;
 import core.CoreEngine;
 import core.Entity;
@@ -50,7 +49,7 @@ public class PlayerScript extends Script {
 
 
 
-           if(UIManager.takingInput.State()==false) {
+        
 
 			if(InputPoller.NOT_REALESED(GLFW.GLFW_KEY_LEFT)) {
 				movement.x=-1;
@@ -91,7 +90,7 @@ public class PlayerScript extends Script {
 
 
 		}
-		}
+		
 
 
 	}

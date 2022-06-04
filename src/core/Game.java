@@ -2,7 +2,6 @@ package core;
 
 import org.joml.Vector2f;
 
-import UIMouse.UIManager;
 import audio.AudioInit;
 import audio.Music;
 import audio.Source;

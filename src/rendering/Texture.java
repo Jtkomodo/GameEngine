@@ -65,10 +65,12 @@ public Texture(String path) {
 			
 		//data=stbi_load(location,width,height,comp,4);
 			InputStream stream=getClass().getResourceAsStream(location);
+			
 			if(stream==null) {
 				System.err.println("stream is null");
 			}
 			  stream = new BufferedInputStream(stream); 
+			  
 			PNGDecoder decoder = new PNGDecoder(stream);
 			
 

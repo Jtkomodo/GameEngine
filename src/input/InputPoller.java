@@ -8,7 +8,7 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
-import UIMouse.UIManager;
+
 import core.CoreEngine;
 import core.Game;
 import core.Window;
@@ -120,7 +120,7 @@ public class InputPoller {
 		}
 		Flag f=keysToWatchFlags.get(key);
 		Condition keyTriggered=new Condition(f,CHANGED,true);
-		return new Event(new Condition(keyTriggered,AND,new Condition(UIManager.takingInput,EQUALS,false)),action);
+		return new Event(keyTriggered,action);
 	}
 	public static Event makeEventOnUIKeyUpdated(int key,EventAction action) {
 		if(!keysToWatchFlags.containsKey(key)) {
@@ -137,7 +137,7 @@ public class InputPoller {
 		}
 		Flag f=keysToWatchFlags.get(key);
 		Condition keyTriggered=new Condition(f,CHANGED,true);
-		return new Condition(keyTriggered,AND,new Condition(UIManager.takingInput,EQUALS,false));
+		return keyTriggered;
 	}
 	
 	public static Condition UIkeyTriggered(int key) {

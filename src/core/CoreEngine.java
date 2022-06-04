@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import UIMouse.UIManager;
 
 import java.util.UUID;
 
@@ -35,12 +34,11 @@ public class CoreEngine {
     
 
     	FlagHandler.updateFlags();
-    	UIManager.CollisionUpdate();
+    
         UpdateGameLoop_BEFORE();
     	UpdatePhysicsEngine();
     	UpdateGameLoop_AFTER();
     	UpdateAnimationEngine();
-    	UIManager.RenderUpdate();
     	UpdateRenderEngine();
     	
     	
@@ -68,7 +66,6 @@ public class CoreEngine {
     }
     
 	private static void UpdatePhysicsEngine() {
-		UIManager.CollisionUpdate();
 		
 		PhysicsEngine.update();
 	}

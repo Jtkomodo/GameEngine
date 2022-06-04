@@ -1,5 +1,6 @@
 package test;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.UUID;
@@ -9,10 +10,9 @@ import org.lwjgl.glfw.GLFW;
 
 import TestScprits.EnemyScript;
 import TestScprits.PlayerScript;
-import UIMouse.UIBox;
-import UIMouse.UISwitchButton;
-import UIMouse.UIManager;
-import UIMouse.UITextField;
+import TestScprits.ScriptTest;
+import TestScprits.Test;
+import TestScprits.TestScript;
 import animation.Animation;
 import animation.ComponentAnimation;
 import animation.SpriteSheet;
@@ -25,6 +25,8 @@ import core.CoreEngine;
 import core.Entity;
 import core.EntityComponent;
 import core.Game;
+import core.GroovyScriptFinder;
+import core.GroovyScriptEngineLoader;
 import core.PASSABLE_BOOL;
 import core.PASSABLE_INT;
 import core.PASSABLE_VEC2F;
@@ -34,6 +36,8 @@ import events.ActionDebugPrintVar;
 import events.ActionSetVar;
 import events.Condition;
 import events.Operation;
+import groovy.util.ResourceException;
+import groovy.util.ScriptException;
 import events.Event;
 import events.Flag;
 import events.FlagHandler;
@@ -70,6 +74,9 @@ public class Start extends Game {
 	private Sound NO;
 	private Sound TimedBad;
 	private Source source;
+	private GroovyScriptFinder scripter;
+	private GroovyScriptEngineLoader engineloader;
+	private GroovyScriptFinder test2;
 
 	public static int amountWidth=Math.round((width/64)),amountHeight=Math.round((height/64));
 
@@ -111,7 +118,7 @@ public class Start extends Game {
 	@Override
 	public void start() { 
 	//	CoreEngine.DebugPrint("start");
-		Source.SOUNDON=false;
+		Source.SOUNDON=true;
 		text=new TextBuilder("aakar",512);
 		test=new Flag(false);
 		buttonPressed=new Flag(false);
@@ -123,21 +130,40 @@ public class Start extends Game {
 		playerTex=playerSheet.getTexture();
 		walkingAnimation=new Animation(playerSheet, 0, 7, 7);
 
+		Heal=new Sound("healing sound");
+		Select=new Sound("select_GUI");
+		Move=new Sound("move_GUI");
+		Back=new Sound("Back_GUI");
+		NO=new Sound("NO_GUI");
+		TimedBad=new Sound("Timed_Button_BAD");
+		music=new Music("TEST");
 
 
+
+		source=new Source(new Vector2f(0), 1, 1, 0, 0,0);
+		source.setSourceRelitive(true);	
+		try {
+			engineloader=new GroovyScriptEngineLoader();
+	        test2=new GroovyScriptFinder(engineloader,"Test2");
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+        
 		player=new Entity(new EntityComponent[]{
 				new ComponentRenderModel(playerModel,playerTex),
 				new ComponentAnimation(walkingAnimation),
 				new ComponentColision(16,42,0),
-				new ComponentScript(new PlayerScript())    
-
+				new ComponentScript(new PlayerScript()),    
+				new ComponentScript(new Test(test2))
 		});
-
+        
 
 
 		player2=new Entity(new EntityComponent[]{
 				new ComponentColision(16,16,0),
-			    new ComponentScript(new EnemyScript(player))
+			 //   new ComponentScript(new EnemyScript(player))
 		});
 		Entity player3=new Entity(new EntityComponent[]{
 				new ComponentColision(50,50,0),
@@ -149,8 +175,7 @@ public class Start extends Game {
 		
 		
 		
-	
-		
+	   
 		
 		
 		
@@ -193,31 +218,11 @@ public class Start extends Game {
 
 		currentMap=new MapLoader(mapTextue,map,128);
 
-		Heal=new Sound("healing sound");
-		Select=new Sound("select_GUI");
-		Move=new Sound("move_GUI");
-		Back=new Sound("Back_GUI");
-		NO=new Sound("NO_GUI");
-		TimedBad=new Sound("Timed_Button_BAD");
-		music=new Music("TEST");
-
-
-
-		source=new Source(new Vector2f(0), 1, 1, 0, 0,0);
-		source.setSourceRelitive(true);	
+		
 		MusicSource.playMusic(music);
-		UIBox box=new UIBox(new Vector2f(0,0),300,200,new Vector2f(10,10),false);
-		UIManager.addBox(box);
-		UISwitchButton button=new UISwitchButton(100,20);
-		UISwitchButton button2=new UISwitchButton(100,20);
-		box.addElement(button);
-		box.addElement(new UITextField("test",100,0.5f));
+		
 
-		Event on=new Event(new Condition(button.getONFlag(),EQUALS,true),new ActionSetVar<Integer,PASSABLE_INT>(player,ComponentRenderModel.VAR_LAYER,1000));
-		Event off=new Event(new Condition(button.getONFlag(),EQUALS,false),new ActionSetVar<Integer,PASSABLE_INT>(player,ComponentRenderModel.VAR_LAYER,10));
-		on.ActivateFlags();
-		off.ActivateFlags();
-
+	
 		Event escape=InputPoller.makeEventOnUIKeyUpdated(GLFW.GLFW_KEY_ESCAPE,()->esacpe());
 		
 
@@ -229,10 +234,10 @@ public class Start extends Game {
 		
 		
 		PhysicsEngine.WatchForCollision(new Collision(a,b),player.getVar(Entity.VAR_FLAG));
-	
-		
+	  
 		
         Event enter=InputPoller.makeEventOnKeyUpdated(GLFW.GLFW_KEY_ENTER,()->enter());
+     //   Event reloadGroovy=InputPoller.makeEventOnKeyUpdated(amountHeight,);
         Event flagTest=new Event(new Condition(player.getVar(Entity.VAR_FLAG),EQUALS,true),()->flagEvent());
        
         flagTest.ActivateFlags();
@@ -240,8 +245,8 @@ public class Start extends Game {
 		toggleFullscreen.ActivateFlags();
 		escape.ActivateFlags();
 		
-
-
+      
+        
 	}
 
 	private void flagEvent() {
@@ -250,9 +255,7 @@ public class Start extends Game {
 
 
 	private void enter() {
-		if(InputPoller.JustPushed(GLFW.GLFW_KEY_ENTER)) {
-			player.getVar(Entity.VAR_FLAG).toggleState();
-		}
+		
 		
 		
 	}
