@@ -11,7 +11,6 @@ import org.lwjgl.glfw.GLFW;
 import TestScprits.EnemyScript;
 import TestScprits.PlayerScript;
 import TestScprits.ScriptTest;
-import TestScprits.Test;
 import TestScprits.TestScript;
 import animation.Animation;
 import animation.ComponentAnimation;
@@ -25,6 +24,7 @@ import core.CoreEngine;
 import core.Entity;
 import core.EntityComponent;
 import core.Game;
+import core.GroovyScript;
 import core.GroovyScriptFinder;
 import core.GroovyScriptEngineLoader;
 import core.PASSABLE_BOOL;
@@ -77,6 +77,7 @@ public class Start extends Game {
 	private GroovyScriptFinder scripter;
 	private GroovyScriptEngineLoader engineloader;
 	private GroovyScriptFinder test2;
+	private GroovyScriptEngineLoader engineloader2;
 
 	public static int amountWidth=Math.round((width/64)),amountHeight=Math.round((height/64));
 
@@ -144,7 +145,9 @@ public class Start extends Game {
 		source.setSourceRelitive(true);	
 		try {
 			engineloader=new GroovyScriptEngineLoader();
-	        test2=new GroovyScriptFinder(engineloader,"Test2");
+			engineloader2=new GroovyScriptEngineLoader();
+	       // test2=new GroovyScriptFinder(engineloader,"Test2");
+	        
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -155,8 +158,8 @@ public class Start extends Game {
 				new ComponentRenderModel(playerModel,playerTex),
 				new ComponentAnimation(walkingAnimation),
 				new ComponentColision(16,42,0),
-				new ComponentScript(new PlayerScript()),    
-				new ComponentScript(new Test(test2))
+				new ComponentScript(new GroovyScript(engineloader2,"PlayerScript")),    
+				new ComponentScript(new GroovyScript(engineloader,"Test2"))
 		});
         
 

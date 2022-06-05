@@ -13,7 +13,7 @@ import core.VAR_RW;
 import input.InputPoller;
 import test.ComponentTest;
 
-public class PlayerScript extends Script {
+protected class Player extends Script {
 
 	public static final UUID ID=UUID.randomUUID();
 
@@ -36,7 +36,8 @@ public class PlayerScript extends Script {
 
 	@Override
 	public void GAMELOOP_TICK_BEFORE_PHYSICS() {
-		if(player.hasAllVars(new VAR_RW<?>[] {Entity.VAR_POSITION,Entity.VAR_MIRROR})){
+		if(player.hasVAR(Entity.VAR_POSITION) && player.hasVAR(Entity.VAR_MIRROR)){
+			
 			boolean mirror=player.getVar(Entity.VAR_MIRROR);
 			Vector2f movement=new Vector2f();
 			Vector2f direction=new Vector2f();
@@ -120,3 +121,4 @@ public class PlayerScript extends Script {
 
 
 }
+new Player()

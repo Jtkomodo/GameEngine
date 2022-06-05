@@ -1,29 +1,36 @@
-package TestScprits
+package core
 
 import audio.Sound
 
 import audio.Source
-import core.ComponentScript
-import core.CoreEngine
-import core.Entity
 import events.Event
 import input.InputPoller;
 import org.lwjgl.glfw.GLFW;
-class Test extends core.Script{
+class GroovyScript extends core.Script{
 	
-	
+	Entity entity;
 	core.GroovyScriptFinder script;
 	Event reloadScript;
 	
 	
-	public Test(core.GroovyScriptFinder script){
+	public GroovyScript(core.GroovyScriptFinder script){
 		this.script=script;
+		this.reloadScript=InputPoller.makeEventOnKeyUpdated(GLFW.GLFW_KEY_R,{->reloadScript()});
+		this.reloadScript.ActivateFlags();
+	}
+	
+	public GroovyScript(core.GroovyScriptEngineLoader gse,String name){
+		
+		
+		this.script=new core.GroovyScriptFinder(gse,name);
+		
 		this.reloadScript=InputPoller.makeEventOnKeyUpdated(GLFW.GLFW_KEY_R,{->reloadScript()});
 		this.reloadScript.ActivateFlags();
 	}
 	
 	def void reloadScript() {
 		script.reloadScript();
+		script.invoke("Start",this.entity);
 	}
 	
 	
@@ -45,6 +52,7 @@ class Test extends core.Script{
  }
 	@Override
 	public void Start(Entity entity) {
+      this.entity=entity;
 	  script.invoke("Start",entity)
 		
 	}
@@ -58,7 +66,7 @@ class Test extends core.Script{
 
 	@Override
 	public UUID getSCRIPTID() {
-		return null;
+		return script.invoke("getSCRIPTID");
 	}
 	
 	
