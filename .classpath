@@ -12,134 +12,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Engine/libwin/joml-1.9.9.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/joml-1.9.9-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-assimp.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-assimp-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-assimp-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-assimp-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-bgfx.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-bgfx-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-bgfx-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-bgfx-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-egl.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-egl-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-egl-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-glfw.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-glfw-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-glfw-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-glfw-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-jawt.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-jawt-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-jawt-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-jemalloc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-jemalloc-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-jemalloc-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-jemalloc-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-lmdb.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-lmdb-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-lmdb-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-lmdb-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-lz4.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-lz4-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-lz4-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-lz4-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-nanovg.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-nanovg-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-nanovg-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-nanovg-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-nfd.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-nfd-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-nfd-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-nfd-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-nuklear.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-nuklear-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-nuklear-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-nuklear-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-odbc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-odbc-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-odbc-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-openal.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-openal-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-openal-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-openal-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-opencl.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-opencl-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-opencl-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-opengl.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-opengles.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-opengles-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-opengles-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-opengles-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-opengl-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-opengl-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-opengl-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-openvr.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-openvr-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-openvr-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-openvr-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-ovr.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-ovr-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-ovr-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-ovr-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-par.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-par-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-par-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-par-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-remotery.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-remotery-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-remotery-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-remotery-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-rpmalloc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-rpmalloc-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-rpmalloc-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-rpmalloc-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-sse.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-sse-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-sse-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-sse-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-stb.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-stb-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-stb-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-stb-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-tinyexr.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-tinyexr-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-tinyexr-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-tinyexr-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-tinyfd.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-tinyfd-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-tinyfd-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-tinyfd-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-tootle.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-tootle-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-tootle-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-tootle-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-vma.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-vma-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-vma-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-vma-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-vulkan.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-vulkan-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-vulkan-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-xxhash.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-xxhash-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-xxhash-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-xxhash-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-yoga.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-yoga-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-yoga-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-yoga-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-zstd.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-zstd-javadoc.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-zstd-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/lwjgl-zstd-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/slick-util.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/jogg-0.0.7.jar"/>
-	<classpathentry kind="lib" path="D:/Engine/libwin/jorbis-0.0.15.jar"/>
 	<classpathentry kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="con" path="GROOVY_SUPPORT"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
@@ -147,5 +19,190 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/jogg-0.0.7.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/joml-1.9.9.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/joml-1.9.9-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/joml-1.10.5.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/jorbis-0.0.15.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-assimp.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-assimp-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-assimp-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-assimp-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-bgfx.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-bgfx-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-bgfx-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-bgfx-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-cuda.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-cuda-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-cuda-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-egl.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-egl-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-egl-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-fmod.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-fmod-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-fmod-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-freetype.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-freetype-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-freetype-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-freetype-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-glfw.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-glfw-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-glfw-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-glfw-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-harfbuzz.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-harfbuzz-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-harfbuzz-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-harfbuzz-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-hwloc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-hwloc-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-hwloc-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-hwloc-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-jawt.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-jawt-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-jawt-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-jemalloc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-jemalloc-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-jemalloc-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-jemalloc-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-ktx.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-ktx-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-ktx-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-ktx-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-libdivide.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-libdivide-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-libdivide-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-libdivide-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-llvm.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-llvm-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-llvm-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-llvm-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-lmdb.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-lmdb-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-lmdb-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-lmdb-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-lz4.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-lz4-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-lz4-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-lz4-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-meow.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-meow-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-meow-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-meow-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-meshoptimizer.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-meshoptimizer-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-meshoptimizer-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-meshoptimizer-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-nanovg.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-nanovg-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-nanovg-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-nanovg-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-nfd.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-nfd-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-nfd-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-nfd-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-nuklear.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-nuklear-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-nuklear-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-nuklear-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-odbc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-odbc-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-odbc-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-openal.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-openal-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-openal-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-openal-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-opencl.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-opencl-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-opencl-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-opengl.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-opengles.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-opengles-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-opengles-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-opengles-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-opengl-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-opengl-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-opengl-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-openvr.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-openvr-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-openvr-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-openvr-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-openxr.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-openxr-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-openxr-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-openxr-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-opus.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-opus-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-opus-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-opus-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-ovr.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-ovr-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-ovr-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-ovr-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-par.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-par-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-par-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-par-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-remotery.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-remotery-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-remotery-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-remotery-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-rpmalloc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-rpmalloc-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-rpmalloc-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-rpmalloc-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-shaderc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-shaderc-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-shaderc-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-shaderc-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-spvc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-spvc-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-spvc-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-spvc-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-sse.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-sse-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-sse-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-sse-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-stb.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-stb-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-stb-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-stb-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-tinyexr.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-tinyexr-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-tinyexr-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-tinyexr-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-tinyfd.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-tinyfd-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-tinyfd-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-tinyfd-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-tootle.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-tootle-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-tootle-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-tootle-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-vma.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-vma-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-vma-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-vma-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-vulkan.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-vulkan-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-vulkan-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-xxhash.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-xxhash-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-xxhash-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-xxhash-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-yoga.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-yoga-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-yoga-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-yoga-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-zstd.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-zstd-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-zstd-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/lwjgl-zstd-sources.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/slick.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/slick2d-core-1.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/Game engine/GameEngine/libwin/slick-util.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
