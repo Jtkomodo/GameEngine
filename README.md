@@ -11,7 +11,7 @@ the mistakes I learned along the way. If I were to make this project again I wou
 to the code to allow it to be better read. This project is meant to be changed into a Java library that
 would be included to create a game. It will fully make a runnable OpenGL window just by including it, making
 a start class that extends the Game object, and initializes the object through the main(). It has two functions
-that need to be overridden. I created an example of how this would work in the folder <b>/src/main/java/test/Start.java</b>
+that need to be overridden. I created an example of how this would work in the file <a href="https://github.com/Jtkomodo/GameEngine/blob/main/src/main/java/test/Start.java"> /main/src/main/java/test/Start.java </a>
 <dl>
 <dt>start()</dt>
 <dd>This is where all the startup code would be placed anything that needs to be initiated before the program
