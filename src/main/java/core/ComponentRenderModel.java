@@ -27,7 +27,7 @@ public class ComponentRenderModel extends EntityComponent {
 
 	protected Model model;
 	protected Texture texture;
-	
+
 
 	public ComponentRenderModel(Model model,Texture texture) {
 		this.model=new Model(model.getVertices(),model.getUv_coords());
@@ -52,13 +52,21 @@ public class ComponentRenderModel extends EntityComponent {
 
 	}
 
+	@Override
+	protected void enable() {
 	
+		INIT(this.currentEntity);
+		
+	}
+
+
+
 
 	@Override
 	protected void RENDER_TICK() {
-		
-         
-		
+
+
+
 		if(this.currentEntity.hasAllVars(new VAR_RW<?>[] {VAR_ANGLE,Entity.VAR_COLOR,Entity.VAR_POSITION,Entity.VAR_MIRROR,VAR_TEXTURE,VAR_LAYER,VAR_SCALE})) {
 			Vector4f color=this.currentEntity.getVar(Entity.VAR_COLOR);
 			Vector2f position=this.currentEntity.getVar(Entity.VAR_POSITION);
@@ -66,7 +74,7 @@ public class ComponentRenderModel extends EntityComponent {
 			Texture  texture=this.currentEntity.getVar(VAR_TEXTURE);
 			Vector2f scale=this.currentEntity.getVar(VAR_SCALE);
 			float angle=this.currentEntity.getVar(VAR_ANGLE);
-			
+
 			MainRenderHandler.addEntity(new RenderEntity(model, new Vector3f(position,this.currentEntity.getVar(VAR_LAYER)),angle,scale,texture,color,mirror));
 		}
 	}
@@ -87,15 +95,18 @@ public class ComponentRenderModel extends EntityComponent {
 		// TODO Auto-generated method stub
 		return ID;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	public static  VAR_R<PASSABLE_MODEL> READ_VAR_MODEL() {
 		return   createNewVAR_R(VAR_MODEL);
 	}
 
-	
+
+
+
+
 
 }

@@ -91,7 +91,7 @@ public class TextBuilder{
 		
 			int a=text.charAt(i);//this gets each char in order and uses it as the key to the hexmap that has all the info we need to draw in the correct place  
 		  
-		   
+			
 			
 			Float[] val=loader.Values.get(a);// this gets all the values for the current char
 			float x=val[0];// x value of the topleft hand corner
@@ -104,11 +104,15 @@ public class TextBuilder{
 			 offset.x=xoff;
 			 offset.y=-yoff;
 			float xadv=val[6];//how much the cursor needs to advance for the next char
-			//makes easy reading 
+			
+			//converting values to be proportional to the size of the sheet
 			float Xz=x/loader.Texwidth;
 			float Yz=y/loader.Texheight;
 			float Xo=(x+width)/loader.Texwidth;
 			float Yo=(y+height)/loader.Texheight;
+			
+			
+			//CoreEngine.DebugPrint("ratio="+loader.Texwidth+" height"+loader.Texheight);
 			float height2=(height/2);
 			float width2=(width/2);
 			
@@ -123,10 +127,10 @@ public class TextBuilder{
 					};
 			
 			v=new float[]{// finds the positons of all the corners of the char
-				   cursor.x+ -width2,cursor.y+height2,
-				   cursor.x+width2, cursor.y+height2,
-				   cursor.x+width2,cursor.y-height2,
-				   cursor.x+-width2,cursor.y-height2
+				   (cursor.x+ -width2)/loader.Texwidth,(cursor.y+height2)/loader.Texheight,
+				   (cursor.x+width2)/loader.Texwidth, (cursor.y+height2)/loader.Texheight,
+				   (cursor.x+width2)/loader.Texwidth,(cursor.y-height2)/loader.Texheight,
+				   (cursor.x+-width2)/loader.Texwidth,(cursor.y-height2)/loader.Texheight
 				};
 			textModel.addvaluestoVBO(v, l);//this is what actually adds the char into the batched model with the correct uv and vertex pionts
 			

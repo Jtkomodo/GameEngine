@@ -81,4 +81,13 @@ public class UIText extends EntityComponent {
 		return null;
 	}
 
+
+
+
+	@Override
+	protected void enable() {
+		INIT(this.currentEntity);
+		
+	}
+
 }

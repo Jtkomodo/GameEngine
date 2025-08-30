@@ -5,7 +5,7 @@ import java.util.UUID;
 import main.java.physics.AABB;
 import main.java.physics.Collision;
 
-public class EventTypeCollisionEnter implements EventType<AABB> {
+public class EventTypeCollisionEnter implements EventType<DATA_AABB> {
 	
 	private UUID ID;
 	private boolean state=false;

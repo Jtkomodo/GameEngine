@@ -7,7 +7,7 @@ import main.java.core.PASSABLE_HASH_MAP
 import main.java.core.PASSABLE_STRING
 import main.java.core.PASSABLE_UUID
 import main.java.core.VAR_RW
-import main.java.events.Event
+import main.java.events.ConditionalEvent
 import main.java.input.InputPoller
 
 import org.lwjgl.glfw.GLFW;
@@ -17,13 +17,13 @@ class GroovyScript extends main.java.core.Script{
 	
 	Entity entity;
 	main.groovy.core.GroovyScriptFinder script;
-	Event reloadScript;
+	ConditionalEvent reloadScript;
 	
 	
 	
 	public GroovyScript(main.groovy.core.GroovyScriptFinder script){
 		this.script=script;
-		this.reloadScript=InputPoller.makeEventOnKeyUpdated(GLFW.GLFW_KEY_R,{->reloadScript()});
+		this.reloadScript=InputPoller.makeEventOnKeyUpdated("reload",GLFW.GLFW_KEY_R,{->reloadScript()});
 		this.reloadScript.ActivateFlags();
 	}
 	
@@ -32,14 +32,14 @@ class GroovyScript extends main.java.core.Script{
 		
 		this.script=new main.groovy.core.GroovyScriptFinder(gse,name);
 		
-		this.reloadScript=InputPoller.makeEventOnKeyUpdated(GLFW.GLFW_KEY_R,{->reloadScript()});
+		this.reloadScript=InputPoller.makeEventOnKeyUpdated("reload",GLFW.GLFW_KEY_R,{->reloadScript()});
 		this.reloadScript.ActivateFlags();
 	}
 	public GroovyScript(main.java.core.GroovyScriptEngineLoader gse,String name,GroovyArgument... arg){
 		
 		
 		this.script=new main.groovy.core.GroovyScriptFinder(gse,name,arg);
-		this.reloadScript=InputPoller.makeEventOnKeyUpdated(GLFW.GLFW_KEY_R,{->reloadScript()});
+		this.reloadScript=InputPoller.makeEventOnKeyUpdated("reload",GLFW.GLFW_KEY_R,{->reloadScript()});
 		this.reloadScript.ActivateFlags();
 	}
 	def void reloadScript() {

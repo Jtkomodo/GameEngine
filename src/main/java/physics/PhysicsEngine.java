@@ -9,9 +9,11 @@ import org.joml.Vector2f;
 import main.java.core.CoreEngine;
 import main.java.core.Entity;
 import main.java.core.EntityComponent;
+import main.java.core.PASSABLE_AABB;
 import main.java.core.PASSABLE_VEC2F;
 import main.java.core.VAR_R;
 import main.java.core.VAR_RW;
+import main.java.events.DATA_AABB;
 import main.java.events.EventDispatcher;
 import main.java.events.EventTypeCollisionEnter;
 import main.java.events.EventTypeCollisionExit;
@@ -22,7 +24,8 @@ public class PhysicsEngine {
 	private static LinkedList<Collision> collisionsColided=new LinkedList<Collision>();
 	private static LinkedList<UUID> entities=new LinkedList<UUID>();
 	private static LinkedList<UUID> entitiesMoved=new LinkedList<UUID>();
-	private static HashMap<Collision,Boolean> stateOfCollisions=new HashMap<Collision,Boolean>();	
+	private static HashMap<Collision,Boolean> stateOfCollisions=new HashMap<Collision,Boolean>();
+	
 	
 	
 
@@ -110,6 +113,9 @@ public class PhysicsEngine {
 						if(e.hasVAR(ComponentColision.VAR_AABB) && e2.hasVAR(ComponentColision.VAR_AABB) && !e.equals(e2)) {
 							AABB A=e.getVar(ComponentColision.VAR_AABB);
 							AABB B=e2.getVar(ComponentColision.VAR_AABB);
+							
+							
+							
 							//if there is a collision then add that collision to the list
 						
 							
@@ -133,7 +139,7 @@ public class PhysicsEngine {
 								   stateLastBA=false;
 							}								
 							
-							
+							//if we have collided
 							if(A.vsAABB(B)) {
 								collision=true;
 								
@@ -143,25 +149,27 @@ public class PhysicsEngine {
 //								
 								//if the last time through the collision was false then now we fire the event on enter
 								if(stateLastAB==false) {
-									EventDispatcher.post(new EventTypeCollisionEnter(e.ID),B);
+									EventDispatcher.post(new EventTypeCollisionEnter(e.ID),new DATA_AABB(B));
 								}
 								
 								if(stateLastBA==false) {
-									EventDispatcher.post(new EventTypeCollisionEnter(e2.ID),A);
+									EventDispatcher.post(new EventTypeCollisionEnter(e2.ID),new DATA_AABB(A));
 								}
 								
-								
+								//set the state of collisions to true
                                stateOfCollisions.put(col,true);
                                stateOfCollisions.put(col2,true);
                                
 							}else {
+								//check to see if we have exited the collision if so fire the event on exit
 								if(stateLastAB==true) {
-									EventDispatcher.post(new EventTypeCollisionExit(e.ID),B);
+									EventDispatcher.post(new EventTypeCollisionExit(e.ID),new DATA_AABB(B));
 								}
 
 								if(stateLastBA==true) {	
-									EventDispatcher.post(new EventTypeCollisionExit(e2.ID),A);
+									EventDispatcher.post(new EventTypeCollisionExit(e2.ID),new DATA_AABB(A));
 								}
+								//set state of collisions to false
 								stateOfCollisions.put(col,false);
 								stateOfCollisions.put(col2,false);
 

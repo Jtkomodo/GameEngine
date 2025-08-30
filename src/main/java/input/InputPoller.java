@@ -3,6 +3,7 @@ package main.java.input;
 import static main.java.events.Operation.*;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.joml.Matrix4f;
@@ -14,7 +15,7 @@ import main.java.core.CoreEngine;
 import main.java.core.Game;
 import main.java.core.Window;
 import main.java.events.Condition;
-import main.java.events.Event;
+import main.java.events.ConditionalEvent;
 import main.java.events.EventAction;
 import main.java.events.Flag;
 import main.java.rendering.Camera;
@@ -49,7 +50,7 @@ public class InputPoller {
 		}else {
 			States.put(key,(byte) (state & 0b01));
 		}
-		
+	
 	}
 	
 	
@@ -57,6 +58,10 @@ public class InputPoller {
 	
 	
 	public static void POll() {
+		
+		Iterator<Integer> i=keysToWatchFlags.keySet().iterator();
+		
+		
 		if(CharCallback.takeInput && CharCallback.changed) {
 			string=CharCallback.string;
 			charsChanged.setState(true);
@@ -73,79 +78,82 @@ public class InputPoller {
 		while(!justPushed.isEmpty()) {
 		    int key=justPushed.pop();
 		    States.put(key,STILL_PUSHED);
+		   
+		  
 		}
 		while(!keysReset.isEmpty()) {
 			int key=keysReset.pop();
 			States.put(key,STILL_REALEASED);
+			if(keysToWatchFlags.containsKey(key)) {
+				keysToWatchFlags.get(key).setState(false);
+			}
+			
 		}
+		
 	
 		while(!keyUpdated.isEmpty()) {
-			
+
 			int key=keyUpdated.pop();
-			if(keysToWatchFlags.containsKey(key)) {
-			     keysToWatchFlags.get(key).toggleState();
-			}
+
 			boolean now;
 			if(key!=GLFW.GLFW_MOUSE_BUTTON_1 && key!=GLFW.GLFW_MOUSE_BUTTON_2 && key!=GLFW.GLFW_MOUSE_BUTTON_3) {
-			now=KeyCallback.keys[key];
+				now=KeyCallback.keys[key];
 			}else {
-		    now=MouseButtonCallback.Buttons[key];
+				now=MouseButtonCallback.Buttons[key];
 			}
 			byte state=States.getOrDefault(key, STILL_REALEASED);
-		  	
-			   
-			   if(now) {
-                	state=((byte) (state | 0b01));
-					
-                }else {
-                	state=((byte) (state & 0b10));
-                }
-			   
-               if(state==JUST_REALEASED) {
-            	   keysReset.add(key);
-               }
-		      States.put(key,state);
+
+
+			if(now) {
+				state=((byte) (state | 0b01));
+
+			}else {
+				state=((byte) (state & 0b10));
+			}
+
+			if(state==JUST_REALEASED) {
+				keysReset.add(key);
+				if(keysToWatchFlags.containsKey(key)) {
+					keysToWatchFlags.get(key).setState(false);
+				}
+			}
+			States.put(key,state);
 			if(state==JUST_PUSHED) {
 				justPushed.add(key);
+				if(keysToWatchFlags.containsKey(key)) {
+					keysToWatchFlags.get(key).setState(true);
+				}
 			}
-			
+
 		}
 	   
 		
 		
 	}
-	public static Event makeEventOnKeyUpdated(int key,EventAction action) {
+	public static ConditionalEvent makeEventOnKeyUpdated(String id,int key,EventAction action) {
 		if(!keysToWatchFlags.containsKey(key)) {
 			keysToWatchFlags.put(key,new Flag(false));
 		}
 		Flag f=keysToWatchFlags.get(key);
-		Condition keyTriggered=new Condition(f,CHANGED,true);
-		return new Event(keyTriggered,action);
+		Condition keyTriggered=new Condition(id,f,EQUALS,true);
+		return new ConditionalEvent(keyTriggered,action);
 	}
-	public static Event makeEventOnUIKeyUpdated(int key,EventAction action) {
+	public static ConditionalEvent makeEventOnUIKeyUpdated(String id,int key,EventAction action) {
 		if(!keysToWatchFlags.containsKey(key)) {
 			keysToWatchFlags.put(key,new Flag(false));
 		}
 		Flag f=keysToWatchFlags.get(key);
-		Condition keyTriggered=new Condition(f,CHANGED,true);
-		return new Event(keyTriggered,action);
-	}
-	
-	public static Condition keyTriggered(int key) {
-		if(!keysToWatchFlags.containsKey(key)) {
-			keysToWatchFlags.put(key,new Flag(false));
-		}
-		Flag f=keysToWatchFlags.get(key);
-		Condition keyTriggered=new Condition(f,CHANGED,true);
-		return keyTriggered;
+		Condition keyTriggered=new Condition(id,f,EQUALS,true);
+		return new ConditionalEvent(keyTriggered,action);
 	}
 	
-	public static Condition UIkeyTriggered(int key) {
+	
+	public static Condition UIkeyTriggered(String id,int key) {
 		if(!keysToWatchFlags.containsKey(key)) {
 			keysToWatchFlags.put(key,new Flag(false));
 		}
 		Flag f=keysToWatchFlags.get(key);
-		Condition keyTriggered=new Condition(f,CHANGED,true);
+		Condition keyTriggered=new Condition(id,f,EQUALS,true);
 		return keyTriggered;
 	
 	}

@@ -2,7 +2,7 @@ package main.java.events;
 
 import java.util.UUID;
 
-public class EventHandle<T> {
+public class EventHandle<T extends EVENT_DATA> {
 	
 	
 	private EventType<T> Type;
@@ -17,6 +17,12 @@ public class EventHandle<T> {
 	}
 	protected String getType() {
 		return Type.getID();
+	}
+	public EventType<T> getEventType() {
+		return this.Type;
+	}
+	public OnEvent<T> getAction(){
+		return this.action; 
 	}
 	
 	protected void dispatch(T data) {

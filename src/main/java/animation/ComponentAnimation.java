@@ -45,7 +45,11 @@ public class ComponentAnimation extends EntityComponent {
 	 AnimationEngine.addEntityAnimation(entity.ID, a);
 
 	}
-	
+	@Override
+	protected void enable() {
+		INIT(this.currentEntity);
+		
+	}
     protected void changeFrame(SpriteSheet sheet,int frame) {
 		if(this.currentEntity.hasVAR(ComponentRenderModel.READ_VAR_MODEL())) {this.currentEntity.setVar(VAR_ANIMATION_UPDATED,false);
     	Model model=this.currentEntity.getVar(ComponentRenderModel.READ_VAR_MODEL());	
@@ -118,6 +122,9 @@ public class ComponentAnimation extends EntityComponent {
 		// TODO Auto-generated method stub
 		return ID;
 	}
+
+
+	
     
 
 

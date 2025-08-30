@@ -13,40 +13,40 @@ import java.util.UUID;
  *
  */
 public abstract class  EntityComponent  {
-	
-   
-	
-    
-	protected Entity currentEntity;
-	
-	
-	protected static  <ST,T extends PassableData<ST>> VAR_W<T> createNewVAR_W(VAR_RW<T> var){
-		  return new VAR_W<T>(var);	
-		 
-	 }
-	
-	
-	 protected static  <ST,T extends PassableData<ST>> VAR_R<T> createNewVAR_R(VAR_RW<T> var){
-		  return new VAR_R<T>(var);	
-		 
-	 }
-	
-	 protected static <ST,T extends PassableData<ST>> VAR_RW<T> createNewVAR(String name,DATA_HANDLE<ST,T> handle){
-		  return VAR_RW.makeNewVar(name,handle);
-	 }
-	
-	
-	
-	
 
-    /**
-     * INIT this is what is called when we add the component all the init code goes here
-     * @param entity
-     */
+
+
+
+	protected Entity currentEntity;
+
+
+	protected static  <ST,T extends PassableData<ST>> VAR_W<T> createNewVAR_W(VAR_RW<T> var){
+		return new VAR_W<T>(var);	
+
+	}
+
+
+	protected static  <ST,T extends PassableData<ST>> VAR_R<T> createNewVAR_R(VAR_RW<T> var){
+		return new VAR_R<T>(var);	
+
+	}
+
+	protected static <ST,T extends PassableData<ST>> VAR_RW<T> createNewVAR(String name,DATA_HANDLE<ST,T> handle){
+		return VAR_RW.makeNewVar(name,handle);
+	}
+
+
+
+
+
+	/**
+	 * INIT this is what is called when we add the component all the init code goes here
+	 * @param entity
+	 */
 	protected abstract void INIT(Entity entity);
 	/**
 	 * GAMELOOP_TICK_BEFORE_PHYSICS:
-	 * This is where we will put any code that happens before rendering
+	 * This is where we will put any code that happens before rendersing
 	 * and before physics engine has done detection
 	 *
 	 */
@@ -60,11 +60,11 @@ public abstract class  EntityComponent  {
 	 *
 	 */
 	protected void GAMELOOP_TICK_AFTER_PHYSICS() {
-		
+
 	}
 
-	
-	
+
+
 	/**
 	 * RENDER_TICK
 	 * This is where we will put any code that needs to happen during rendering
@@ -82,7 +82,10 @@ public abstract class  EntityComponent  {
 	 *  tell if a entity has this component type
 	 * @return
 	 */
-    public abstract UUID getCOMPONENTID();
+	public abstract UUID getCOMPONENTID();
+
+
+	protected abstract void enable();
 
 
 

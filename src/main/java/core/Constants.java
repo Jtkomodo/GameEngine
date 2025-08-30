@@ -3,7 +3,7 @@ package main.java.core;
 import org.joml.Vector4f;
 
 public final class Constants {
-    
+
 	public static Vector4f BLACK = new Vector4f((0x00),(0x00),(0x00),0xff);
 	public static Vector4f WHITE = new Vector4f(0xff,0xff,0xff,0xff);
 	public static Vector4f GREEN=new Vector4f(0,0xff,0,0xff);
@@ -22,9 +22,9 @@ public final class Constants {
 	//FE E8 36
 	public static Vector4f BAR_COLOR_ORANGE=new Vector4f(0xfe,0xd6,0x35,0xff);
 	public static Vector4f BAR_COLOR_YELLOW=new Vector4f(0xfe,0xe8,0x46,0xff);
-	
+
 	public static Vector4f DEFAULT_COLOR = new Vector4f(1,1,1,1);
 	public static Vector4f SPRITE_NOT_SELECTED_COLOR=new Vector4f(0x64,0x64,0x64,0xff);
-	
-	
+
+
 }

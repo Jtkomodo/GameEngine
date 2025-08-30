@@ -141,6 +141,7 @@ public class Music {
 	protected void update(Source source) {
 		
 		int state=alGetSourcei(source.sourceID,AL_SOURCE_STATE);
+		
 		int buffersProccesed=alGetSourcei(source.sourceID,AL_BUFFERS_PROCESSED);
 		while(buffersProccesed>0) {
 			//CoreEngine.DebugPrint("NOT MOVING");

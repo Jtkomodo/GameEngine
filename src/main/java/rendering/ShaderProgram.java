@@ -81,7 +81,7 @@ private int program,vs,fs,locationSlot;
 		BufferedReader br;
 		
 		try{
-		    ResourceLoader r=new ResourceLoader("/shaders/"+path);
+		    ResourceLoader r=new ResourceLoader(path);
 			
 			  InputStreamReader isr = new InputStreamReader(r.getInputStream());
 			br=new BufferedReader(isr);
@@ -105,7 +105,7 @@ private int program,vs,fs,locationSlot;
 	private  void createShaders(String path) {
 		
 		vs=glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vs,readFile(path+".vs"));//tells opengl where the source code is and loads it
+	glShaderSource(vs,readFile("/shaders/"+path+".vs"));//tells opengl where the source code is and loads it
 	glCompileShader(vs);//compiles the shader so it can be used by the graphics card
 	if(glGetShaderi(vs,GL_COMPILE_STATUS)!=1) {//print out any compile errors
 		System.err.println(glGetShaderInfoLog(vs));
@@ -114,7 +114,7 @@ private int program,vs,fs,locationSlot;
 	}
 	
 	fs=glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fs,readFile(path+".fs"));
+	glShaderSource(fs,readFile("/shaders/"+path+".fs"));
 	
 	glCompileShader(fs);
 	if(glGetShaderi(fs,GL_COMPILE_STATUS)!=1) {

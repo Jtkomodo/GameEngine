@@ -4,18 +4,18 @@ import java.util.UUID;
 
 public class PASSABLE_BOOL implements PassableData<Boolean> {
 
-	
+
 	public static final UUID ID=UUID.randomUUID();
-	
-	
+
+
 	private boolean value=false;
-	
-	
-    private PASSABLE_BOOL() {
-    	
-    }
-	
-	
+
+
+	private PASSABLE_BOOL() {
+
+	}
+
+
 
 	@Override
 	public UUID getDATAID() {
@@ -32,18 +32,18 @@ public class PASSABLE_BOOL implements PassableData<Boolean> {
 	public String getType() {
 		return "BOOL";
 	}
-    
+
 	@Override
 	public void setValue(Boolean value) {
 		this.value=value;
-		
+
 	}
-	
-	
-	
-    public static DATA_HANDLE<Boolean,PASSABLE_BOOL> getHandle() {
-    	     return new DATA_HANDLE<Boolean,PASSABLE_BOOL>(new PASSABLE_BOOL());
-    }
+
+
+
+	public static DATA_HANDLE<Boolean,PASSABLE_BOOL> getHandle() {
+		return new DATA_HANDLE<Boolean,PASSABLE_BOOL>(new PASSABLE_BOOL());
+	}
 
 	@Override
 	public <S extends PassableData<Boolean>> S getNewType() {
@@ -57,6 +57,6 @@ public class PASSABLE_BOOL implements PassableData<Boolean> {
 		return ""+value;
 	}
 
-	
+
 
 }

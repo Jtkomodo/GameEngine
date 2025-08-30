@@ -5,20 +5,27 @@ import java.util.UUID;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
+import main.groovy.core.GroovyScript
 import main.java.animation.ComponentAnimation
+import main.java.core.ComponentRenderModel
+import main.java.core.ComponentScript
 import main.java.core.ComponentTags
+import main.java.core.Constants
 import main.java.core.CoreEngine
 import main.java.core.Entity
+import main.java.core.EntityComponent
 import main.java.core.Script
 import main.java.core.VAR_RW
 import main.java.events.EventHandle
 import main.java.events.EventTypeTest
 import main.java.input.InputPoller
 import main.java.physics.AABB
+import main.java.physics.ComponentColision
 import main.java.test.ComponentTest
 import main.java.events.EventDispatcher;
 import main.java.events.EventTypeCollisionEnter;
-import main.java.events.EventTypeCollisionExit
+import main.java.events.EventTypeCollisionExit;
+import main.java.events.*;
 
 protected class Player extends Script {
 
@@ -27,21 +34,28 @@ protected class Player extends Script {
 	private Entity player;
     public float Walkingspeed=2;
 	private float RunningSpeed=5;
-	private EventHandle<AABB> handleOnEnter,handleOnExit;
+	private EventHandle<DATA_AABB> handleOnEnter,handleOnExit;
    
     
+	
+	
+	
+	
 	@Override
 	public void Start(Entity entity) {
 
 		this.player=entity;
-		handleOnEnter=EventDispatcher.subscribe(new EventTypeCollisionEnter(entity.ID),{AABB box->ON_COLLISON_ENTER(box)});
-		handleOnExit=EventDispatcher.subscribe(new EventTypeCollisionExit(entity.ID),{AABB box->ON_COLLISON_EXIT(box)});
 		
-		
-		
+	
+	
+		handleOnEnter=EventDispatcher.subscribe(new EventTypeCollisionEnter(entity.ID),{DATA_AABB box->ON_COLLISON_ENTER(box)});
+		handleOnExit=EventDispatcher.subscribe(new EventTypeCollisionExit(entity.ID),{DATA_AABB box->ON_COLLISON_EXIT(box)});
+			
 	}
-	public void ON_COLLISON_EXIT(AABB box) {
-	   UUID entityID=box.getID();	
+	
+	public void ON_COLLISON_EXIT(DATA_AABB box) {
+		
+	   UUID entityID=box.A.getID();
 	
 	   if(entityID!=null) {
 		   Entity entity=CoreEngine.getEntity(entityID);
@@ -55,8 +69,8 @@ protected class Player extends Script {
 		
 		
 	}
-	public void ON_COLLISON_ENTER(AABB box) {
-		UUID entityID=box.getID();
+	public void ON_COLLISON_ENTER(DATA_AABB box) {
+		UUID entityID=box.A.getID();
 		if(entityID!=null) {
 			Entity entity=CoreEngine.getEntity(entityID);
 
@@ -113,7 +127,8 @@ protected class Player extends Script {
 			}
 			if(InputPoller.NOT_REALESED(GLFW.GLFW_KEY_W)) {
 				speed=this.RunningSpeed;
-				EventDispatcher.post(new EventTypeTest(), speed);
+				if(InputPoller.JustPushed(GLFW.GLFW_KEY_W))
+					EventDispatcher.post(new EventTypeTest("function"),new DATA_Float(speed));
 			}
             			
 		

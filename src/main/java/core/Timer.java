@@ -2,22 +2,22 @@ package main.java.core;
 
 public class Timer {
 
-	
+
 	public static double getTIme() {
-		
+
 		return (double)System.nanoTime()/(double)1000000000;
-		
+
 	}
-	
-	
+
+
 	private double timeToWaitFor;
 	private double timeAlreadyPassed,time1;
 	private boolean paused=false;
 	private boolean hasFinishd=false;
-	
-	
-	
-	
+
+
+
+
 	public void pause() {
 		this.paused=true;
 		this.timeAlreadyPassed=(getTIme()+this.timeAlreadyPassed)-time1;
@@ -28,7 +28,7 @@ public class Timer {
 	public boolean isPaused() {
 		return this.paused;
 	}
-	
+
 	public boolean HasFinighed() {
 		boolean finished=false;
 		if(!this.hasFinishd) {
@@ -43,7 +43,7 @@ public class Timer {
 			}else {
 				time1=getTIme();
 			}
-			
+
 		}else {
 			finished=true;
 		}
@@ -59,16 +59,16 @@ public class Timer {
 		this.timeToWaitFor=timeToWaitFor;
 		resetTimer();
 	}
-	
-	
+
+
 	public void resetTimer() {
 		this.timeAlreadyPassed=0;
 		this.time1=getTIme();
 		this.hasFinishd=false;
 		this.paused=false;
 	}
-    public boolean hasFinished() {
-    	return this.hasFinishd;
-    }
-	
+	public boolean hasFinished() {
+		return this.hasFinishd;
+	}
+
 }

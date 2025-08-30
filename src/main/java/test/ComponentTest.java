@@ -33,6 +33,10 @@ public class ComponentTest extends EntityComponent {
 		
 		
 	}
+	@Override
+	protected void enable() {
+		INIT(this.currentEntity);		
+	}
 
 	@Override
 	protected void GAMELOOP_TICK_BEFORE_PHYSICS() {
@@ -68,6 +72,8 @@ public class ComponentTest extends EntityComponent {
 	
 		return ID;
 	}
+
+	
 
 
 

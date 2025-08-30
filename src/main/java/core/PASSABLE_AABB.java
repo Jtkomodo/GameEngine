@@ -8,20 +8,20 @@ public class PASSABLE_AABB implements PassableData<AABB> {
 
 	public static final UUID ID=UUID.randomUUID();
 	private AABB value;
-	
-    protected  PASSABLE_AABB() {
-    	
-    }
-	
-	
+
+	protected  PASSABLE_AABB() {
+
+	}
+
+
 	protected PASSABLE_AABB(AABB value) {
 		this.value=value;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	@Override
 	public AABB getValue() {
 		// TODO Auto-generated method stub
@@ -45,8 +45,8 @@ public class PASSABLE_AABB implements PassableData<AABB> {
 	}
 	@Override
 	public void setValue(AABB value) {
-		 this.value=value;
-		
+		this.value=value;
+
 	}
 
 	public static   DATA_HANDLE<AABB,PASSABLE_AABB> getHandle() {
@@ -63,7 +63,7 @@ public class PASSABLE_AABB implements PassableData<AABB> {
 	@Override
 	public String printValue(String indent) {
 		if(value!=null) {
-		return      "AABB{"+"\n"+
+			return      "AABB{"+"\n"+
 					indent+"			Widht:"+value.getwidth()+"\n"+
 					indent+"			Height:"+value.getHeight()+"\n"+
 					indent+"			Resistance:"+value.getResistance()+"\n"+
@@ -77,13 +77,13 @@ public class PASSABLE_AABB implements PassableData<AABB> {
 
 
 
-  
-
-
-    
 
 
 
-	
+
+
+
+
+
 
 }

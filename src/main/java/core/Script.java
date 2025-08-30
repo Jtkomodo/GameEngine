@@ -4,29 +4,29 @@ import java.util.UUID;
 
 public abstract class Script {
 
-	
-	
-	
+
+
+
 	protected static  <ST,T extends PassableData<ST>> VAR_W<T> createNewVAR_W(VAR_RW<T> var){
-		  return new VAR_W<T>(var);	
-		 
-	 }
-	
-	
-	 protected static  <ST,T extends PassableData<ST>> VAR_R<T> createNewVAR_R(VAR_RW<T> var){
-		  return new VAR_R<T>(var);	
-		 
-	 }
-	
-	 protected static <ST,T extends PassableData<ST>> VAR_RW<T> createNewVAR(String name,DATA_HANDLE<ST,T> handle){
-		  return VAR_RW.makeNewVar(name,handle);
-	 }
-	
-	
-	
-	
-	
-	
+		return new VAR_W<T>(var);	
+
+	}
+
+
+	protected static  <ST,T extends PassableData<ST>> VAR_R<T> createNewVAR_R(VAR_RW<T> var){
+		return new VAR_R<T>(var);	
+
+	}
+
+	protected static <ST,T extends PassableData<ST>> VAR_RW<T> createNewVAR(String name,DATA_HANDLE<ST,T> handle){
+		return VAR_RW.makeNewVar(name,handle);
+	}
+
+
+
+
+
+
 	/**
 	 * This is where any initailization code will go it will pass in the current Entity
 	 * 
@@ -49,7 +49,7 @@ public abstract class Script {
 	 *
 	 */
 	public void GAMELOOP_TICK_AFTER_PHYSICS() {
-		
+
 	}
 
 	/**
@@ -65,11 +65,11 @@ public abstract class Script {
 	 */
 	public abstract boolean DISABLE();
 
-	  public abstract UUID getSCRIPTID();
-	
-	
-	
-	
-	
-	
+	public abstract UUID getSCRIPTID();
+
+
+
+
+
+
 }

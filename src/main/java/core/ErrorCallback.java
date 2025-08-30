@@ -8,11 +8,11 @@ public class ErrorCallback implements GLFWErrorCallbackI {
 	@Override
 	public void invoke(int error, long description) {
 		System.err.println("GLFW error [" + Integer.toHexString(error) + "]: " + GLFWErrorCallback.getDescription(description));
-		
+
 	}
 
-	
-	
-	
-	
+
+
+
+
 }

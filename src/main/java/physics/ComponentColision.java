@@ -41,7 +41,7 @@ public class ComponentColision extends EntityComponent {
 		this.height=height;
 		this.r=r;
 	
-			this.aabb=new AABB( width, height, r);
+		this.aabb=new AABB( width, height, r);
 	}
 	
 
@@ -61,7 +61,11 @@ public class ComponentColision extends EntityComponent {
 		
 	}
 	
-	
+	@Override
+	protected void enable() {
+		INIT(this.currentEntity);
+		
+	}
 
 	@Override
 	protected void GAMELOOP_TICK_BEFORE_PHYSICS() {
@@ -116,6 +120,9 @@ public class ComponentColision extends EntityComponent {
    protected static VAR_R<PASSABLE_VEC2F> READ_VAR_NEXT_POS(){
 	   return createNewVAR_R(var_nextPosition);
    }
+
+
+
 	
 	
 	

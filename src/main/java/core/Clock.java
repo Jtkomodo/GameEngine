@@ -1,36 +1,36 @@
 package main.java.core;
 
 public class Clock {
-	
-	
 
-    private boolean paused=false;
-    private double timeWhenPaused;
-    private double timeLastFrame;
-	
-    public Clock() {
-    	this.timeLastFrame=getTime();
-    }
-    
-    
-    
+
+
+	private boolean paused=false;
+	private double timeWhenPaused;
+	private double timeLastFrame;
+
+	public Clock() {
+		this.timeLastFrame=getTime();
+	}
+
+
+
 	public double getDeltaTime() {
 		double timeNow=getTime();
 		double timePaused=0;
-	    double deltaT=timeNow-(timeLastFrame);
+		double deltaT=timeNow-(timeLastFrame);
 		if(paused) {
-	        timePaused=timeNow-timeWhenPaused;
-	        deltaT=0;
-	    }
-	
-	    
+			timePaused=timeNow-timeWhenPaused;
+			deltaT=0;
+		}
+
+
 		this.timeLastFrame=getTime();
-		
-	    
-	    return deltaT;
+
+
+		return deltaT;
 	}
-	
-	
+
+
 	public void Pause() {
 		if(!paused) {
 			this.timeWhenPaused=getTime();
@@ -43,12 +43,12 @@ public class Clock {
 			paused=false;
 		}
 	}
-	
+
 	private  double getTime() {
-		
+
 		return (double)System.nanoTime()/(double)1000000000;
-		
+
 	}
-	
+
 
 }

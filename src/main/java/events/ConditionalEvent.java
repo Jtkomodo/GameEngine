@@ -3,14 +3,14 @@ package main.java.events;
 import main.java.core.CoreEngine;
 
 
-public class Event {
+public class ConditionalEvent {
 
 
 	private Condition condition;
 	private EventAction action;
 	private boolean Activated=false;
 
-	public Event(Condition condition,EventAction action) {
+	public ConditionalEvent(Condition condition,EventAction action) {
 		this.condition=condition;
 		this.action=action;
 	}

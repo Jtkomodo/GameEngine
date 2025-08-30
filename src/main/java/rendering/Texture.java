@@ -169,7 +169,7 @@ private void loadTexture(ByteBuffer data) {
       glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
       glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,w,h,0,GL_RGBA,GL_UNSIGNED_BYTE,data);
    
-   glBindTexture(GL_TEXTURE_2D,0);//unbinds
+      glBindTexture(GL_TEXTURE_2D,0);//unbinds
  
    
   

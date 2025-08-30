@@ -27,6 +27,11 @@ public class ComponentTest2 extends EntityComponent {
 		   this.e.setVar(VAR_TEST, 100f);
 		   
 	}
+	@Override
+	protected void enable() {
+		INIT(this.e);
+		
+	}
 
 	@Override
 	protected void GAMELOOP_TICK_BEFORE_PHYSICS() {
@@ -51,5 +56,7 @@ public class ComponentTest2 extends EntityComponent {
 		// TODO Auto-generated method stub
 		return ID;
 	}
+
+	
 
 }

@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import main.java.physics.AABB;
 
-public class EventTypeCollisionExit implements EventType<AABB> {
+public class EventTypeCollisionExit implements EventType<DATA_AABB> {
 
 	
 	

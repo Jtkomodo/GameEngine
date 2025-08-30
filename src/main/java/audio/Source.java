@@ -7,7 +7,7 @@ import main.java.core.CoreEngine;
 import static org.lwjgl.openal.AL10.*;
 public class Source {
    
-	public static boolean SOUNDON=false;//just so I can have my sound on for other stuff but mute my game
+	public static boolean SOUNDON=true;//just so I can have my sound on for other stuff but mute my game
 	private Vector2f position;
 	protected int sourceID;
 	protected float gainOriginal;

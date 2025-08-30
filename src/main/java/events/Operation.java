@@ -18,7 +18,7 @@ public enum Operation implements Operationable {
 		
 		@Override
 		public boolean check(Flag a, Flag b) {
-			return a.State()&&b.State();
+			return a.State()&& b.State();
 		}
 		
 		

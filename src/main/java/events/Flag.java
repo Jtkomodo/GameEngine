@@ -10,7 +10,7 @@ public class Flag {
 
 	
 	private boolean state=false;
-	private LinkedList<Event> events=new LinkedList<Event>();
+	private LinkedList<ConditionalEvent> events=new LinkedList<ConditionalEvent>();
 	private boolean stateChanged=false;
 	
 	public Flag() {
@@ -21,14 +21,14 @@ public class Flag {
 		this.state=state;
 	}
 	
-	protected void addEvent(Event event) {
+	protected void addEvent(ConditionalEvent event) {
 		
 		if(!this.events.contains(event)) {
 			this.events.add(event);
 			CoreEngine.DebugPrint("Event added to FLAG");
 		}	
 	}
-	protected void removeEvent(Event event) {
+	protected void removeEvent(ConditionalEvent event) {
 		
 		if(this.events.remove(event)) {
 			CoreEngine.DebugPrint("Event removed from FLAG");
@@ -42,7 +42,7 @@ public class Flag {
 	public void TriggerEvents() {
 	
 		for(int i=0;i<this.events.size();i++) {
-			Event event=events.get(i);
+			ConditionalEvent event=events.get(i);
 			if(event.Condition()) {
 				event.Invoke();
 				

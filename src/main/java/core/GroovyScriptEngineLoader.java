@@ -9,31 +9,31 @@ import groovy.util.ScriptException;
 
 public class GroovyScriptEngineLoader {
 
-	
-	
-	
+
+
+
 	private String scriptsLocation;
 	private GroovyScriptEngine gse;
 
 	public GroovyScriptEngineLoader(String scriptsLocation) throws IOException{
-        this.scriptsLocation=scriptsLocation;
-        gse= new GroovyScriptEngine(scriptsLocation);
-	
-     
-		
+		this.scriptsLocation=scriptsLocation;
+		gse= new GroovyScriptEngine(scriptsLocation);
+
+
+
 	}
 	protected void reloadScript() throws IOException {
-		
 
-        gse= new GroovyScriptEngine(scriptsLocation);
-        
-	 
-     
+
+		gse= new GroovyScriptEngine(scriptsLocation);
+
+
+
 	}
-	
+
 	protected GroovyScriptEngine getGSE() {
 		return this.gse;
 	}
-	
-		
+
+
 }
